@@ -3,6 +3,9 @@ import '../design/Navbar.css'
 
 function Navbar({ logoSrc, brand = 'SORBETES' }) {
   const [activeNav, setActiveNav] = useState(null)
+  const goToAuth = () => {
+    window.location.search = '?page=auth'
+  }
 
   return (
     <header className="hp-header">
@@ -60,7 +63,7 @@ function Navbar({ logoSrc, brand = 'SORBETES' }) {
       </nav>
 
       <div className="hp-header-right">
-        <button type="button" className="hp-login-btn">
+        <button type="button" className="hp-login-btn" onClick={goToAuth}>
           Log in
         </button>
         <button type="button" className="hp-pricing-btn">

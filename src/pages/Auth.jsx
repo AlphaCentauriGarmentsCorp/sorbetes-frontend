@@ -10,6 +10,10 @@ function Auth() {
   const [loginShowPassword, setLoginShowPassword] = useState(false)
   const [registerShowPassword, setRegisterShowPassword] = useState(false)
 
+  const goToHomepage = () => {
+    window.location.search = '?page=home'
+  }
+
   const handleSignUpClick = () => setIsSignUp(true)
 
   const handleLogInClick = useCallback(() => {
@@ -32,7 +36,7 @@ function Auth() {
                 Log in
               </button>
             </div>
-            <button type="button" className="register-back-button" aria-label="Back">
+            <button type="button" className="register-back-button" aria-label="Back" onClick={goToHomepage}>
               <span className="register-back-icon" />
             </button>
             <div className="register-form-wrapper">
@@ -161,7 +165,7 @@ function Auth() {
               Sign up
             </button>
           </div>
-          <button type="button" className="login-back-button" aria-label="Back">
+          <button type="button" className="login-back-button" aria-label="Back" onClick={goToHomepage}>
             <span className="login-back-icon" />
           </button>
           <div className="login-form-wrapper">

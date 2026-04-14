@@ -135,8 +135,34 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .auth-page {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .auth-signup-layer,
+  .auth-login-overlay {
+    position: relative;
+    inset: auto;
+    min-height: 100dvh;
+  }
+
+  .auth-signup-layer {
+    display: none;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transition: none;
+  }
+
+  .auth-signup-layer.auth-signup-visible {
+    display: block;
+  }
+
   .auth-signup-inner {
     flex-direction: column;
+    min-height: 100dvh;
   }
 
   .auth-signup-decorative {
@@ -146,6 +172,15 @@
 
   .auth-login-overlay {
     flex-direction: column;
+  }
+
+  .auth-login-overlay.auth-login-signup {
+    display: none;
+  }
+
+  .auth-login-overlay.auth-login-returning,
+  .auth-login-overlay:not(.auth-login-signup) {
+    display: flex;
   }
 
   .auth-login-left-panel {

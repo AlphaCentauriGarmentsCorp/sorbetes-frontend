@@ -43,7 +43,13 @@ function Footer({ logoSrc }) {
             rel="noreferrer"
             aria-label="Instagram"
           />
-          <a className="hp-footer-social hp-footer-social-tiktok" href="#" aria-label="TikTok" />
+          <a
+            className="hp-footer-social hp-footer-social-tiktok"
+            href="https://www.tiktok.com/@sorbetesapparelstudio.ph"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="TikTok"
+          />
         </div>
       </div>
 
