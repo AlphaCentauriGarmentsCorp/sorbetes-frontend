@@ -8,13 +8,15 @@ import hero5 from '../assets/Hero 5.jpg'
 import hero6 from '../assets/Hero 6.jpg'
 import hero7 from '../assets/Hero 7.jpg'
 import wLogo from '../assets/w_logo.png'
-import testimonialPortrait from '../assets/bam.jpg'
 import kushLogo from '../assets/kush-logo.png'
 import linyaLogo from '../assets/linya.jpg'
 import dailyGrindLogo from '../assets/daily grind.jpg'
 import teamMnlLogo from '../assets/teammnl.jpg'
-import foundersCircleLogo from '../assets/Logo Sorbetes.jpg'
-import testimonialQuoteMarks from '../assets/testimonial-quote-marks.png'
+import foundersClubKush from '../assets/Kush.jpg'
+import foundersClubRevel from '../assets/REVEL.jpg'
+import foundersClubSenoritos from '../assets/Senoritos.jpg'
+import foundersClubStayHungry from '../assets/Stay Hungry.jpg'
+import foundersClubVariant5 from '../assets/Variant5.jpg'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import { useEffect, useState } from 'react'
@@ -35,9 +37,18 @@ function getHomepageScale() {
 
 function Homepage() {
   const [heroIndex, setHeroIndex] = useState(0)
+  const [testimonialIndex, setTestimonialIndex] = useState(0)
+  const [testimonialDirection, setTestimonialDirection] = useState('next')
   const [pageScale, setPageScale] = useState(() => getHomepageScale())
 
   const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7]
+  const testimonialImages = [
+    { src: foundersClubKush, alt: 'Founders Club testimonial for KUSH' },
+    { src: foundersClubRevel, alt: 'Founders Club testimonial for REVEL' },
+    { src: foundersClubSenoritos, alt: 'Founders Club testimonial for Senoritos' },
+    { src: foundersClubStayHungry, alt: 'Founders Club testimonial for Stay Hungry' },
+    { src: foundersClubVariant5, alt: 'Founders Club testimonial for Variant5' },
+  ]
   const trustedBrands = [
     { src: kushLogo, alt: 'KUSH' },
     { src: linyaLogo, alt: 'Linya Linya' },
@@ -63,6 +74,16 @@ function Homepage() {
 
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  const showPreviousTestimonial = () => {
+    setTestimonialDirection('prev')
+    setTestimonialIndex((prev) => (prev - 1 + testimonialImages.length) % testimonialImages.length)
+  }
+
+  const showNextTestimonial = () => {
+    setTestimonialDirection('next')
+    setTestimonialIndex((prev) => (prev + 1) % testimonialImages.length)
+  }
 
   return (
     <div className="homepage-shell">
@@ -151,71 +172,31 @@ function Homepage() {
 
       {/* Testimonial / Founders Club (Group 831) */}
       <section className="hp-testimonial" aria-label="Client testimonial">
-        <div className="hp-t-bg" aria-hidden="true" />
+        <img
+          key={`${testimonialDirection}-${testimonialIndex}`}
+          className={
+            testimonialDirection === 'prev'
+              ? 'hp-t-slide-image hp-t-slide-image-prev'
+              : 'hp-t-slide-image hp-t-slide-image-next'
+          }
+          src={testimonialImages[testimonialIndex].src}
+          alt={testimonialImages[testimonialIndex].alt}
+        />
 
-        <div className="hp-t-quote-mark" aria-hidden="true">
-          <img className="hp-t-quote-img" src={testimonialQuoteMarks} alt="" />
-        </div>
-
-        <div className="hp-t-founders-visual" aria-hidden="true">
-          <div className="hp-t-founders-stack">
-            <div className="hp-t-founders-card">
-              <div className="hp-t-founders-badge">
-                <img className="hp-t-founders-badge-img" src={foundersCircleLogo} alt="" />
-              </div>
-              <span className="hp-t-founders-line hp-t-founders-the">THE</span>
-              <span className="hp-t-founders-line hp-t-founders-founders">FOUNDERS</span>
-              <span className="hp-t-founders-line hp-t-founders-club">CLUB</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hp-t-kush-logo">
-          <img className="hp-t-kush-img" src={kushLogo} alt="KUSH" />
-        </div>
-
-        <div className="hp-t-frame">
-          <p className="hp-t-body">
-            Every so often a new company comes along and completely shifts an entire industry. Sorbetes did it for
-            KUSH Co. and other local brand apparels SORBETES STUDIO helped us grow with its high quality prints using
-            their advance technologies and outstanding services.
-          </p>
-          <div className="hp-t-highlight">
-            <p className="hp-t-highlight-text">
-              This manufacturing company officially receives the highest praise from KUSH CO.
-            </p>
-          </div>
-        </div>
-
-        <div className="hp-t-author">
-          <div className="hp-t-author-text">
-            <div className="hp-t-author-name">Bam Santiago</div>
-            <div className="hp-t-author-role">Founder, KUSH CO.</div>
-          </div>
-          <div className="hp-t-author-social" aria-label="Social links">
-            <a
-              className="hp-t-social hp-t-social-fb"
-              href="https://www.facebook.com/SorbetesApparel"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Facebook"
-            />
-            <a
-              className="hp-t-social hp-t-social-ig"
-              href="https://www.instagram.com/sorbetesapparelstudio/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            />
-          </div>
-        </div>
-
-        <img className="hp-t-portrait" src={testimonialPortrait} alt="Bam Santiago, Founder of KUSH CO." />
-
-        <button type="button" className="hp-t-nav hp-t-nav-prev" aria-label="Previous testimonial">
+        <button
+          type="button"
+          className="hp-t-nav hp-t-nav-prev"
+          aria-label="Previous testimonial"
+          onClick={showPreviousTestimonial}
+        >
           <span className="hp-t-nav-icon" aria-hidden="true" />
         </button>
-        <button type="button" className="hp-t-nav hp-t-nav-next" aria-label="Next testimonial">
+        <button
+          type="button"
+          className="hp-t-nav hp-t-nav-next"
+          aria-label="Next testimonial"
+          onClick={showNextTestimonial}
+        >
           <span className="hp-t-nav-icon" aria-hidden="true" />
         </button>
       </section>
@@ -329,12 +310,19 @@ function Homepage() {
 
       {/* Why Choose Us */}
       <section className="hp-why" aria-label="Why choose us">
-        <div className="hp-why-header-row">
-          <h3 className="hp-why-title">Why Choose us?</h3>
-          <p className="hp-why-subtitle">
-            Decades of experience, uncompromising quality, and trust you can rely on, crafted to deliver exceptional
-            results you can be proud of.
-          </p>
+        <div className="hp-why-header">
+          <div className="hp-why-about-row">
+          <div className="hp-services-top-line" />
+          <h2 className="hp-services-title">ABOUT US</h2>
+          </div>
+
+          <div className="hp-why-header-row">
+            <h3 className="hp-why-title">Why Choose us?</h3>
+            <p className="hp-why-subtitle">
+              Decades of experience, uncompromising quality, and trust you can rely on, crafted to deliver exceptional
+              results you can be proud of.
+            </p>
+          </div>
         </div>
 
         <div className="hp-why-list">
