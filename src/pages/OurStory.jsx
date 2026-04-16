@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaBullseye, FaChevronLeft, FaChevronRight, FaEye, FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
+import { IoChevronBack } from 'react-icons/io5'
 import '../design/OurStory.css'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
@@ -62,7 +63,7 @@ function OurStory() {
             <Navbar logoSrc={logoCircleImg} currentPage="our-story" />
 
             <button type="button" className="os-back-button" aria-label="Back to homepage" onClick={goToHome}>
-              &lsaquo;
+              <IoChevronBack className="os-back-icon" aria-hidden="true" />
             </button>
 
             <section className="os-hero">
