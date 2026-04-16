@@ -102,7 +102,7 @@ function Homepage() {
       <div className="hp-ellipse hp-ellipse-105" aria-hidden="true" />
       <div className="hp-ellipse hp-ellipse-106" aria-hidden="true" />
 
-      <Navbar logoSrc={logoCircleImg} />
+      <Navbar logoSrc={logoCircleImg} currentPage="home" />
 
       {/* Hero */}
       <section className="hp-hero">

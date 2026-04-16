@@ -1,0 +1,329 @@
+.our-story-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.our-story-scale-frame {
+  position: relative;
+  margin: 0 auto;
+}
+
+.our-story-scale-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 3223px;
+  transform-origin: top left;
+}
+
+.our-story-page {
+  position: relative;
+  width: 1920px;
+  height: 3223px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.os-ellipse {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffce31 0%, #ffffff 100%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.os-ellipse-left {
+  width: 1012.21px;
+  height: 1012.21px;
+  left: -771px;
+  top: 2371px;
+  transform: rotate(-76.99deg);
+}
+
+.os-ellipse-right {
+  width: 1270.21px;
+  height: 1268.21px;
+  left: 1516.73px;
+  top: 562px;
+  transform: rotate(97.73deg);
+}
+
+.os-back-button {
+  position: absolute;
+  left: 116px;
+  top: 175px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  background: transparent;
+  color: #000000;
+  font-size: 56px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.os-hero {
+  position: absolute;
+  width: 1735px;
+  left: 92.5px;
+  top: 319px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.os-title {
+  margin: 0;
+  width: 100%;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 92px;
+  line-height: 88%;
+  text-align: center;
+  color: #000000;
+}
+
+.os-title-line {
+  width: 324.04px;
+  border-top: 3px solid #ffce31;
+}
+
+.os-story-body {
+  position: absolute;
+  left: 92.5px;
+  top: 548px;
+  width: 1735px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.os-copy {
+  width: 883px;
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+}
+
+.os-copy p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 200%;
+  text-align: justify;
+  color: #000000;
+}
+
+.os-image-card {
+  position: relative;
+  width: 745px;
+  height: 748px;
+}
+
+.os-story-image {
+  width: 745px;
+  height: 709.83px;
+  border-radius: 20px;
+  object-fit: cover;
+  display: block;
+}
+
+.os-image-arrow {
+  position: absolute;
+  top: 355px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.45);
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.os-image-arrow-left {
+  left: 24px;
+}
+
+.os-image-arrow-right {
+  right: 24px;
+}
+
+.os-image-arrow:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.os-image-dots {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 11px;
+}
+
+.os-dot {
+  width: 16px;
+  height: 15.36px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  background: #ffffff;
+  display: inline-block;
+}
+
+.os-dot-active {
+  background: #000000;
+  border-color: #000000;
+  box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.os-mission-vision {
+  position: absolute;
+  width: 1744px;
+  left: 88px;
+  top: 1499px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 90px;
+}
+
+.os-mission-vision h2 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 70px;
+  line-height: 88%;
+  text-align: center;
+}
+
+.os-mv-grid {
+  width: 1673px;
+  display: flex;
+  justify-content: center;
+  gap: 73px;
+}
+
+.os-mv-card {
+  width: 800px;
+  height: 386px;
+  padding: 66px 70px;
+  border: 1px solid #b8b8b8;
+  border-radius: 40px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 51px;
+}
+
+.os-mv-head {
+  display: flex;
+  align-items: center;
+  gap: 37px;
+}
+
+.os-mv-icon-wrap {
+  width: 63px;
+  height: 61px;
+  border: 1px solid #b8b8b8;
+  border-radius: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.os-mv-icon {
+  width: 31px;
+  height: 31px;
+  color: #000000;
+}
+
+.os-mv-head h3 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 88%;
+}
+
+.os-mv-card p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+  text-align: justify;
+}
+
+.os-follow {
+  position: absolute;
+  width: 1279px;
+  left: 321px;
+  top: 2213px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 38px;
+}
+
+.os-follow h2 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 88%;
+  text-align: center;
+}
+
+.os-follow p {
+  margin: 0 0 58px;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+  text-align: center;
+}
+
+.os-follow-icons {
+  width: 1279px;
+  display: flex;
+  justify-content: center;
+  gap: 280px;
+}
+
+.os-follow-circle {
+  width: 239px;
+  height: 240px;
+  border: 1px solid #000000;
+  border-radius: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.os-follow-icon {
+  color: #000000;
+}
+
+.os-follow-icon-facebook {
+  width: 120px;
+  height: 120px;
+}
+
+.os-follow-icon-instagram {
+  width: 120px;
+  height: 120px;
+}
+
+.os-follow-icon-tiktok {
+  width: 102px;
+  height: 116px;
+}
