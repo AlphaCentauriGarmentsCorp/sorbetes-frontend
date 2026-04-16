@@ -59,10 +59,7 @@
   height: 56px;
   border: none;
   background: transparent;
-<<<<<<< Updated upstream
   color: #000000;
-=======
->>>>>>> Stashed changes
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -71,13 +68,8 @@
 }
 
 .os-back-icon {
-<<<<<<< Updated upstream
-  width: 26px;
-  height: 26px;
-=======
   width: 40px;
   height: 40px;
->>>>>>> Stashed changes
   color: #000000;
 }
 
