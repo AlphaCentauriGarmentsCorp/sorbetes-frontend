@@ -62,7 +62,7 @@ function OurStory() {
             <Navbar logoSrc={logoCircleImg} currentPage="our-story" />
 
             <button type="button" className="os-back-button" aria-label="Back to homepage" onClick={goToHome}>
-              &lsaquo;
+              <FaChevronLeft className="os-back-icon" />
             </button>
 
             <section className="os-hero">
