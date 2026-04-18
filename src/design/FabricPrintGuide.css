@@ -1,0 +1,184 @@
+.fabric-guide-shell {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #ffffff;
+}
+
+.fabric-guide-scale-frame {
+  position: relative;
+}
+
+.fabric-guide-scale-content {
+  width: 1920px;
+  height: 4449px;
+  transform-origin: top left;
+}
+
+.fabric-guide-page {
+  position: relative;
+  width: 1920px;
+  height: 4449px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.fabric-guide-back-button {
+  position: absolute;
+  top: 175px;
+  left: 116px;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #000000;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.fabric-guide-back-icon {
+  font-size: 34px;
+}
+
+.fabric-guide-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 274px;
+}
+
+.fabric-guide-title-block {
+  width: 1743px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.fabric-guide-title {
+  margin: 0;
+  width: 100%;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 130px;
+  line-height: 0.88;
+  text-align: center;
+  color: #000000;
+}
+
+.fabric-guide-title-line {
+  width: 324px;
+  border-top: 3px solid #ffce31;
+}
+
+.fabric-guide-intro-card {
+  box-sizing: border-box;
+  width: 1244px;
+  margin-top: 30px;
+  padding: 45px 10px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+}
+
+.fabric-guide-intro-text {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.61;
+  text-align: center;
+  color: #000000;
+}
+
+.fabric-guide-steps-section {
+  width: 1764px;
+  margin: 121px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 105px;
+}
+
+.fabric-guide-step-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 235px;
+}
+
+.fabric-guide-step-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.fabric-guide-step-copy {
+  width: 661px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.fabric-guide-step-copy-right {
+  text-align: right;
+}
+
+.fabric-guide-step-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fabric-guide-step-number {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 0.88;
+  color: #000000;
+}
+
+.fabric-guide-step-head h2 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 62px;
+  line-height: 0.94;
+  color: #000000;
+}
+
+.fabric-guide-step-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.fabric-guide-step-bullets p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+
+.fabric-guide-step-media {
+  width: 868px;
+  height: 439px;
+  border-radius: 20px;
+  overflow: hidden;
+  filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.25));
+  background: #c4c4c4;
+  flex: 0 0 auto;
+}
+
+.fabric-guide-step-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #cdcdcd 0%, #c4c4c4 100%);
+}
+
+.fabric-guide-back-button:hover {
+  opacity: 0.9;
+}
