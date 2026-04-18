@@ -1,0 +1,215 @@
+.guide-shell {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #ffffff;
+}
+
+.guide-scale-frame {
+  position: relative;
+}
+
+.guide-scale-content {
+  width: 1920px;
+  height: 4261px;
+  transform-origin: top left;
+}
+
+.guide-page {
+  position: relative;
+  width: 1920px;
+  height: 4261px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.guide-back-button {
+  position: absolute;
+  top: 175px;
+  left: 116px;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #000000;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.guide-back-icon {
+  font-size: 34px;
+}
+
+.guide-hero {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 274px;
+  gap: 30px;
+}
+
+.guide-title-block {
+  width: 1743px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.guide-title {
+  margin: 0;
+  width: 100%;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 130px;
+  line-height: 0.88;
+  text-align: center;
+  color: #000000;
+}
+
+.guide-title-line {
+  width: 324px;
+  border-top: 3px solid #ffce31;
+}
+
+.guide-intro-card {
+  box-sizing: border-box;
+  width: 1244px;
+  padding: 45px 10px;
+  background: #ffffff;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.guide-intro-text {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 1.61;
+  text-align: center;
+  color: #000000;
+}
+
+.guide-video-card {
+  position: relative;
+  width: 1743px;
+  height: 656px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.guide-video-panel {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.18) 100%),
+    linear-gradient(135deg, #d7d7d7 0%, #c7c7c7 100%);
+}
+
+.guide-video-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 124px;
+  height: 124px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.guide-video-play-icon {
+  margin-left: 6px;
+  font-size: 42px;
+  color: #000000;
+}
+
+.guide-steps-section {
+  width: 1663px;
+  margin: 114px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 430px;
+}
+
+.guide-steps-title {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 0.88;
+  text-align: center;
+  color: #000000;
+}
+
+.guide-steps-list {
+  width: 100%;
+  margin-top: 114px;
+  display: flex;
+  flex-direction: column;
+  gap: 110px;
+}
+
+.guide-step-item {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 51px;
+}
+
+.guide-step-number-wrap {
+  width: 98px;
+  height: 98px;
+  border-radius: 999px;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.guide-step-number {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 0.8687;
+  color: #ffffff;
+}
+
+.guide-step-copy {
+  width: 1514px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guide-step-copy h3 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.61;
+  color: #000000;
+}
+
+.guide-step-copy p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.61;
+  text-align: justify;
+  color: #000000;
+}

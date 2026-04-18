@@ -21,6 +21,8 @@
   flex-direction: row;
   align-items: center;
   gap: 7px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .hp-logo-circle {
@@ -88,6 +90,83 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.hp-nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hp-nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: #ffffff;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+  z-index: 12;
+}
+
+.hp-nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10px;
+  height: 10px;
+}
+
+.hp-nav-dropdown:hover .hp-nav-dropdown-menu,
+.hp-nav-dropdown-open .hp-nav-dropdown-menu,
+.hp-nav-dropdown:focus-within .hp-nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.hp-nav-dropdown-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 0;
+  text-decoration: none;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: #111111;
+  white-space: nowrap;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.hp-nav-dropdown-link + .hp-nav-dropdown-link {
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.hp-nav-dropdown-link:hover,
+.hp-nav-dropdown-link:focus-visible {
+  background: rgba(255, 206, 49, 0.18);
+  color: #000000;
+  outline: none;
+}
+
+.hp-nav-dropdown-link-active {
+  font-weight: 400;
 }
 
 .hp-nav-caret {
