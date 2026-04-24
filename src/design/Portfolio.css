@@ -120,7 +120,7 @@
 }
 
 .portfolio-featured-brands {
-  width: 2025px;
+  width: 1764px;
   margin: 90px auto 0;
   display: flex;
   flex-direction: column;
@@ -130,7 +130,7 @@
 
 .portfolio-featured-label {
   margin: 0;
-  width: 100%;
+  width: auto;
   font-family: 'Montserrat', system-ui, sans-serif;
   font-weight: 400;
   font-size: 12px;
@@ -140,7 +140,7 @@
 }
 
 .portfolio-brand-marquee {
-  width: 2025px;
+  width: 1764px;
   overflow: hidden;
 }
 
