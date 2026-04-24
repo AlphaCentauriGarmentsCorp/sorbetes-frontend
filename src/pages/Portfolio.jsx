@@ -3,11 +3,12 @@ import { IoChevronBack } from 'react-icons/io5'
 import '../design/Portfolio.css'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
+import reeferLogo from '../assets/reefer-logo.png'
 import kushLogo from '../assets/kush-logo.png'
 import linyaLogo from '../assets/linya.jpg'
 import dailyGrindLogo from '../assets/daily grind.jpg'
 import teamMnlLogo from '../assets/teammnl.jpg'
-import featureImage from '../assets/REVEL.jpg'
+import reeferImage from '../assets/reefer.png'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
@@ -45,6 +46,11 @@ function Portfolio() {
 
   const goToHome = () => {
     window.history.pushState({}, '', '?page=home')
+    window.dispatchEvent(new Event('cursor:navigate'))
+  }
+
+  const goToCollection = () => {
+    window.history.pushState({}, '', '?page=portfolio-archive')
     window.dispatchEvent(new Event('cursor:navigate'))
   }
 
@@ -127,7 +133,7 @@ function Portfolio() {
                     </p>
                   </div>
 
-                  <button type="button" className="portfolio-outline-button">
+                  <button type="button" className="portfolio-outline-button" onClick={goToCollection}>
                     View Collection
                   </button>
                 </div>
@@ -136,8 +142,11 @@ function Portfolio() {
                   <div className="portfolio-showcase-layer portfolio-showcase-layer-1" aria-hidden="true" />
                   <div className="portfolio-showcase-layer portfolio-showcase-layer-2" aria-hidden="true" />
                   <div className="portfolio-showcase-layer portfolio-showcase-layer-3" aria-hidden="true" />
-                  <img src={featureImage} alt="Featured Sorbetes archive piece" className="portfolio-showcase-image" />
-                  <img src={wLogo} alt="" className="portfolio-showcase-badge" />
+                  <div className="portfolio-showcase-layer portfolio-showcase-layer-4" aria-hidden="true" />
+                  <div className="portfolio-showcase-image-frame">
+                    <img src={reeferImage} alt="Reefer oversized T-shirt" className="portfolio-showcase-image" />
+                  </div>
+                  <img src={reeferLogo} alt="" className="portfolio-showcase-badge" />
                   <div className="portfolio-showcase-meta">
                     <h4>Reefer</h4>
                     <p>Silkscreen Printed Oversized T-shirt</p>

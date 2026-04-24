@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { IoChevronBack } from 'react-icons/io5'
 import '../design/FabricPrintGuide.css'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
+import reeferImg from '../assets/reefer.png'
 import wLogo from '../assets/w_logo.png'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
@@ -146,9 +147,7 @@ function FabricPrintGuide() {
                   </div>
 
                   <div className="fabric-guide-step-media">
-                    <div className="fabric-guide-step-placeholder" aria-hidden="true">
-                      <span>Image Placeholder</span>
-                    </div>
+                    <img className="fabric-guide-step-image" src={reeferImg} alt="Silkscreen printed oversized T-shirt" />
                   </div>
                 </article>
               ))}

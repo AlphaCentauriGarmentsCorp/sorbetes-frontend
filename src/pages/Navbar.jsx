@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import '../design/Navbar.css'
 
 function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
@@ -68,7 +69,7 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
     setOpenDropdown((current) => (current === dropdownName ? null : dropdownName))
   }
 
-  return (
+  const navbar = (
     <header className="hp-header">
       <a className="hp-header-left" href="?page=home" onClick={goToHome} aria-label="Go to homepage">
         <img className="hp-logo-circle" src={logoSrc} alt="" />
@@ -169,6 +170,12 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
       </div>
     </header>
   )
+
+  if (typeof document === 'undefined') {
+    return navbar
+  }
+
+  return createPortal(navbar, document.body)
 }
 
 export default Navbar

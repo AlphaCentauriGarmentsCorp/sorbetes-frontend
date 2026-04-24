@@ -7,6 +7,8 @@ import Services from './Services.jsx'
 import Guide from './Guide.jsx'
 import FabricPrintGuide from './FabricPrintGuide.jsx'
 import Portfolio from './Portfolio.jsx'
+import PortfolioArchive from './PortfolioArchive.jsx'
+import PortfolioExpanded from './PortfolioExpanded.jsx'
 import '../design/index.css'
 
 function getCurrentPage() {
@@ -30,6 +32,12 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [page])
+
   if (page === 'otp') return <OtpVerification />
   if (page === 'auth') return <Auth />
   if (page === 'home') return <Homepage />
@@ -38,6 +46,8 @@ function App() {
   if (page === 'guide') return <Guide />
   if (page === 'fabric-print-guide') return <FabricPrintGuide />
   if (page === 'portfolio') return <Portfolio />
+  if (page === 'portfolio-archive') return <PortfolioArchive />
+  if (page === 'portfolio-expanded') return <PortfolioExpanded />
 
   return <Homepage />
 }
