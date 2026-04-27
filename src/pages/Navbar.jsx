@@ -6,22 +6,69 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
 
   const resolvedActiveNav = activeNav ?? currentPage
 
+  const navigateTo = (search, { replace = false } = {}) => {
+    if (replace) {
+      window.history.replaceState({}, '', search)
+    } else {
+      window.history.pushState({}, '', search)
+    }
+
+    window.dispatchEvent(new Event('cursor:navigate'))
+  }
+
+  const goToHome = (event) => {
+    event.preventDefault()
+    setActiveNav('home')
+    navigateTo('?page=home')
+  }
+
   const goToAuth = () => {
-    window.location.search = '?page=auth'
+    navigateTo('?page=auth')
   }
 
   const goToOurStory = (event) => {
     event.preventDefault()
     setActiveNav('our-story')
-    window.location.search = '?page=our-story'
+    navigateTo('?page=our-story')
+  }
+
+  const goToServices = (event) => {
+    event.preventDefault()
+    setActiveNav('services')
+    navigateTo('?page=services')
+  }
+
+  const goToGuide = (event) => {
+    event.preventDefault()
+    setActiveNav('guide')
+    navigateTo('?page=guide')
+  }
+
+  const goToFabricPrintGuide = (event) => {
+    event.preventDefault()
+    setActiveNav('guide')
+    navigateTo('?page=fabric-print-guide')
+  }
+
+  const goToPortfolio = (event) => {
+    event.preventDefault()
+    setActiveNav('services')
+
+    if (currentPage === 'services') {
+      navigateTo('?page=services&section=portfolio', { replace: true })
+      document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
+
+    navigateTo('?page=services&section=portfolio')
   }
 
   return (
     <header className="hp-header">
-      <div className="hp-header-left">
+      <a className="hp-header-left" href="?page=home" onClick={goToHome} aria-label="Go to homepage">
         <img className="hp-logo-circle" src={logoSrc} alt="" />
         <span className="hp-brand">{brand}</span>
-      </div>
+      </a>
 
       <nav className="hp-header-center" aria-label="Primary">
         <a
@@ -32,25 +79,53 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
           Our Story
         </a>
 
-        <button
-          type="button"
-          className={
-            resolvedActiveNav === 'services' ? 'hp-nav-link hp-nav-button hp-nav-selected' : 'hp-nav-link hp-nav-button'
-          }
-          onClick={() => setActiveNav('services')}
-        >
-          Services <span className="hp-nav-caret" aria-hidden="true" />
-        </button>
+        <div className="hp-nav-dropdown">
+          <button
+            type="button"
+            className={
+              resolvedActiveNav === 'services'
+                ? 'hp-nav-link hp-nav-button hp-nav-selected'
+                : 'hp-nav-link hp-nav-button'
+            }
+            onClick={goToServices}
+          >
+            Services <span className="hp-nav-caret" aria-hidden="true" />
+          </button>
 
-        <button
-          type="button"
-          className={
-            resolvedActiveNav === 'guide' ? 'hp-nav-link hp-nav-button hp-nav-selected' : 'hp-nav-link hp-nav-button'
-          }
-          onClick={() => setActiveNav('guide')}
-        >
-          Guide <span className="hp-nav-caret" aria-hidden="true" />
-        </button>
+          <div className="hp-nav-dropdown-menu" aria-label="Services menu">
+            <a className="hp-nav-dropdown-link hp-nav-dropdown-link-active" href="?page=services" onClick={goToServices}>
+              Our Services
+            </a>
+            <a className="hp-nav-dropdown-link" href="?page=services&section=portfolio" onClick={goToPortfolio}>
+              Portfolio
+            </a>
+          </div>
+        </div>
+
+        <div className="hp-nav-dropdown">
+          <button
+            type="button"
+            className={
+              resolvedActiveNav === 'guide' ? 'hp-nav-link hp-nav-button hp-nav-selected' : 'hp-nav-link hp-nav-button'
+            }
+            onClick={goToGuide}
+          >
+            Guide <span className="hp-nav-caret" aria-hidden="true" />
+          </button>
+
+          <div className="hp-nav-dropdown-menu" aria-label="Guide menu">
+            <a className="hp-nav-dropdown-link hp-nav-dropdown-link-active" href="?page=guide" onClick={goToGuide}>
+              How to Order
+            </a>
+            <a
+              className="hp-nav-dropdown-link"
+              href="?page=fabric-print-guide"
+              onClick={goToFabricPrintGuide}
+            >
+              Fabric Print Guide
+            </a>
+          </div>
+        </div>
 
         <a
           className={resolvedActiveNav === 'founders-club' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
