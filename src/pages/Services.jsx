@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { FaAward, FaLocationDot, FaPlay, FaShirt, FaStar, FaUsers } from 'react-icons/fa6'
 import { IoChevronBack } from 'react-icons/io5'
 import { MdHandshake } from 'react-icons/md'
@@ -13,20 +13,12 @@ import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const SERVICES_BASE_WIDTH = 1920
-const SERVICES_BASE_HEIGHT = 7800
-
-function getServicesScale() {
-  if (typeof window === 'undefined') {
-    return 1
-  }
-
-  return Math.min(Math.max((window.innerWidth - 24) / SERVICES_BASE_WIDTH, 0.18), 1)
-}
+const SERVICES_BASE_HEIGHT = 7901
 
 const highlightCards = [
-  { icon: FaAward, label: '20+ Years of Experience' },
-  { icon: FaShirt, label: '500+ Brands Served' },
-  { icon: FaStar, label: 'Premium Quality Production' },
+  { Icon: FaAward, label: '20+ Years of Experience' },
+  { Icon: FaShirt, label: '500+ Brands Served' },
+  { Icon: FaStar, label: 'Premium Quality Production' },
 ]
 
 const serviceRows = [
@@ -61,33 +53,33 @@ const serviceRows = [
 
 const whyChooseUs = [
   {
-    title: 'Established Experience',
-    text: 'Operating since 2002, we bring years of industry knowledge and hands-on expertise to every project.',
     Icon: FaStar,
+    title: 'Established Experience',
+    description: 'Operating since 2002, we bring years of industry knowledge and hands-on expertise to every project.',
     iconClass: 'services-why-icon-star',
   },
   {
-    title: 'Trusted by Brands',
-    text: 'We have worked with respected local and national brands who continue to choose us for our reliability and results.',
     Icon: MdHandshake,
+    title: 'Trusted by Brands',
+    description: 'We have worked with respected local and national brands who continue to choose us for our reliability and results.',
     iconClass: 'services-why-icon-handshake',
   },
   {
-    title: 'Quality-Driven',
-    text: 'Every project is handled with attention to detail and a commitment to high standards.',
     Icon: FaAward,
+    title: 'Quality-Driven',
+    description: 'Every project is handled with attention to detail and a commitment to high standards.',
     iconClass: 'services-why-icon-award',
   },
   {
-    title: 'Local Expertise',
-    text: 'Based in Quezon City, we understand the local market while delivering professional-level service.',
     Icon: FaLocationDot,
+    title: 'Local Expertise',
+    description: 'Based in Quezon City, we understand the local market while delivering professional-level service.',
     iconClass: 'services-why-icon-location',
   },
   {
-    title: 'Client-Focused Approach',
-    text: 'We value long-term partnerships and treat every project as a collaborative effort.',
     Icon: FaUsers,
+    title: 'Client-Focused Approach',
+    description: 'We value long-term partnerships and treat every project as a collaborative effort.',
     iconClass: 'services-why-icon-users',
   },
 ]
@@ -99,8 +91,18 @@ const trustedBrands = [
   { src: teamMnlLogo, alt: 'Team MNL brand logo' },
 ]
 
+function getServicesScale() {
+  if (typeof window === 'undefined') {
+    return 1
+  }
+
+  return Math.min(Math.max((window.innerWidth - 24) / SERVICES_BASE_WIDTH, 0.18), 1)
+}
+
 function Services() {
   const [pageScale, setPageScale] = useState(() => getServicesScale())
+
+  const marqueeBrands = useMemo(() => [...trustedBrands, ...trustedBrands], [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -129,7 +131,8 @@ function Services() {
   }, [])
 
   const goToHome = () => {
-    window.location.search = '?page=home'
+    window.history.pushState({}, '', '?page=home')
+    window.dispatchEvent(new Event('cursor:navigate'))
   }
 
   return (
@@ -143,8 +146,8 @@ function Services() {
       >
         <div className="services-scale-content" style={{ transform: `scale(${pageScale})` }}>
           <div className="services-page">
-            <div className="services-ellipse services-ellipse-left" aria-hidden="true" />
             <div className="services-ellipse services-ellipse-right" aria-hidden="true" />
+            <div className="services-ellipse services-ellipse-left" aria-hidden="true" />
 
             <Navbar logoSrc={logoCircleImg} currentPage="services" />
 
@@ -160,37 +163,40 @@ function Services() {
 
               <div className="services-intro-card">
                 <p className="services-intro-text">
-                  We offer a comprehensive and fully integrated suite of apparel production services designed to
-                  support brands at every stage of their journey, from concept development and design to manufacturing,
-                  quality control, and final delivery. Our end-to-end solutions ensure efficiency, consistency, and
-                  high-quality results, helping businesses streamline their production process, enhance product value,
-                  and successfully bring their vision to market.
+                  We offer a comprehensive and fully integrated suite of apparel production services designed to support
+                  brands at every stage of their journey, from concept development and design to manufacturing, quality
+                  control, and final delivery. Our end-to-end solutions ensure efficiency, consistency, and high-quality
+                  results, helping businesses streamline their production process, enhance product value, and
+                  successfully bring their vision to market.
                 </p>
               </div>
 
               <div className="services-highlight-grid" aria-label="Service highlights">
-                {highlightCards.map(({ icon: Icon, label }) => (
+                {highlightCards.map(({ Icon, label }) => (
                   <article key={label} className="services-highlight-card">
                     <div className="services-highlight-icon-wrap" aria-hidden="true">
                       <span className="services-highlight-icon-bg" />
                       <Icon className="services-highlight-icon" />
                     </div>
-                    <h2 className="services-highlight-label">{label}</h2>
+                    <p className="services-highlight-label">{label}</p>
                   </article>
                 ))}
               </div>
 
-              <div className="services-hero-banner">
+              <div className="services-hero-banner" aria-label="Video placeholder">
                 <div className="services-hero-placeholder" aria-hidden="true">
-                  <div className="services-hero-placeholder-copy">Video Placeholder</div>
+                  <span className="services-hero-placeholder-copy">Video Placeholder</span>
                 </div>
+                <button type="button" className="services-hero-play" aria-label="Play services video">
+                  <FaPlay className="services-hero-play-icon" />
+                </button>
               </div>
             </section>
 
             <section className="services-what-we-do" aria-label="What we do">
               <div className="services-section-heading">
                 <h2>What We Do</h2>
-                <p>We offer a complete suite of apparel production services to support brands at every stage.</p>
+                <p>We offer a complete suite of apparel production services to support brands at every stage:</p>
               </div>
 
               <div className="services-row-list">
@@ -205,12 +211,12 @@ function Services() {
                     </div>
 
                     <div className="services-row-media">
-                      <div className="services-row-placeholder" aria-hidden="true">
-                        <div className="services-row-placeholder-copy">Image Placeholder</div>
-                      </div>
-                      <div className="services-watch-tag">
+                      <div className={service.reverse ? 'services-watch-tag services-watch-tag-left' : 'services-watch-tag'}>
                         <FaPlay className="services-watch-icon" aria-hidden="true" />
                         <span>Watch Video</span>
+                      </div>
+                      <div className="services-row-placeholder" aria-hidden="true">
+                        <div className="services-row-placeholder-copy">Image Placeholder</div>
                       </div>
                     </div>
                   </article>
@@ -225,18 +231,19 @@ function Services() {
               </div>
 
               <div className="services-why-list">
-                {whyChooseUs.map(({ title, text, Icon, iconClass }) => (
+                {whyChooseUs.map(({ Icon, title, description, iconClass }) => (
                   <article key={title} className="services-why-item">
                     <div className="services-why-left-card">
                       <div className="services-why-left-inner">
-                        <span className="services-why-icon-wrap" aria-hidden="true">
-                          <Icon className={`services-why-icon ${iconClass}`} />
-                        </span>
+                        <div className="services-why-icon-wrap">
+                          <Icon className={`services-why-icon ${iconClass}`} aria-hidden="true" />
+                        </div>
                         <h3>{title}</h3>
                       </div>
                     </div>
+
                     <div className="services-why-right-card">
-                      <p>{text}</p>
+                      <p>{description}</p>
                     </div>
                   </article>
                 ))}
@@ -246,27 +253,32 @@ function Services() {
             <section id="portfolio" className="services-trusted" aria-label="Trusted by brands">
               <div className="services-trusted-header">
                 <h2 className="services-trusted-title">Trusted by Brands</h2>
-                <p className="services-trusted-subtitle">Built on credibility and results.</p>
+                <p className="services-trusted-subtitle">
+                  From rising labels to established names, we support brands at every stage.
+                </p>
               </div>
 
-              <div className="services-trusted-marquee" aria-label="Trusted brand logos">
+              <div className="services-trusted-marquee" aria-label="Trusted brands marquee">
                 <div className="services-trusted-marquee-track">
                   <div className="services-trusted-marquee-segment">
-                    {trustedBrands.map((brand) => (
-                      <div key={brand.alt} className="services-brand-card">
-                        <img src={brand.src} alt={brand.alt} className="services-brand-image" />
+                    {marqueeBrands.map((brand, index) => (
+                      <div key={`${brand.alt}-${index}`} className="services-brand-card">
+                        <img className="services-brand-image" src={brand.src} alt={brand.alt} />
                       </div>
                     ))}
                   </div>
+
                   <div className="services-trusted-marquee-segment" aria-hidden="true">
-                    {trustedBrands.map((brand) => (
-                      <div key={`${brand.alt}-duplicate`} className="services-brand-card">
-                        <img src={brand.src} alt="" className="services-brand-image" />
+                    {marqueeBrands.map((brand, index) => (
+                      <div key={`${brand.alt}-clone-${index}`} className="services-brand-card">
+                        <img className="services-brand-image" src={brand.src} alt="" />
                       </div>
                     ))}
                   </div>
                 </div>
               </div>
+
+              <p className="services-trusted-more">...and the list goes on</p>
 
               <button type="button" className="services-avail-button">
                 AVAIL NOW

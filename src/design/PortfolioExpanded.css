@@ -1,0 +1,327 @@
+.portfolio-expanded-shell {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #ffffff;
+}
+
+.portfolio-expanded-scale-frame {
+  position: relative;
+}
+
+.portfolio-expanded-scale-content {
+  width: 1920px;
+  height: 2154px;
+  transform-origin: top left;
+}
+
+.portfolio-expanded-page {
+  position: relative;
+  width: 1920px;
+  height: 2154px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.portfolio-expanded-ellipse {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffce31 0%, #ffffff 100%);
+  opacity: 0.2;
+}
+
+.portfolio-expanded-ellipse-left {
+  width: 818.54px;
+  height: 818.54px;
+  left: -508px;
+  bottom: -420px;
+  transform: rotate(-95.1deg);
+}
+
+.portfolio-expanded-back-button {
+  position: absolute;
+  top: 174px;
+  left: 116px;
+  width: 46px;
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #000000;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.portfolio-expanded-back-icon {
+  font-size: 34px;
+}
+
+.portfolio-expanded-hero {
+  position: relative;
+  width: 100%;
+  margin: 174px 0 0;
+  min-height: 156px;
+}
+
+.portfolio-expanded-title-group {
+  width: 354px;
+  margin: 47px auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.portfolio-expanded-title {
+  margin: 0;
+  width: 100%;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 58px;
+  line-height: 1.08;
+  text-align: center;
+  color: #000000;
+}
+
+.portfolio-expanded-subtitle {
+  margin: 8px 0 0;
+  width: 100%;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #000000;
+}
+
+.portfolio-expanded-badge {
+  position: absolute;
+  top: 0;
+  right: 120px;
+  width: 92px;
+  height: 93px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.portfolio-expanded-gallery {
+  position: relative;
+  width: 1423px;
+  height: 731px;
+  margin: 95px auto 0;
+}
+
+.portfolio-expanded-gallery-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 8.45794px;
+  overflow: hidden;
+  box-shadow: 0px 3.38318px 12.6869px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  transition:
+    left 320ms ease,
+    top 320ms ease,
+    width 320ms ease,
+    height 320ms ease,
+    opacity 320ms ease,
+    transform 320ms ease;
+  will-change: left, top, width, height, transform, opacity;
+}
+
+.portfolio-expanded-gallery-item img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  transform: scale(1.08);
+  transform-origin: center center;
+  transition: transform 320ms ease;
+}
+
+.portfolio-expanded-gallery-item-active {
+  width: 659px;
+  height: 659px;
+  left: 382px;
+  top: 0;
+  z-index: 4;
+}
+
+.portfolio-expanded-gallery-item-active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-expanded-gallery-item-prev,
+.portfolio-expanded-gallery-item-next {
+  width: 501px;
+  height: 501px;
+  top: 79px;
+  z-index: 3;
+  opacity: 1;
+}
+
+.portfolio-expanded-gallery-item-prev {
+  left: 93px;
+}
+
+.portfolio-expanded-gallery-item-next {
+  left: 829px;
+}
+
+.portfolio-expanded-gallery-item-prev::after,
+.portfolio-expanded-gallery-item-next::after,
+.portfolio-expanded-gallery-item-prev-far::after,
+.portfolio-expanded-gallery-item-next-far::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.portfolio-expanded-gallery-item-prev-far,
+.portfolio-expanded-gallery-item-next-far {
+  width: 371px;
+  height: 371px;
+  top: 144px;
+  z-index: 2;
+  opacity: 1;
+}
+
+.portfolio-expanded-gallery-item-prev-far {
+  left: 0;
+}
+
+.portfolio-expanded-gallery-item-next-far {
+  left: 1052px;
+}
+
+.portfolio-expanded-gallery-item-hidden {
+  display: none;
+}
+
+.portfolio-expanded-gallery-arrow {
+  position: absolute;
+  top: 298px;
+  width: 64.97px;
+  height: 64.32px;
+  border: 0.845794px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.portfolio-expanded-gallery-arrow svg {
+  font-size: 32px;
+}
+
+.portfolio-expanded-gallery-arrow-left {
+  left: 145px;
+}
+
+.portfolio-expanded-gallery-arrow-right {
+  right: 145px;
+}
+
+.portfolio-expanded-pagination {
+  width: fit-content;
+  margin: -12px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.portfolio-expanded-pagination-dot {
+  width: 12.62px;
+  height: 12.99px;
+  border-radius: 50%;
+  border: 0.541321px solid #000000;
+  background: #ffffff;
+  cursor: pointer;
+  padding: 0;
+}
+
+.portfolio-expanded-pagination-dot-active {
+  background: #000000;
+}
+
+.portfolio-expanded-details {
+  box-sizing: border-box;
+  width: 1601px;
+  min-height: 383px;
+  margin: 95px auto 0;
+  padding: 40px 30px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.portfolio-expanded-details-header {
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+}
+
+.portfolio-expanded-details-header span {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 0.8687;
+  color: #000000;
+}
+
+.portfolio-expanded-details-grid {
+  width: 100%;
+  padding: 45px 15px 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.portfolio-expanded-details-labels,
+.portfolio-expanded-details-values {
+  display: flex;
+  flex-direction: column;
+  gap: 31px;
+}
+
+.portfolio-expanded-details-labels {
+  width: 170px;
+}
+
+.portfolio-expanded-details-values {
+  width: 303px;
+}
+
+.portfolio-expanded-details-labels p,
+.portfolio-expanded-details-values p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+}
+
+.portfolio-expanded-details-labels p {
+  font-weight: 400;
+}
+
+.portfolio-expanded-details-values p {
+  font-weight: 600;
+}
+
+.portfolio-expanded-back-button:hover,
+.portfolio-expanded-gallery-arrow:hover,
+.portfolio-expanded-pagination-dot:hover {
+  opacity: 0.9;
+}
