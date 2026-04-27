@@ -12,53 +12,55 @@ const FABRIC_PRINT_GUIDE_BASE_HEIGHT = 4449
 
 const fabricPrintSteps = [
   {
-    number: '01',
-    title: 'Choose the Right Garment',
+    number: 'STEP 1:',
+    title: 'Assess the File Quality',
     bullets: [
-      'Start with the shirt style, fit, and fabric that best matches the look and feel of your collection.',
-      'Different fabrics respond differently to each print method, so this choice affects the final output.',
+      'Check the resolution: Printing needs high resolution, usually around 300 DPI.',
+      'Identify the file type: Vector files like AI, EPS, or PDF work best, while raster files like JPG or PNG need extra care.',
+      'Determine if the design is layered: Layered files make editing easier, while flat files may need to be recreated.',
     ],
   },
   {
-    number: '02',
-    title: 'Prepare High-Quality Artwork',
+    number: 'STEP 2:',
+    title: 'Recreate or Enhance the Design',
     bullets: [
-      'Use clear artwork files with the correct sizing and placement references before sending them for production.',
-      'A cleaner file helps avoid unnecessary adjustments during setup and improves print consistency.',
-    ],
-    reverse: true,
-  },
-  {
-    number: '03',
-    title: 'Select the Print Method',
-    bullets: [
-      'Silkscreen, transfer, and other approaches each have strengths depending on quantity, color count, and design detail.',
-      'We help recommend the most practical option based on your target result and production requirements.',
-    ],
-  },
-  {
-    number: '04',
-    title: 'Review Mockup or Sample',
-    bullets: [
-      'Before full production, a mockup or sample can help confirm placement, scale, color direction, and garment feel.',
-      'This extra step reduces revisions later and gives you more confidence before scaling the order.',
+      'If the file is low-quality, we enhance it or recreate it in high resolution.',
+      'For non-layered files, we separate elements like text, graphics, and colors into editable layers.',
+      'This ensures the colors and shapes remain sharp and accurate in print.',
     ],
     reverse: true,
   },
   {
-    number: '05',
-    title: 'Approve for Production',
+    number: 'STEP 3:',
+    title: 'Adjust Colors for Printing',
     bullets: [
-      'Once all details are aligned, the order can move forward into full production and finishing.',
-      'At this point the timeline, quantity, and print method are already coordinated for smoother execution.',
+      'Convert colors to CMYK, the standard color mode for print production.',
+      'Adjust brightness, contrast, and saturation to ensure the print matches what you see on screen.',
     ],
   },
   {
-    number: '06',
-    title: 'Quality Check and Release',
+    number: 'STEP 4:',
+    title: 'Optimize for Print Size',
     bullets: [
-      'Finished garments are checked for print consistency, placement, and presentation before release.',
-      'The final output is then prepared for pickup, shipping, or the next stage of your brand launch.',
+      'Scale the design to the actual print dimensions.',
+      'Check that text and details are clear and readable at the final size.',
+    ],
+    reverse: true,
+  },
+  {
+    number: 'STEP 5:',
+    title: 'Proof and Finalize',
+    bullets: [
+      'The designer prepares a print proof for review.',
+      'Check that text and details are clear and readable at the final size.',
+    ],
+  },
+  {
+    number: 'STEP 6:',
+    title: 'Export as Print-Ready File',
+    bullets: [
+      'Save the design in the correct format for printing, usually PDF or TIFF at high resolution.',
+      'Include bleed and crop marks if needed for cutting.',
     ],
     reverse: true,
   },
@@ -121,21 +123,23 @@ function FabricPrintGuide() {
 
               <div className="fabric-guide-intro-card">
                 <p className="fabric-guide-intro-text">
-                  A quick guide to understanding how your artwork, garments, and print method come together before
-                  production starts.
+                  Follow along as we show you how we turn your mockups, no matter the quality, into high-resolution,
+                  print-ready designs. We enhance your files, separate layers, adjust colors, and make sure every
+                  detail looks perfect before printing. This guide explains each step so your final product comes out
+                  exactly as you envisioned.
                 </p>
               </div>
             </section>
 
-            <section className="fabric-guide-steps-section">
+            <section className="fabric-guide-steps-section" aria-label="Fabric print guide steps">
               {fabricPrintSteps.map((step) => (
                 <article
                   key={step.number}
                   className={step.reverse ? 'fabric-guide-step-row fabric-guide-step-row-reverse' : 'fabric-guide-step-row'}
                 >
-                  <div className="fabric-guide-step-copy">
+                  <div className={step.reverse ? 'fabric-guide-step-copy fabric-guide-step-copy-right' : 'fabric-guide-step-copy'}>
                     <div className="fabric-guide-step-head">
-                      <span className="fabric-guide-step-number">{`STEP ${Number(step.number)}:`}</span>
+                      <span className="fabric-guide-step-number">{step.number}</span>
                       <h2>{step.title}</h2>
                     </div>
 

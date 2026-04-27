@@ -129,7 +129,7 @@ function Guide() {
               </div>
             </section>
 
-            <section className="guide-steps-section">
+            <section className="guide-steps-section" aria-label="How to order">
               <h2 className="guide-steps-title">How to Order?</h2>
 
               <div className="guide-steps-list">

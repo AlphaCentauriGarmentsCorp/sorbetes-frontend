@@ -80,9 +80,10 @@
 .guide-intro-card {
   box-sizing: border-box;
   width: 1244px;
+  margin-top: 30px;
   padding: 45px 10px;
-  background: #ffffff;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+  background: #ffffff;
 }
 
 .guide-intro-text {
@@ -99,17 +100,26 @@
   position: relative;
   width: 1743px;
   height: 656px;
+  margin-top: 98px;
   border-radius: 20px;
   overflow: hidden;
+  box-shadow: 0px 18px 40px rgba(0, 0, 0, 0.12);
 }
 
 .guide-video-panel {
   position: absolute;
   inset: 0;
-  border-radius: 20px;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.18) 100%),
-    linear-gradient(135deg, #d7d7d7 0%, #c7c7c7 100%);
+    radial-gradient(circle at 78% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 18%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.18) 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 2px,
+      transparent 2px,
+      transparent 72px
+    ),
+    linear-gradient(135deg, #d8d8d8 0%, #cfcfcf 100%);
 }
 
 .guide-video-play {
@@ -170,6 +180,7 @@
 }
 
 .guide-step-number-wrap {
+  flex: 0 0 auto;
   width: 98px;
   height: 98px;
   border-radius: 999px;
@@ -177,7 +188,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
 }
 
 .guide-step-number {
@@ -212,4 +222,9 @@
   line-height: 1.61;
   text-align: justify;
   color: #000000;
+}
+
+.guide-back-button:hover,
+.guide-video-play:hover {
+  opacity: 0.9;
 }

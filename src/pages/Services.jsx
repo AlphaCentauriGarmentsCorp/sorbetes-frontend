@@ -30,7 +30,7 @@ const serviceRows = [
   {
     title: 'Shirt + Print Packages',
     description:
-      'Bring your ideas to life with fully customized apparel tailored to your vision. From shirts to hoodies, we help you design and produce pieces that represent your brand or style.',
+      'Pair quality garments with reliable print execution in one streamlined package. This service is ideal for launches, brand drops, company apparel, and ready-to-sell merchandise.',
     reverse: true,
   },
   {
@@ -85,10 +85,10 @@ const whyChooseUs = [
 ]
 
 const trustedBrands = [
-  { src: kushLogo, alt: 'KUSH' },
-  { src: linyaLogo, alt: 'Linya Linya' },
-  { src: dailyGrindLogo, alt: 'Daily Grind' },
-  { src: teamMnlLogo, alt: 'Team MNL' },
+  { src: kushLogo, alt: 'KUSH brand logo' },
+  { src: linyaLogo, alt: 'Linya Linya brand logo' },
+  { src: dailyGrindLogo, alt: 'Daily Grind brand logo' },
+  { src: teamMnlLogo, alt: 'Team MNL brand logo' },
 ]
 
 function getServicesScale() {
@@ -113,6 +113,21 @@ function Services() {
     window.addEventListener('resize', handleResize)
 
     return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const section = params.get('section')
+
+    if (section !== 'portfolio') {
+      return
+    }
+
+    const id = window.requestAnimationFrame(() => {
+      document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+
+    return () => window.cancelAnimationFrame(id)
   }, [])
 
   const goToHome = () => {
@@ -178,7 +193,7 @@ function Services() {
               </div>
             </section>
 
-            <section className="services-what-we-do">
+            <section className="services-what-we-do" aria-label="What we do">
               <div className="services-section-heading">
                 <h2>What We Do</h2>
                 <p>We offer a complete suite of apparel production services to support brands at every stage:</p>
@@ -209,7 +224,7 @@ function Services() {
               </div>
             </section>
 
-            <section className="services-why">
+            <section className="services-why" aria-label="Why choose us">
               <div className="services-section-heading services-section-heading-tight">
                 <h2>Why Choose Us?</h2>
                 <p>Experience. Quality. Trust.</p>
@@ -235,7 +250,7 @@ function Services() {
               </div>
             </section>
 
-            <section id="portfolio" className="services-trusted">
+            <section id="portfolio" className="services-trusted" aria-label="Trusted by brands">
               <div className="services-trusted-header">
                 <h2 className="services-trusted-title">Trusted by Brands</h2>
                 <p className="services-trusted-subtitle">

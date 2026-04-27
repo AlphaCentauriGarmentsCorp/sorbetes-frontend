@@ -124,6 +124,10 @@
   flex: 0 0 auto;
 }
 
+.fabric-guide-step-copy-right {
+  text-align: right;
+}
+
 .fabric-guide-step-head {
   display: flex;
   flex-direction: column;
@@ -194,6 +198,13 @@
 .fabric-guide-step-placeholder span {
   opacity: 0;
   pointer-events: none;
+}
+
+.fabric-guide-step-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .fabric-guide-back-button:hover {
