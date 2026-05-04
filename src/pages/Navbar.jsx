@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import '../design/Navbar.css'
 
-function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
+function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = false }) {
   const [activeNav, setActiveNav] = useState(null)
   const [openDropdown, setOpenDropdown] = useState(null)
 
@@ -65,6 +65,13 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
     navigateTo('?page=fabric-print-guide')
   }
 
+  const goToFoundersClub = (event) => {
+    event.preventDefault()
+    setActiveNav('founders-club')
+    setOpenDropdown(null)
+    navigateTo('?page=founders-club')
+  }
+
   const toggleDropdown = (dropdownName) => {
     setOpenDropdown((current) => (current === dropdownName ? null : dropdownName))
   }
@@ -72,8 +79,8 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
   const navbar = (
     <header className="hp-header">
       <a className="hp-header-left" href="?page=home" onClick={goToHome} aria-label="Go to homepage">
-        <img className="hp-logo-circle" src={logoSrc} alt="" />
-        <span className="hp-brand">{brand}</span>
+        <img className={logoOnly ? 'hp-logo-circle hp-logo-founders' : 'hp-logo-circle'} src={logoSrc} alt="" />
+        {logoOnly ? null : <span className="hp-brand">{brand}</span>}
       </a>
 
       <nav className="hp-header-center" aria-label="Primary">
@@ -139,17 +146,10 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
 
         <a
           className={resolvedActiveNav === 'founders-club' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
-          href="#founders-club"
-          onClick={() => setActiveNav('founders-club')}
+          href="?page=founders-club"
+          onClick={goToFoundersClub}
         >
           Founder&apos;s Club
-        </a>
-        <a
-          className={resolvedActiveNav === 'reviews' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
-          href="#reviews"
-          onClick={() => setActiveNav('reviews')}
-        >
-          Reviews
         </a>
         <a
           className={resolvedActiveNav === 'get-in-touch' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}

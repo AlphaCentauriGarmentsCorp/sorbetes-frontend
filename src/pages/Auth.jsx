@@ -5,7 +5,7 @@ import '../design/Register.css'
 import '../design/Auth.css'
 
 function Auth() {
-  const [isSignUp, setIsSignUp] = useState(false)
+  const [isSignUp, setIsSignUp] = useState(() => new URLSearchParams(window.location.search).get('mode') === 'signup')
   const [returnPhase, setReturnPhase] = useState('idle') // 'idle' | 'off'
   const [loginShowPassword, setLoginShowPassword] = useState(false)
   const [registerShowPassword, setRegisterShowPassword] = useState(false)
