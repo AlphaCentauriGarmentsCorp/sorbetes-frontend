@@ -1,77 +1,45 @@
-import '../design/Footer.css'
+import "../design/Footer.css";
 
 function Footer({ logoSrc }) {
   return (
-    <footer className="hp-footer" aria-label="Footer">
-      <div className="hp-footer-divider" aria-hidden="true" />
-
-      <div className="hp-footer-brand">
-        <div className="hp-footer-brand-row">
-          <img className="hp-footer-logo" src={logoSrc} alt="" />
-          <div className="hp-footer-brand-text">SORBETES</div>
+    <footer className="hp-footer">
+      <div className="hp-footer-container">
+        <div className="hp-footer-brand">
+          <div className="hp-footer-brand-row">
+            <img className="hp-footer-logo" src={logoSrc} alt="Sorbetes Logo" />
+            <span className="hp-footer-brand-text">SORBETES</span>
+          </div>
+          <p className="hp-footer-location">Quezon City, Philippines</p>
         </div>
-        <div className="hp-footer-location">Quezon City, Philippines</div>
-      </div>
 
-      <div className="hp-footer-contact">
-        <div className="hp-footer-heading">Contact us</div>
-        <div className="hp-footer-item">117 Mother Ignacia Ave., Quezon City, Philippines</div>
-        <div className="hp-footer-item">sales@alphacentauri.ph</div>
-        <div className="hp-footer-item">0961 442 7409</div>
-      </div>
-
-      <div className="hp-footer-hours">
-        <div className="hp-footer-heading">Business Hours</div>
-        <div className="hp-footer-item">Mon-Sat: 9:00AM-5:00PM</div>
-        <div className="hp-footer-item">Sunday: Closed</div>
-      </div>
-
-      <div className="hp-footer-follow">
-        <div className="hp-footer-heading">Follow us</div>
-        <div className="hp-footer-social-row" aria-label="Social links">
-          <a
-            className="hp-footer-social hp-footer-social-facebook"
-            href="https://www.facebook.com/SorbetesApparel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Facebook"
-          />
-          <a
-            className="hp-footer-social hp-footer-social-instagram"
-            href="https://www.instagram.com/sorbetesapparelstudio/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Instagram"
-          />
-          <a
-            className="hp-footer-social hp-footer-social-tiktok"
-            href="https://www.tiktok.com/@sorbetesapparelstudio.ph"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="TikTok"
-          />
+        <div className="hp-footer-section">
+          <h3 className="hp-footer-heading">Contact us</h3>
+          <p>117 Mother Ignacia Ave., Quezon City, Philippines</p>
+          <p>sales@alphacentauri.ph</p>
+          <p>0961 442 7409</p>
         </div>
+
+        <div className="hp-footer-section">
+          <h3 className="hp-footer-heading">Business Hours</h3>
+          <p>Mon-Sat: 9:00AM-5:00PM</p>
+          <p>Sunday: Closed</p>
+        </div>
+
+     
       </div>
 
-      <div className="hp-footer-copy">
-        <span className="hp-footer-copy-text">2002-2025 Sorbetes. All rights reserved.</span>
-      </div>
+      <div className="hp-footer-divider"></div>
 
-      <div className="hp-footer-privacy" aria-label="Privacy and Terms">
-        <a className="hp-footer-privacy-link" href="#">
-          Privacy Policy
-        </a>
-        <span className="hp-footer-privacy-sep" aria-hidden="true">
-          {' '}
-          &amp;{' '}
-        </span>
-        <a className="hp-footer-privacy-link" href="#">
-          Terms and Conditions
-        </a>
+      <div className="hp-footer-bottom">
+        <p>2002-2025 Sorbetes. All rights reserved.</p>
+        <div>
+          <a href="#">Privacy Policy</a>
+          <span> & </span>
+          <a href="#">Terms and Conditions</a>
+        </div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default Footer
-
+export default Footer;
