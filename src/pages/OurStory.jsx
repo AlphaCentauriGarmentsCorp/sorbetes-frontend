@@ -175,11 +175,13 @@ function OurStory() {
               </div>
             </section>
 
-            <Footer logoSrc={wLogo} />
           </div>
         </div>
       </div>
+      <Footer logoSrc={wLogo} />
+
     </div>
+
   )
 }
 

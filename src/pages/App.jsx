@@ -9,6 +9,8 @@ import FabricPrintGuide from './FabricPrintGuide.jsx'
 import Portfolio from './Portfolio.jsx'
 import PortfolioArchive from './PortfolioArchive.jsx'
 import PortfolioExpanded from './PortfolioExpanded.jsx'
+import GuidedWalkthrough from './GuidedWalkthrough.jsx'
+import Pricing from './Pricing.jsx'
 import FoundersClub from './FoundersClub.jsx'
 import FoundersClubGuide from './FoundersClubGuide.jsx'
 import '../design/index.css'
@@ -17,13 +19,11 @@ function getCurrentPage() {
   return new URLSearchParams(window.location.search).get('page')
 }
 
-function App() {
+export default function App() {
   const [page, setPage] = useState(() => getCurrentPage())
 
   useEffect(() => {
-    const syncPage = () => {
-      setPage(getCurrentPage())
-    }
+    const syncPage = () => setPage(getCurrentPage())
 
     window.addEventListener('popstate', syncPage)
     window.addEventListener('cursor:navigate', syncPage)
@@ -35,7 +35,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
   }, [page])
@@ -50,10 +50,9 @@ function App() {
   if (page === 'portfolio') return <Portfolio />
   if (page === 'portfolio-archive') return <PortfolioArchive />
   if (page === 'portfolio-expanded') return <PortfolioExpanded />
+  if (page === 'walkthrough') return <GuidedWalkthrough />
+  if (page === 'pricing') return <Pricing />
   if (page === 'founders-club') return <FoundersClub />
   if (page === 'founders-club-guide') return <FoundersClubGuide />
-
   return <Homepage />
 }
-
-export default App

@@ -2,179 +2,180 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import '../design/Navbar.css'
 
+const NAV_ITEMS = [
+  { key: 'our-story', label: 'Our Story', page: 'our-story' },
+  {
+    key: 'services',
+    label: 'Services',
+    dropdown: [
+      { label: 'Our Services', page: 'services' },
+      { label: 'Portfolio', page: 'portfolio' },
+    ],
+  },
+  {
+    key: 'guide',
+    label: 'Guide',
+    dropdown: [
+      { label: 'How to Order', page: 'guide' },
+      { label: 'Fabric Print Guide', page: 'fabric-print-guide' },
+    ],
+  },
+  { key: 'founders-club', label: "Founder's Club", page: 'founders-club' },
+  { key: 'reviews', label: 'Reviews', hash: '#reviews' },
+  { key: 'get-in-touch', label: 'Get in Touch', hash: '#get-in-touch' },
+]
+
 function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = false }) {
   const [activeNav, setActiveNav] = useState(null)
   const [openDropdown, setOpenDropdown] = useState(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileDropdown, setMobileDropdown] = useState(null)
 
-  const resolvedActiveNav = activeNav ?? currentPage
+  const resolved = activeNav ?? currentPage
 
-  const navigateTo = (search, { replace = false } = {}) => {
-    if (replace) {
-      window.history.replaceState({}, '', search)
-    } else {
-      window.history.pushState({}, '', search)
-    }
-
+  const navigate = (path) => {
+    window.history.pushState({}, '', path)
     window.dispatchEvent(new Event('cursor:navigate'))
   }
 
-  const goToHome = (event) => {
-    event.preventDefault()
-    setActiveNav('home')
+  const handleNavClick = (e, key, page, hash) => {
+    e.preventDefault()
+    setActiveNav(key)
     setOpenDropdown(null)
-    navigateTo('?page=home')
+    setMobileOpen(false)
+    setMobileDropdown(null)
+    if (page) navigate(`?page=${page}`)
+    else if (hash) window.location.hash = hash
   }
 
-  const goToAuth = () => {
+  const handleDropdownItem = (e, key, page) => {
+    e.preventDefault()
+    setActiveNav(key)
     setOpenDropdown(null)
-    navigateTo('?page=auth')
-  }
-
-  const goToOurStory = (event) => {
-    event.preventDefault()
-    setActiveNav('our-story')
-    setOpenDropdown(null)
-    navigateTo('?page=our-story')
-  }
-
-  const goToServices = (event) => {
-    event.preventDefault()
-    setActiveNav('services')
-    setOpenDropdown(null)
-    navigateTo('?page=services')
-  }
-
-  const goToPortfolio = (event) => {
-    event.preventDefault()
-    setActiveNav('services')
-    setOpenDropdown(null)
-    navigateTo('?page=portfolio')
-  }
-
-  const goToGuide = (event) => {
-    event.preventDefault()
-    setActiveNav('guide')
-    setOpenDropdown(null)
-    navigateTo('?page=guide')
-  }
-
-  const goToFabricPrintGuide = (event) => {
-    event.preventDefault()
-    setActiveNav('guide')
-    setOpenDropdown(null)
-    navigateTo('?page=fabric-print-guide')
-  }
-
-  const goToFoundersClub = (event) => {
-    event.preventDefault()
-    setActiveNav('founders-club')
-    setOpenDropdown(null)
-    navigateTo('?page=founders-club')
-  }
-
-  const toggleDropdown = (dropdownName) => {
-    setOpenDropdown((current) => (current === dropdownName ? null : dropdownName))
+    setMobileOpen(false)
+    setMobileDropdown(null)
+    navigate(`?page=${page}`)
   }
 
   const navbar = (
-    <header className="hp-header">
-      <a className="hp-header-left" href="?page=home" onClick={goToHome} aria-label="Go to homepage">
-        <img className={logoOnly ? 'hp-logo-circle hp-logo-founders' : 'hp-logo-circle'} src={logoSrc} alt="" />
-        {logoOnly ? null : <span className="hp-brand">{brand}</span>}
+    <header className="nb-header">
+      <a className="nb-brand" href="?page=home" onClick={(e) => handleNavClick(e, 'home', 'home')} aria-label="Go to homepage">
+        <img className={`nb-logo${logoOnly ? ' nb-logo-founders' : ''}`} src={logoSrc} alt="" />
+        {!logoOnly && <span className="nb-brand-name">{brand}</span>}
       </a>
 
-      <nav className="hp-header-center" aria-label="Primary">
-        <a
-          className={resolvedActiveNav === 'our-story' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
-          href="?page=our-story"
-          onClick={goToOurStory}
-        >
-          Our Story
-        </a>
-
-        <div className={openDropdown === 'services' ? 'hp-nav-dropdown hp-nav-dropdown-open' : 'hp-nav-dropdown'}>
-          <button
-            type="button"
-            className={
-              resolvedActiveNav === 'services'
-                ? 'hp-nav-link hp-nav-button hp-nav-selected'
-                : 'hp-nav-link hp-nav-button'
-            }
-            aria-expanded={openDropdown === 'services'}
-            aria-haspopup="menu"
-            onClick={() => toggleDropdown('services')}
-          >
-            Services <span className="hp-nav-caret" aria-hidden="true" />
-          </button>
-
-          <div className="hp-nav-dropdown-menu" aria-label="Services menu">
-            <a className="hp-nav-dropdown-link hp-nav-dropdown-link-active" href="?page=services" onClick={goToServices}>
-              Our Services
-            </a>
-            <a className="hp-nav-dropdown-link" href="?page=portfolio" onClick={goToPortfolio}>
-              Portfolio
-            </a>
-          </div>
-        </div>
-
-        <div className={openDropdown === 'guide' ? 'hp-nav-dropdown hp-nav-dropdown-open' : 'hp-nav-dropdown'}>
-          <button
-            type="button"
-            className={
-              resolvedActiveNav === 'guide' ? 'hp-nav-link hp-nav-button hp-nav-selected' : 'hp-nav-link hp-nav-button'
-            }
-            aria-expanded={openDropdown === 'guide'}
-            aria-haspopup="menu"
-            onClick={() => toggleDropdown('guide')}
-          >
-            Guide <span className="hp-nav-caret" aria-hidden="true" />
-          </button>
-
-          <div className="hp-nav-dropdown-menu" aria-label="Guide menu">
-            <a className="hp-nav-dropdown-link hp-nav-dropdown-link-active" href="?page=guide" onClick={goToGuide}>
-              How to Order
-            </a>
-            <a
-              className="hp-nav-dropdown-link"
-              href="?page=fabric-print-guide"
-              onClick={goToFabricPrintGuide}
+      <nav className="nb-nav" aria-label="Primary">
+        {NAV_ITEMS.map(({ key, label, page, hash, dropdown }) =>
+          dropdown ? (
+            <div
+              key={key}
+              className={`nb-dropdown${openDropdown === key ? ' nb-dropdown-open' : ''}`}
+              onMouseLeave={() => setOpenDropdown(null)}
             >
-              Fabric Print Guide
+              <button
+                type="button"
+                className={`nb-link nb-link-btn${resolved === key ? ' nb-link-active' : ''}`}
+                aria-expanded={openDropdown === key}
+                aria-haspopup="menu"
+                onMouseEnter={() => setOpenDropdown(key)}
+                onClick={() => setOpenDropdown(p => p === key ? null : key)}
+              >
+                {label} <span className="nb-caret" aria-hidden="true" />
+              </button>
+              <div className="nb-dropdown-menu" role="menu">
+                {dropdown.map((item) => (
+                  <a
+                    key={item.page}
+                    className="nb-dropdown-item"
+                    href={`?page=${item.page}`}
+                    role="menuitem"
+                    onClick={(e) => handleDropdownItem(e, key, item.page)}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              key={key}
+              className={`nb-link${resolved === key ? ' nb-link-active' : ''}`}
+              href={page ? `?page=${page}` : hash}
+              onClick={(e) => handleNavClick(e, key, page, hash)}
+            >
+              {label}
             </a>
-          </div>
-        </div>
-
-        <a
-          className={resolvedActiveNav === 'founders-club' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
-          href="?page=founders-club"
-          onClick={goToFoundersClub}
-        >
-          Founder&apos;s Club
-        </a>
-        <a
-          className={resolvedActiveNav === 'get-in-touch' ? 'hp-nav-link hp-nav-selected' : 'hp-nav-link'}
-          href="#get-in-touch"
-          onClick={() => setActiveNav('get-in-touch')}
-        >
-          Get in Touch
-        </a>
+          )
+        )}
       </nav>
 
-      <div className="hp-header-right">
-        <button type="button" className="hp-login-btn" onClick={goToAuth}>
+      <div className="nb-actions">
+        <button type="button" className="nb-btn nb-btn-dark" onClick={() => { setMobileOpen(false); navigate('?page=auth') }}>
           Log in
         </button>
-        <button type="button" className="hp-pricing-btn">
+        <button type="button" className="nb-btn nb-btn-outline"  onClick={() => { setMobileOpen(false); navigate('?page=pricing') }} >
           Pricing
         </button>
       </div>
+
+      <button
+        type="button"
+        className={`nb-hamburger${mobileOpen ? ' nb-hamburger-open' : ''}`}
+        aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={mobileOpen}
+        onClick={() => setMobileOpen(p => !p)}
+      >
+        <span /><span /><span />
+      </button>
+
+      {mobileOpen && (
+        <div className="nb-mobile-menu" role="dialog" aria-label="Mobile navigation">
+          {NAV_ITEMS.map(({ key, label, page, hash, dropdown }) =>
+            dropdown ? (
+              <div key={key} className="nb-mobile-group">
+                <button
+                  type="button"
+                  className={`nb-mobile-link nb-mobile-link-btn${mobileDropdown === key ? ' nb-mobile-link-expanded' : ''}`}
+                  onClick={() => setMobileDropdown(p => p === key ? null : key)}
+                >
+                  {label} <span className="nb-caret" aria-hidden="true" />
+                </button>
+                {mobileDropdown === key && (
+                  <div className="nb-mobile-submenu">
+                    {dropdown.map((item) => (
+                      <a
+                        key={item.page}
+                        className="nb-mobile-sublink"
+                        href={`?page=${item.page}`}
+                        onClick={(e) => handleDropdownItem(e, key, item.page)}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <a
+                key={key}
+                className={`nb-mobile-link${resolved === key ? ' nb-mobile-link-active' : ''}`}
+                href={page ? `?page=${page}` : hash}
+                onClick={(e) => handleNavClick(e, key, page, hash)}
+              >
+                {label}
+              </a>
+            )
+          )}
+          <div className="nb-mobile-actions">
+            <button type="button" className="nb-btn nb-btn-dark" onClick={() => { setMobileOpen(false); navigate('?page=auth') }}>Log in</button>
+            <button type="button" className="nb-btn nb-btn-outline"  onClick={() => { setMobileOpen(false); navigate('?page=pricing') }} >Pricing</button>
+          </div>
+        </div>
+      )}
     </header>
   )
 
-  if (typeof document === 'undefined') {
-    return navbar
-  }
-
+  if (typeof document === 'undefined') return navbar
   return createPortal(navbar, document.body)
 }
 

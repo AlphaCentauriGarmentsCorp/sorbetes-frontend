@@ -1,0 +1,206 @@
+.PR-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  font-family: Inter, sans-serif;
+}
+
+.PR-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 120px 20px 80px;
+}
+
+.PR-content {
+  max-width: 1100px;
+  width: 100%;
+  text-align: center;
+}
+
+.PR-header {
+  position: relative;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.PR-back {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.PR-logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #222;
+  display: block;
+  margin: auto;
+}
+
+.PR-guide {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  text-decoration: underline;
+  color: #888;
+}
+
+.PR-title {
+  font-size: 58px;
+  font-weight: 800;
+}
+
+.PR-subtitle {
+  color: #777;
+  margin-top: 10px;
+}
+
+.PR-cards {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.PR-card {
+  width: 380px;
+  padding: 45px;
+  border: 1px solid #eee;
+  border-radius: 22px;
+  background: #fff;
+}
+
+.PR-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.PR-btn {
+  width: 100%;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.PR-outline {
+  margin-top: 50px;
+  padding: 12px 40px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.PR-play {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PR-info {
+  margin-top: 25px;
+  font-size: 12px;
+  color: #a8842a;
+  background: #fff7df;
+  padding: 10px 18px;
+  border-radius: 999px;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.PR-i {
+  width: 16px;
+  height: 16px;
+  background: #a8842a;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+}
+
+.PR-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.PR-box {
+  width: 85%;
+  max-width: 900px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+}
+
+.PR-placeholder {
+  height: 500px;
+  background: linear-gradient(135deg, #111, #333);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.PR-center {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.PR-controls {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.PR-controls button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}

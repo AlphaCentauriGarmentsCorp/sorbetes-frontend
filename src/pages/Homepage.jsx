@@ -1,4 +1,5 @@
 import '../design/Homepage.css'
+
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import hero1 from '../assets/Hero 1.jpg'
 import hero2 from '../assets/Hero 2.jpg'
@@ -17,6 +18,11 @@ import foundersClubRevel from '../assets/REVEL.jpg'
 import foundersClubSenoritos from '../assets/Senoritos.jpg'
 import foundersClubStayHungry from '../assets/Stay Hungry.jpg'
 import foundersClubVariant5 from '../assets/Variant5.jpg'
+import serviceImg1 from '../assets/OurServices/Clothing Production.jpg'
+import serviceImg2 from '../assets/OurServices/Print Packages.jpg'
+import serviceImg3 from '../assets/OurServices/Printing Services.jpg'
+import serviceImg4 from '../assets/OurServices/Garment Making.jpg'
+import serviceImg5 from '../assets/OurServices/Ready-Made Items.jpg'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import { useEffect, useState } from 'react'
@@ -24,499 +30,284 @@ import { FaAward, FaLocationDot, FaPen, FaStar, FaUserGroup, FaUsers } from 'rea
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
 import { MdHandshake } from 'react-icons/md'
 
-const HOMEPAGE_BASE_WIDTH = 1920
-const HOMEPAGE_BASE_HEIGHT = 9800
+const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7]
 
-function getHomepageScale() {
-  if (typeof window === 'undefined') {
-    return 1
-  }
+const testimonialImages = [
+  { src: foundersClubKush, alt: 'Founders Club testimonial for KUSH' },
+  { src: foundersClubRevel, alt: 'Founders Club testimonial for REVEL' },
+  { src: foundersClubSenoritos, alt: 'Founders Club testimonial for Senoritos' },
+  { src: foundersClubStayHungry, alt: 'Founders Club testimonial for Stay Hungry' },
+  { src: foundersClubVariant5, alt: 'Founders Club testimonial for Variant5' },
+]
 
-  return Math.min(Math.max((window.innerWidth - 24) / HOMEPAGE_BASE_WIDTH, 0.18), 1)
-}
+const trustedBrands = [
+  { src: kushLogo, alt: 'KUSH' },
+  { src: linyaLogo, alt: 'Linya Linya' },
+  { src: dailyGrindLogo, alt: 'Daily Grind' },
+  { src: teamMnlLogo, alt: 'Team MNL' },
+]
+
+const services = [
+  {
+    title: 'Custom Clothing Production',
+    text: "Bring your ideas to life with fully customized apparel tailored to your vision. From fabrics to finishes, we help you design and produce pieces that represent your brand's style.",
+    img: serviceImg1,
+    imgAlt: 'Custom clothing production',
+    layout: 'text-image',
+  },
+  {
+    title: 'Shirt + Print Packages',
+    text: 'Pair quality shirts with full customization and scaled production options. From style selection to print execution, we help you build ready-to-sell pieces for your brand or store.',
+    img: serviceImg2,
+    imgAlt: 'Shirt and print packages',
+    layout: 'image-text',
+  },
+  {
+    title: 'Printing Services',
+    text: 'We offer high-quality printing using durable ink and proven techniques like silkscreen printing, direct transfer, color details, and long-lasting prints on every garment.',
+    img: serviceImg3,
+    imgAlt: 'Printing services',
+    layout: 'text-image',
+  },
+  {
+    title: 'Cut & Sew Garment Making',
+    text: 'From fabric selection to final packaging, we handle the entire production process. This end-to-end service is ideal for brands looking for custom-made apparel from concept to completion.',
+    img: serviceImg4,
+    imgAlt: 'Cut and sew garment making',
+    layout: 'image-text',
+  },
+  {
+    title: 'Ready-Made Items',
+    text: 'Choose from our collection of ready-made apparel, including shirts, hoodies, jackets, socks, shorts, and more, ready to print, brand, and merchandize.',
+    img: serviceImg5,
+    imgAlt: 'Ready-made items',
+    layout: 'text-image',
+  },
+]
+
+const whyItems = [
+  { icon: <FaStar className="hp-why-icon-svg hp-why-icon-svg-star" />, title: 'Established Experience', text: 'Operating since 2002, we bring years of industry knowledge and hands-on expertise to every project.' },
+  { icon: <MdHandshake className="hp-why-icon-svg hp-why-icon-svg-handshake" />, title: 'Trusted by Brands', text: 'We have worked with respected local and national brands who continue to choose us for our reliability and results.' },
+  { icon: <FaAward className="hp-why-icon-svg hp-why-icon-svg-medal" />, title: 'Quality-Driven', text: 'Every project is handled with attention to detail and a commitment to high standards.' },
+  { icon: <FaLocationDot className="hp-why-icon-svg hp-why-icon-svg-ph" />, title: 'Local Expertise', text: 'Based in Quezon City, we understand the local market while delivering professional-level service.' },
+  { icon: <FaUsers className="hp-why-icon-svg hp-why-icon-svg-people" />, title: 'Client-Focused Approach', text: 'We value long-term partnerships and treat every project as a collaborative effort.' },
+]
+
+const socialLinks = [
+  { href: 'https://www.facebook.com/SorbetesApparel', label: 'Facebook', cls: 'facebook', icon: <FaFacebookF className="hp-follow-icon hp-follow-icon-facebook" /> },
+  { href: 'https://www.instagram.com/sorbetesapparelstudio/', label: 'Instagram', cls: 'instagram', icon: <FaInstagram className="hp-follow-icon hp-follow-icon-instagram" /> },
+  { href: 'https://www.tiktok.com/@sorbetesapparelstudio.ph', label: 'TikTok', cls: 'tiktok', icon: <FaTiktok className="hp-follow-icon hp-follow-icon-tiktok" /> },
+]
 
 function Homepage() {
   const [heroIndex, setHeroIndex] = useState(0)
   const [testimonialIndex, setTestimonialIndex] = useState(0)
   const [testimonialDirection, setTestimonialDirection] = useState('next')
-  const [pageScale, setPageScale] = useState(() => getHomepageScale())
-
-  const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7]
-  const testimonialImages = [
-    { src: foundersClubKush, alt: 'Founders Club testimonial for KUSH' },
-    { src: foundersClubRevel, alt: 'Founders Club testimonial for REVEL' },
-    { src: foundersClubSenoritos, alt: 'Founders Club testimonial for Senoritos' },
-    { src: foundersClubStayHungry, alt: 'Founders Club testimonial for Stay Hungry' },
-    { src: foundersClubVariant5, alt: 'Founders Club testimonial for Variant5' },
-  ]
-  const trustedBrands = [
-    { src: kushLogo, alt: 'KUSH' },
-    { src: linyaLogo, alt: 'Linya Linya' },
-    { src: dailyGrindLogo, alt: 'Daily Grind' },
-    { src: teamMnlLogo, alt: 'Team MNL' },
-  ]
 
   useEffect(() => {
-    const id = window.setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
-    }, 3000)
-
-    return () => window.clearInterval(id)
-  }, [heroImages.length])
-
-  useEffect(() => {
-    const handleResize = () => {
-      setPageScale(getHomepageScale())
-    }
-
-    handleResize()
-    window.addEventListener('resize', handleResize)
-
-    return () => window.removeEventListener('resize', handleResize)
+    const id = setInterval(() => setHeroIndex(p => (p + 1) % heroImages.length), 3000)
+    return () => clearInterval(id)
   }, [])
 
-  const showPreviousTestimonial = () => {
+  const prevTestimonial = () => {
     setTestimonialDirection('prev')
-    setTestimonialIndex((prev) => (prev - 1 + testimonialImages.length) % testimonialImages.length)
+    setTestimonialIndex(p => (p - 1 + testimonialImages.length) % testimonialImages.length)
   }
 
-  const showNextTestimonial = () => {
+  const nextTestimonial = () => {
     setTestimonialDirection('next')
-    setTestimonialIndex((prev) => (prev + 1) % testimonialImages.length)
+    setTestimonialIndex(p => (p + 1) % testimonialImages.length)
   }
 
   return (
-    <div className="homepage-shell">
-      <div
-        className="homepage-scale-frame"
-        style={{
-          width: `${HOMEPAGE_BASE_WIDTH * pageScale}px`,
-          height: `${HOMEPAGE_BASE_HEIGHT * pageScale}px`,
-        }}
-      >
-        <div className="homepage-scale-content" style={{ transform: `scale(${pageScale})` }}>
-          <div className="homepage-page">
-      {/* Decorative ellipses */}
-      <div className="hp-ellipse hp-ellipse-107" aria-hidden="true" />
-      <div className="hp-ellipse hp-ellipse-104" aria-hidden="true" />
-      <div className="hp-ellipse hp-ellipse-105" aria-hidden="true" />
-      <div className="hp-ellipse hp-ellipse-106" aria-hidden="true" />
+    <div className="hp-page">
+      <div className="hp-ellipse hp-ellipse-1" aria-hidden="true" />
+      <div className="hp-ellipse hp-ellipse-2" aria-hidden="true" />
+      <div className="hp-ellipse hp-ellipse-3" aria-hidden="true" />
+      <div className="hp-ellipse hp-ellipse-4" aria-hidden="true" />
 
       <Navbar logoSrc={logoCircleImg} currentPage="home" />
 
-      {/* Hero */}
-      <section className="hp-hero">
-        <div className="hp-hero-frame">
+      <section className="hp-hero" aria-label="Hero">
+        <div className="hp-hero-copy">
           <div className="hp-hero-coin-wrap">
             <img className="hp-hero-coin" src={wLogo} alt="" />
           </div>
-
-          <div className="hp-hero-copy">
-            <h1 className="hp-hero-title">Start your own</h1>
-            <h1 className="hp-hero-title hp-hero-title-2">Clothing Line</h1>
-            <p className="hp-hero-subtitle">
-              From concept to production, we help emerging and established brands turn apparel ideas into
-              thoughtfully crafted, market-ready collections that stand out.
-            </p>
-
-            <div className="hp-hero-cta-row">
-              <button type="button" className="hp-cta hp-cta-primary">
-                EXPLORE MORE
-              </button>
-              <button type="button" className="hp-cta hp-cta-outline">
-                AVAIL NOW
-              </button>
+          <h1 className="hp-hero-title">Start your own</h1>
+          <h1 className="hp-hero-title hp-hero-title-bold">Clothing Line</h1>
+          <p className="hp-hero-subtitle">
+            From concept to production, we help emerging and established brands turn apparel ideas into
+            thoughtfully crafted, market-ready collections that stand out.
+          </p>
+          <div className="hp-hero-cta-row">
+            <button type="button" className="hp-btn hp-btn-primary">EXPLORE MORE</button>
+            <button type="button" className="hp-btn hp-btn-outline">AVAIL NOW</button>
+          </div>
+          <div className="hp-hero-divider" aria-hidden="true" />
+          <div className="hp-hero-stats">
+            <div className="hp-hero-stat">
+              <span className="hp-hero-stat-icon hp-hero-stat-icon-medal" aria-hidden="true" />
+              <span>20+ Years of Experience</span>
             </div>
-
-            <div className="hp-hero-divider" aria-hidden="true" />
-
-            <div className="hp-hero-stats" aria-label="Highlights">
-              <div className="hp-hero-stat">
-                <span className="hp-hero-stat-icon hp-hero-stat-icon-medal" aria-hidden="true" />
-                <span className="hp-hero-stat-text">20+ Years of Experience</span>
-              </div>
-              <div className="hp-hero-stat">
-                <span className="hp-hero-stat-icon hp-hero-stat-icon-shirt" aria-hidden="true" />
-                <span className="hp-hero-stat-text">500+ Brands Served</span>
-              </div>
-              <div className="hp-hero-stat">
-                <span className="hp-hero-stat-icon hp-hero-stat-icon-star" aria-hidden="true" />
-                <span className="hp-hero-stat-text">Premium Quality Production</span>
-              </div>
+            <div className="hp-hero-stat">
+              <span className="hp-hero-stat-icon hp-hero-stat-icon-shirt" aria-hidden="true" />
+              <span>500+ Brands Served</span>
+            </div>
+            <div className="hp-hero-stat">
+              <span className="hp-hero-stat-icon hp-hero-stat-icon-star" aria-hidden="true" />
+              <span>Premium Quality Production</span>
             </div>
           </div>
         </div>
 
-        <div className="hp-hero-image-wrap">
+        <div className="hp-hero-media">
           <div className="hp-hero-stack hp-hero-stack-1" aria-hidden="true" />
           <div className="hp-hero-stack hp-hero-stack-2" aria-hidden="true" />
           <div className="hp-hero-stack hp-hero-stack-3" aria-hidden="true" />
-
           <img key={heroIndex} className="hp-hero-image" src={heroImages[heroIndex]} alt={`Hero ${heroIndex + 1}`} />
           <div className="hp-hero-image-shadow" aria-hidden="true" />
-
-          <div className="hp-hero-vertical-dots" role="tablist" aria-label="Hero images">
-            {heroImages.map((_, idx) => (
+          <div className="hp-hero-dots" role="tablist" aria-label="Hero images">
+            {heroImages.map((_, i) => (
               <button
-                key={idx}
+                key={i}
                 type="button"
-                className={idx === heroIndex ? 'hp-dot hp-dot-active' : 'hp-dot'}
-                aria-label={`Show hero ${idx + 1}`}
-                aria-selected={idx === heroIndex}
-                onClick={() => setHeroIndex(idx)}
+                className={`hp-dot${i === heroIndex ? ' hp-dot-active' : ''}`}
+                aria-label={`Show hero ${i + 1}`}
+                aria-selected={i === heroIndex}
+                onClick={() => setHeroIndex(i)}
               />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonial / Founders Club (Group 831) */}
       <section className="hp-testimonial" aria-label="Client testimonial">
         <img
           key={`${testimonialDirection}-${testimonialIndex}`}
-          className={
-            testimonialDirection === 'prev'
-              ? 'hp-t-slide-image hp-t-slide-image-prev'
-              : 'hp-t-slide-image hp-t-slide-image-next'
-          }
+          className={`hp-t-image hp-t-image-${testimonialDirection}`}
           src={testimonialImages[testimonialIndex].src}
           alt={testimonialImages[testimonialIndex].alt}
         />
-
-        <button
-          type="button"
-          className="hp-t-nav hp-t-nav-prev"
-          aria-label="Previous testimonial"
-          onClick={showPreviousTestimonial}
-        >
+        <button type="button" className="hp-t-nav hp-t-nav-prev" aria-label="Previous testimonial" onClick={prevTestimonial}>
           <span className="hp-t-nav-icon" aria-hidden="true" />
         </button>
-        <button
-          type="button"
-          className="hp-t-nav hp-t-nav-next"
-          aria-label="Next testimonial"
-          onClick={showNextTestimonial}
-        >
+        <button type="button" className="hp-t-nav hp-t-nav-next" aria-label="Next testimonial" onClick={nextTestimonial}>
           <span className="hp-t-nav-icon" aria-hidden="true" />
         </button>
       </section>
 
-      {/* Services showcase */}
-      <section className="hp-services-showcase" aria-label="Our services">
-        <div className="hp-services-showcase-header">
-          <div className="hp-services-top-line" />
-          <h2 className="hp-services-title">OUR SERVICES</h2>
+      <section className="hp-services" aria-label="Our services">
+        <div className="hp-section-label">
+          <div className="hp-label-line" />
+          <span className="hp-label-text">OUR SERVICES</span>
         </div>
-
-        <div className="hp-services-showcase-intro">
-          <h3 className="hp-services-heading">Concept to Production</h3>
-          <p className="hp-services-intro-copy">
+        <div className="hp-services-intro">
+          <h2 className="hp-section-heading">Concept to Production</h2>
+          <p className="hp-section-copy">
             Everything you need to bring your apparel ideas to life, thoughtfully crafted through expert production,
             precision detailing, and a seamless end-to-end process.
           </p>
         </div>
-
         <div className="hp-services-list">
-          <article className="hp-service-row hp-service-row-right">
-            <div className="hp-service-copy">
-              <h4 className="hp-service-title">Custom Clothing Production</h4>
-              <p className="hp-service-text">
-                Bring your ideas to life with fully customized apparel tailored to your vision. From fabrics to
-                finishes, we help you design and produce pieces that represent your brand&apos;s style.
-              </p>
-            </div>
-            <div className="hp-service-media hp-service-placeholder">
-              <div className="hp-service-watch">
-                <span className="hp-service-watch-icon" aria-hidden="true" />
-                <span className="hp-service-watch-text">Watch Video</span>
+          {services.map(({ title, text, img, imgAlt, layout }) => (
+            <article key={title} className={`hp-service-row hp-service-row-${layout}`}>
+              <div className="hp-service-copy">
+                <h3 className="hp-service-title">{title}</h3>
+                <p className="hp-service-text">{text}</p>
               </div>
-              <span className="hp-service-placeholder-label">Image Placeholder</span>
-            </div>
-          </article>
-
-          <article className="hp-service-row hp-service-row-left">
-            <div className="hp-service-media hp-service-placeholder">
-              <div className="hp-service-watch">
-                <span className="hp-service-watch-icon" aria-hidden="true" />
-                <span className="hp-service-watch-text">Watch Video</span>
+              <div className="hp-service-media">
+                <img className="hp-service-img" src={img} alt={imgAlt} />
               </div>
-              <span className="hp-service-placeholder-label">Image Placeholder</span>
-            </div>
-            <div className="hp-service-copy hp-service-copy-right">
-              <h4 className="hp-service-title">Shirt + Print Packages</h4>
-              <p className="hp-service-text">
-                Pair quality shirts with full customization and scaled production options. From style selection to
-                print execution, we help you build ready-to-sell pieces for your brand or store.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-service-row hp-service-row-right">
-            <div className="hp-service-copy">
-              <h4 className="hp-service-title">Printing Services</h4>
-              <p className="hp-service-text">
-                We offer high-quality printing using durable ink and proven techniques like silkscreen printing, direct
-                transfer, color details, and long-lasting prints on every garment.
-              </p>
-            </div>
-            <div className="hp-service-media hp-service-placeholder">
-              <div className="hp-service-watch">
-                <span className="hp-service-watch-icon" aria-hidden="true" />
-                <span className="hp-service-watch-text">Watch Video</span>
-              </div>
-              <span className="hp-service-placeholder-label">Image Placeholder</span>
-            </div>
-          </article>
-
-          <article className="hp-service-row hp-service-row-left">
-            <div className="hp-service-media hp-service-placeholder">
-              <div className="hp-service-watch">
-                <span className="hp-service-watch-icon" aria-hidden="true" />
-                <span className="hp-service-watch-text">Watch Video</span>
-              </div>
-              <span className="hp-service-placeholder-label">Image Placeholder</span>
-            </div>
-            <div className="hp-service-copy hp-service-copy-right">
-              <h4 className="hp-service-title">Cut &amp; Sew Garment Making</h4>
-              <p className="hp-service-text">
-                From fabric selection to final packaging, we handle the entire production process. This end-to-end
-                service is ideal for brands looking for custom-made apparel from concept to completion.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-service-row hp-service-row-right">
-            <div className="hp-service-copy">
-              <h4 className="hp-service-title">Ready-Made Items</h4>
-              <p className="hp-service-text">
-                Choose from our collection of ready-made apparel, including shirts, hoodies, jackets, socks, shorts,
-                and more, ready to print, brand, and merchandize.
-              </p>
-            </div>
-            <div className="hp-service-media hp-service-placeholder">
-              <div className="hp-service-watch">
-                <span className="hp-service-watch-icon" aria-hidden="true" />
-                <span className="hp-service-watch-text">Watch Video</span>
-              </div>
-              <span className="hp-service-placeholder-label">Image Placeholder</span>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
-
-        <button type="button" className="hp-services-avail-button">
-          AVAIL NOW
-        </button>
+        <button type="button" className="hp-btn hp-btn-primary hp-services-avail">AVAIL NOW</button>
       </section>
 
-      {/* Why Choose Us */}
       <section className="hp-why" aria-label="Why choose us">
-        <div className="hp-why-header">
-          <div className="hp-why-about-row">
-          <div className="hp-services-top-line" />
-          <h2 className="hp-services-title">ABOUT US</h2>
-          </div>
-
-          <div className="hp-why-header-row">
-            <h3 className="hp-why-title">Why Choose us?</h3>
-            <p className="hp-why-subtitle">
-              Decades of experience, uncompromising quality, and trust you can rely on, crafted to deliver exceptional
-              results you can be proud of.
-            </p>
-          </div>
+        <div className="hp-section-label">
+          <div className="hp-label-line" />
+          <span className="hp-label-text">ABOUT US</span>
         </div>
-
+        <div className="hp-why-header">
+          <h2 className="hp-section-heading">Why Choose us?</h2>
+          <p className="hp-section-copy">
+            Decades of experience, uncompromising quality, and trust you can rely on, crafted to deliver exceptional
+            results you can be proud of.
+          </p>
+        </div>
         <div className="hp-why-list">
-          <article className="hp-why-item">
-            <div className="hp-why-left-card">
-              <div className="hp-why-left-inner">
-                <span className="hp-why-icon hp-why-icon-star" aria-hidden="true">
-                  <FaStar className="hp-why-icon-svg hp-why-icon-svg-star" />
-                </span>
-                <h4 className="hp-why-item-title">Established Experience</h4>
+          {whyItems.map(({ icon, title, text }) => (
+            <article key={title} className="hp-why-item">
+              <div className="hp-why-left">
+                <span className="hp-why-icon" aria-hidden="true">{icon}</span>
+                <h3 className="hp-why-item-title">{title}</h3>
               </div>
-            </div>
-            <div className="hp-why-right-card">
-              <p className="hp-why-item-text">
-                Operating since 2002, we bring years of industry knowledge and hands-on expertise to every project.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-why-item">
-            <div className="hp-why-left-card">
-              <div className="hp-why-left-inner">
-                <span className="hp-why-icon hp-why-icon-handshake" aria-hidden="true">
-                  <MdHandshake className="hp-why-icon-svg hp-why-icon-svg-handshake" />
-                </span>
-                <h4 className="hp-why-item-title">Trusted by Brands</h4>
+              <div className="hp-why-right">
+                <p className="hp-why-item-text">{text}</p>
               </div>
-            </div>
-            <div className="hp-why-right-card">
-              <p className="hp-why-item-text hp-why-item-text-double">
-                We have worked with respected local and national brands who continue to choose us for our reliability
-                and results.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-why-item">
-            <div className="hp-why-left-card">
-              <div className="hp-why-left-inner">
-                <span className="hp-why-icon hp-why-icon-medal" aria-hidden="true">
-                  <FaAward className="hp-why-icon-svg hp-why-icon-svg-medal" />
-                </span>
-                <h4 className="hp-why-item-title">Quality-Driven</h4>
-              </div>
-            </div>
-            <div className="hp-why-right-card">
-              <p className="hp-why-item-text">
-                Every project is handled with attention to detail and a commitment to high standards.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-why-item">
-            <div className="hp-why-left-card">
-              <div className="hp-why-left-inner">
-                <span className="hp-why-icon hp-why-icon-ph" aria-hidden="true">
-                  <FaLocationDot className="hp-why-icon-svg hp-why-icon-svg-ph" />
-                </span>
-                <h4 className="hp-why-item-title">Local Expertise</h4>
-              </div>
-            </div>
-            <div className="hp-why-right-card">
-              <p className="hp-why-item-text">
-                Based in Quezon City, we understand the local market while delivering professional-level service.
-              </p>
-            </div>
-          </article>
-
-          <article className="hp-why-item">
-            <div className="hp-why-left-card">
-              <div className="hp-why-left-inner">
-                <span className="hp-why-icon hp-why-icon-people" aria-hidden="true">
-                  <FaUsers className="hp-why-icon-svg hp-why-icon-svg-people" />
-                </span>
-                <h4 className="hp-why-item-title">Client-Focused Approach</h4>
-              </div>
-            </div>
-            <div className="hp-why-right-card">
-              <p className="hp-why-item-text">
-                We value long-term partnerships and treat every project as a collaborative effort.
-              </p>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* Request a Quote */}
       <section className="hp-quote" aria-label="Request a quote">
         <div className="hp-quote-header">
-          <h3 className="hp-quote-title">Let&apos;s bring your projects to life</h3>
+          <h2 className="hp-quote-title">Let&apos;s bring your projects to life</h2>
           <p className="hp-quote-subtitle">Receive a detailed quote with no commitment.</p>
         </div>
-
         <div className="hp-quote-options">
           <article className="hp-quote-card">
-            <div className="hp-quote-card-inner">
-              <div className="hp-quote-icon-wrap" aria-hidden="true">
-                <FaUserGroup className="hp-quote-icon" />
-              </div>
-              <h4 className="hp-quote-card-title">Guided Walkthrough</h4>
-              <p className="hp-quote-card-text">
-                Follow our guided walkthrough to help you choose the right options step by step.
-              </p>
-            </div>
+            <div className="hp-quote-icon-wrap"><FaUserGroup className="hp-quote-icon" /></div>
+            <h3 className="hp-quote-card-title">Guided Walkthrough</h3>
+            <p className="hp-quote-card-text">Follow our guided walkthrough to help you choose the right options step by step.</p>
           </article>
-
           <article className="hp-quote-card">
-            <div className="hp-quote-card-inner">
-              <div className="hp-quote-icon-wrap" aria-hidden="true">
-                <FaPen className="hp-quote-icon" />
-              </div>
-              <h4 className="hp-quote-card-title">Fill Form Directly</h4>
-              <p className="hp-quote-card-text">
-                Fill out the order form directly and proceed to pricing with your preferred garment and production
-                specifications.
-              </p>
-            </div>
+            <div className="hp-quote-icon-wrap"><FaPen className="hp-quote-icon" /></div>
+            <h3 className="hp-quote-card-title">Fill Form Directly</h3>
+            <p className="hp-quote-card-text">Fill out the order form directly and proceed to pricing with your preferred garment and production specifications.</p>
           </article>
         </div>
-
-        <button type="button" className="hp-quote-button">
-          Request a Quote
-        </button>
+        <button type="button" className="hp-btn hp-btn-primary hp-quote-btn">Request a Quote</button>
       </section>
 
-      {/* Trusted by Brands (top only for now) */}
-      <section className="hp-trusted">
+      <section className="hp-trusted" aria-label="Trusted brands">
         <h2 className="hp-trusted-title">Trusted by Brands</h2>
         <p className="hp-trusted-subtitle">Built on credibility and results.</p>
-        <div className="hp-trusted-marquee" aria-label="Trusted brand logos">
-          <div className="hp-trusted-marquee-track">
-            <div className="hp-trusted-marquee-segment">
-              {trustedBrands.map((brand) => (
-                <div key={brand.alt} className="hp-trusted-brand-card">
-                  <img className="hp-trusted-brand-image" src={brand.src} alt={brand.alt} />
-                </div>
-              ))}
-            </div>
-            <div className="hp-trusted-marquee-segment" aria-hidden="true">
-              {trustedBrands.map((brand) => (
-                <div key={`${brand.alt}-duplicate`} className="hp-trusted-brand-card">
-                  <img className="hp-trusted-brand-image" src={brand.src} alt="" />
-                </div>
-              ))}
-            </div>
+        <div className="hp-marquee" aria-label="Trusted brand logos">
+          <div className="hp-marquee-track">
+            {[...trustedBrands, ...trustedBrands].map((brand, i) => (
+              <div key={i} className="hp-brand-card">
+                <img className="hp-brand-img" src={brand.src} alt={i < trustedBrands.length ? brand.alt : ''} />
+              </div>
+            ))}
           </div>
         </div>
         <p className="hp-trusted-caption">...and the list goes on</p>
       </section>
 
       <section className="hp-follow" aria-label="Follow us">
-        <div className="hp-follow-header">
-          <h2 className="hp-follow-title">Follow us</h2>
-          <p className="hp-follow-subtitle">See what we&apos;ve been working on.</p>
-        </div>
-
+        <h2 className="hp-follow-title">Follow us</h2>
+        <p className="hp-follow-subtitle">See what we&apos;ve been working on.</p>
         <div className="hp-follow-icons">
-          <a
-            className="hp-follow-circle hp-follow-circle-facebook"
-            href="https://www.facebook.com/SorbetesApparel"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open Sorbetes Apparel on Facebook"
-          >
-            <FaFacebookF className="hp-follow-icon hp-follow-icon-facebook" />
-          </a>
-          <a
-            className="hp-follow-circle hp-follow-circle-instagram"
-            href="https://www.instagram.com/sorbetesapparelstudio/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open Sorbetes Apparel Studio on Instagram"
-          >
-            <FaInstagram className="hp-follow-icon hp-follow-icon-instagram" />
-          </a>
-          <a
-            className="hp-follow-circle hp-follow-circle-tiktok"
-            href="https://www.tiktok.com/@sorbetesapparelstudio.ph"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open Sorbetes Apparel Studio on TikTok"
-          >
-            <FaTiktok className="hp-follow-icon hp-follow-icon-tiktok" />
-          </a>
+          {socialLinks.map(({ href, label, cls, icon }) => (
+            <a
+              key={cls}
+              className={`hp-follow-circle hp-follow-circle-${cls}`}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open Sorbetes Apparel on ${label}`}
+            >
+              {icon}
+            </a>
+          ))}
         </div>
       </section>
 
       <Footer logoSrc={wLogo} />
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
 
 export default Homepage
-
