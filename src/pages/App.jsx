@@ -11,6 +11,8 @@ import PortfolioArchive from './PortfolioArchive.jsx'
 import PortfolioExpanded from './PortfolioExpanded.jsx'
 import GuidedWalkthrough from './GuidedWalkthrough.jsx'
 import Pricing from './Pricing.jsx'
+import FoundersClub from './FoundersClub.jsx'
+import FoundersClubGuide from './FoundersClubGuide.jsx'
 import '../design/index.css'
 
 function getCurrentPage() {
@@ -48,8 +50,9 @@ export default function App() {
   if (page === 'portfolio') return <Portfolio />
   if (page === 'portfolio-archive') return <PortfolioArchive />
   if (page === 'portfolio-expanded') return <PortfolioExpanded />
-  
   if (page === 'walkthrough') return <GuidedWalkthrough />
   if (page === 'pricing') return <Pricing />
+  if (page === 'founders-club') return <FoundersClub />
+  if (page === 'founders-club-guide') return <FoundersClubGuide />
   return <Homepage />
 }

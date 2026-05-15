@@ -1,0 +1,569 @@
+.founders-club-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.founders-club-scale-frame {
+  position: relative;
+  margin: 0 auto;
+}
+
+.founders-club-scale-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 3877px;
+  transform-origin: top left;
+}
+
+.founders-club-page {
+  position: relative;
+  width: 1920px;
+  height: 3877px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+.fc-top-links {
+  position: absolute;
+  left: 116px;
+  top: 175px;
+  width: 1694px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.fc-back-button {
+  width: 46px;
+  height: 46px;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #000000;
+  cursor: pointer;
+}
+
+.fc-back-button svg {
+  width: 40px;
+  height: 40px;
+}
+
+.fc-top-links a {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 86.87%;
+  color: #555555;
+  text-align: right;
+  text-decoration: underline;
+}
+
+.fc-hero {
+  position: absolute;
+  left: 88.5px;
+  top: 319px;
+  width: 1743px;
+  height: 197px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.fc-hero p {
+  width: 100%;
+  margin: 0 0 -16px;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 88%;
+  text-align: center;
+}
+
+.fc-hero h1 {
+  width: 100%;
+  margin: 0;
+  font-weight: 700;
+  font-size: 130px;
+  line-height: 88%;
+  text-align: center;
+}
+
+.fc-title-line {
+  width: 324px;
+  border-top: 3px solid #ffce31;
+}
+
+.fc-about {
+  box-sizing: border-box;
+  position: absolute;
+  left: 176.5px;
+  top: 621px;
+  width: 1567px;
+  height: 314px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 409px;
+  padding: 45px 0;
+}
+
+.fc-about p {
+  width: 769px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 161%;
+}
+
+.fc-about strong {
+  font-weight: 700;
+}
+
+.fc-about-logo {
+  width: 209px;
+  height: auto;
+  margin-left: 212px;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.fc-section-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.fc-section-heading h2 {
+  margin: 0;
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 88%;
+  text-align: center;
+}
+
+.fc-section-heading p {
+  margin: 0;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+  text-align: center;
+}
+
+.fc-trusted {
+  position: absolute;
+  left: 0;
+  top: 1055px;
+  width: 1920px;
+  height: 945px;
+}
+
+.fc-trusted .fc-section-heading {
+  width: 1033px;
+  margin: 0 auto;
+}
+
+.fc-feature-wrap {
+  position: absolute;
+  left: 0;
+  top: 170px;
+  width: 1920px;
+  height: 693px;
+  background: #ffd302;
+  overflow: hidden;
+}
+
+.fc-feature-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.fc-floating-socials {
+  position: absolute;
+  left: 84px;
+  top: 1793px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  z-index: 3;
+}
+
+.fc-floating-socials div {
+  width: 275px;
+  display: flex;
+  flex-direction: column;
+}
+
+.fc-floating-socials strong {
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 125%;
+}
+
+.fc-floating-socials span {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 125%;
+}
+
+.fc-floating-socials a {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #000000;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+}
+
+.fc-floating-socials svg {
+  width: 22px;
+  height: 22px;
+}
+
+.fc-view-all {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 27px;
+  padding: 5px 0;
+  border-bottom: 1px solid #555555;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 86.87%;
+  color: #555555;
+  text-align: right;
+  text-decoration: none;
+}
+
+.fc-view-all::after {
+  content: '';
+  width: 6px;
+  height: 10px;
+  background: #555555;
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
+}
+
+.fc-feature-view-all {
+  position: absolute;
+  right: 95px;
+  bottom: 0;
+}
+
+.fc-reviews {
+  position: absolute;
+  left: 53.5px;
+  top: 2120px;
+  width: 1813px;
+  height: 1023px;
+}
+
+.fc-review-grid {
+  margin-top: 75px;
+  display: grid;
+  grid-template-columns: repeat(3, 571px);
+  gap: 76px 50px;
+}
+
+.fc-review-card {
+  box-sizing: border-box;
+  width: 571px;
+  height: 319px;
+  padding: 40px 25px 25px;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.fc-review-card-featured {
+  background: rgba(255, 206, 49, 0.1);
+}
+
+.fc-review-stars {
+  height: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffce31;
+}
+
+.fc-review-stars svg {
+  width: 11.5px;
+  height: 11.5px;
+}
+
+.fc-review-card h3 {
+  width: 100%;
+  margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 161%;
+}
+
+.fc-review-card p {
+  width: 100%;
+  min-height: 78px;
+  margin: 0;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 161%;
+}
+
+.fc-review-card a,
+.fc-review-read-all {
+  width: 100%;
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 161%;
+  color: #000000;
+  text-align: right;
+  text-decoration: underline;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+.fc-review-bottom {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.fc-review-author {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+}
+
+.fc-review-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 35%, #f3d7c6 0 20%, transparent 21%),
+    radial-gradient(circle at 50% 100%, #101010 0 42%, transparent 43%),
+    #d9d9d9;
+}
+
+.fc-review-quote {
+  width: 90px;
+  height: 64px;
+  color: #ffffff;
+  stroke: #000000;
+  stroke-width: 12px;
+}
+
+.fc-review-summary {
+  position: absolute;
+  left: 0;
+  top: 977px;
+  width: 1813px;
+  height: 46px;
+  box-sizing: border-box;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.fc-review-summary > span {
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+  color: rgba(0, 0, 5, 0.33);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.fc-summary-chat {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 0.6px solid rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  color: #555555;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.fc-summary-chat svg {
+  width: 16px;
+  height: 16px;
+}
+
+.fc-summary-rating {
+  width: 149px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 15px;
+  align-items: center;
+  color: #555555;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 161%;
+}
+
+.fc-summary-rating .fc-review-stars {
+  height: 11px;
+  gap: 4px;
+}
+
+.fc-summary-rating .fc-review-stars svg {
+  width: 11.5px;
+  height: 11.5px;
+}
+
+.fc-summary-rating small {
+  grid-column: 1 / span 2;
+  font-size: 14px;
+  line-height: 161%;
+  color: #555555;
+}
+
+.fc-review-summary > .fc-view-all {
+  display: inline-flex;
+  margin-left: auto;
+}
+
+.fc-cta {
+  position: absolute;
+  left: 628.5px;
+  top: 3263px;
+  width: 663px;
+  height: 137px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 52px;
+}
+
+.fc-cta p {
+  width: 663px;
+  margin: 0;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 161%;
+  text-align: center;
+}
+
+.fc-cta button {
+  width: 427px;
+  height: 53px;
+  border: none;
+  border-radius: 19.35px;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.fc-review-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(3px);
+}
+
+.fc-review-modal-card {
+  position: relative;
+  box-sizing: border-box;
+  width: 580px;
+  min-height: 414px;
+  padding: 36px 42px 34px;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+  font-family: 'Montserrat', system-ui, sans-serif;
+  color: #000000;
+}
+
+.fc-review-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: transparent;
+  color: #555555;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fc-review-modal-card .fc-review-stars {
+  height: 14px;
+  gap: 5px;
+}
+
+.fc-review-modal-card .fc-review-stars svg {
+  width: 14px;
+  height: 14px;
+}
+
+.fc-review-modal-card h2 {
+  margin: 14px 0 16px;
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.fc-review-modal-card p {
+  margin: 0;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 180%;
+}
+
+.fc-review-modal-bottom {
+  margin-top: 38px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.fc-review-modal-bottom .fc-review-author {
+  font-size: 16px;
+}
+
+.fc-review-modal-quote {
+  width: 82px;
+  height: 58px;
+  color: #ffffff;
+  stroke: #000000;
+  stroke-width: 12px;
+}

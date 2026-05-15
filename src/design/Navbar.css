@@ -40,6 +40,12 @@
   color: #000;
 }
 
+.nb-logo-founders {
+  width: 90px;
+  height: 58px;
+  object-fit: contain;
+}
+
 /* ===== Desktop Nav View  ===== */
 
 .nb-nav {

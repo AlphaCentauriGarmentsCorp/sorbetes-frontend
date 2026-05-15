@@ -20,12 +20,12 @@ const NAV_ITEMS = [
       { label: 'Fabric Print Guide', page: 'fabric-print-guide' },
     ],
   },
-  { key: 'founders-club', label: "Founder's Club", hash: '#founders-club' },
+  { key: 'founders-club', label: "Founder's Club", page: 'founders-club' },
   { key: 'reviews', label: 'Reviews', hash: '#reviews' },
   { key: 'get-in-touch', label: 'Get in Touch', hash: '#get-in-touch' },
 ]
 
-function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
+function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = false }) {
   const [activeNav, setActiveNav] = useState(null)
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -60,8 +60,8 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '' }) {
   const navbar = (
     <header className="nb-header">
       <a className="nb-brand" href="?page=home" onClick={(e) => handleNavClick(e, 'home', 'home')} aria-label="Go to homepage">
-        <img className="nb-logo" src={logoSrc} alt="" />
-        <span className="nb-brand-name">{brand}</span>
+        <img className={`nb-logo${logoOnly ? ' nb-logo-founders' : ''}`} src={logoSrc} alt="" />
+        {!logoOnly && <span className="nb-brand-name">{brand}</span>}
       </a>
 
       <nav className="nb-nav" aria-label="Primary">

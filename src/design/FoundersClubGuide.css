@@ -1,0 +1,129 @@
+.founders-club-guide-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.founders-club-guide-scale-frame {
+  position: relative;
+  margin: 0 auto;
+}
+
+.founders-club-guide-scale-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1984px;
+  transform-origin: top left;
+}
+
+.founders-club-guide-page {
+  position: relative;
+  width: 1920px;
+  height: 1984px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+.fcg-back-button {
+  position: absolute;
+  left: 116px;
+  top: 175px;
+  width: 46px;
+  height: 46px;
+  border: none;
+  background: transparent;
+  color: #000000;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.fcg-back-button svg {
+  width: 40px;
+  height: 40px;
+}
+
+.fcg-founders-logo {
+  position: absolute;
+  left: 1570px;
+  top: 170px;
+  width: 209px;
+  height: auto;
+  display: block;
+  z-index: 2;
+}
+
+.fcg-content {
+  position: absolute;
+  left: 107px;
+  top: 313px;
+  width: 1708px;
+  min-height: 1233px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 165px;
+}
+
+.fcg-block {
+  width: 1708px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.fcg-block h1,
+.fcg-block h2 {
+  width: 1024px;
+  margin: 0;
+  font-weight: 800;
+  font-size: 70px;
+  line-height: 88%;
+  color: #000000;
+}
+
+.fcg-copy {
+  width: 1708px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.fcg-copy p {
+  width: 100%;
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 161%;
+  color: #000000;
+}
+
+.fcg-copy strong {
+  font-weight: 800;
+}
+
+.fcg-perks {
+  gap: 50px;
+}
+
+.fcg-avail-button {
+  width: 427px;
+  height: 53px;
+  border: none;
+  border-radius: 19.35px;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+}
