@@ -2,7 +2,7 @@ import '../design/Footer.css'
 
 function Footer({ logoSrc }) {
   return (
-    <footer className="hp-footer" aria-label="Footer">
+    <footer id="get-in-touch" className="hp-footer" aria-label="Footer">
       <div className="hp-footer-divider" aria-hidden="true" />
 
       <div className="hp-footer-brand">

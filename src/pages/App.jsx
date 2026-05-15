@@ -9,6 +9,8 @@ import FabricPrintGuide from './FabricPrintGuide.jsx'
 import Portfolio from './Portfolio.jsx'
 import PortfolioArchive from './PortfolioArchive.jsx'
 import PortfolioExpanded from './PortfolioExpanded.jsx'
+import FoundersClub from './FoundersClub.jsx'
+import FoundersClubGuide from './FoundersClubGuide.jsx'
 import '../design/index.css'
 
 function getCurrentPage() {
@@ -48,6 +50,8 @@ function App() {
   if (page === 'portfolio') return <Portfolio />
   if (page === 'portfolio-archive') return <PortfolioArchive />
   if (page === 'portfolio-expanded') return <PortfolioExpanded />
+  if (page === 'founders-club') return <FoundersClub />
+  if (page === 'founders-club-guide') return <FoundersClubGuide />
 
   return <Homepage />
 }
