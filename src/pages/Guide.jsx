@@ -4,11 +4,13 @@ import { IoChevronBack } from 'react-icons/io5'
 import '../design/Guide.css'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const GUIDE_BASE_WIDTH = 1920
-const GUIDE_BASE_HEIGHT = 4261
+const GUIDE_PAGE_HEIGHT = 4261
+const GUIDE_BASE_HEIGHT = GUIDE_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const guideSteps = [
   {
@@ -146,9 +148,9 @@ function Guide() {
                 ))}
               </div>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

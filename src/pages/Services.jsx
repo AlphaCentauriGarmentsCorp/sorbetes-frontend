@@ -9,11 +9,13 @@ import kushLogo from '../assets/kush-logo.png'
 import linyaLogo from '../assets/linya.jpg'
 import dailyGrindLogo from '../assets/daily grind.jpg'
 import teamMnlLogo from '../assets/teammnl.jpg'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const SERVICES_BASE_WIDTH = 1920
-const SERVICES_BASE_HEIGHT = 7901
+const SERVICES_PAGE_HEIGHT = 7901
+const SERVICES_BASE_HEIGHT = SERVICES_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const highlightCards = [
   { Icon: FaAward, label: '20+ Years of Experience' },
@@ -284,9 +286,9 @@ function Services() {
                 AVAIL NOW
               </button>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

@@ -25,10 +25,13 @@ import serviceImg4 from '../assets/OurServices/Garment Making.jpg'
 import serviceImg5 from '../assets/OurServices/Ready-Made Items.jpg'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaAward, FaLocationDot, FaPen, FaStar, FaUserGroup, FaUsers } from 'react-icons/fa6'
-import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
+import { FaFacebookF, FaInstagram, FaTiktok, FaUser } from 'react-icons/fa'
+import { FiMessageSquare, FiSend } from 'react-icons/fi'
+import { IoClose } from 'react-icons/io5'
 import { MdHandshake } from 'react-icons/md'
+import { isSignedIn } from '../utils/auth.js'
 
 const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7]
 
@@ -99,15 +102,99 @@ const socialLinks = [
   { href: 'https://www.tiktok.com/@sorbetesapparelstudio.ph', label: 'TikTok', cls: 'tiktok', icon: <FaTiktok className="hp-follow-icon hp-follow-icon-tiktok" /> },
 ]
 
+const BOT_REPLY_DELAY_MS = 2000
+const BOT_REPLY_TEXT =
+  'Thanks for your message! Our team has received your inquiry and will get back to you shortly.'
+
+function formatSentTime(date) {
+  const value = date instanceof Date ? date : new Date(date)
+  const time = value.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+  return `Sent ${time.replace(/\s/g, '').toLowerCase()}`
+}
+
 function Homepage() {
   const [heroIndex, setHeroIndex] = useState(0)
   const [testimonialIndex, setTestimonialIndex] = useState(0)
   const [testimonialDirection, setTestimonialDirection] = useState('next')
+  const [chatOpen, setChatOpen] = useState(false)
+  const [chatMessage, setChatMessage] = useState('')
+  const [chatMessages, setChatMessages] = useState([])
+  const [unreadReplies, setUnreadReplies] = useState(0)
+  const chatOpenRef = useRef(chatOpen)
+  const replyTimeoutRef = useRef(null)
+  const signedIn = isSignedIn()
 
   useEffect(() => {
-    const id = setInterval(() => setHeroIndex(p => (p + 1) % heroImages.length), 3000)
-    return () => clearInterval(id)
+    chatOpenRef.current = chatOpen
+    if (chatOpen) {
+      setUnreadReplies(0)
+    }
+  }, [chatOpen])
+
+  useEffect(() => {
+    const id = setInterval(() => setHeroIndex((p) => (p + 1) % heroImages.length), 3000)
+    return () => {
+      clearInterval(id)
+      if (replyTimeoutRef.current) {
+        clearTimeout(replyTimeoutRef.current)
+      }
+    }
   }, [])
+
+  const scheduleBotReply = () => {
+    if (replyTimeoutRef.current) {
+      clearTimeout(replyTimeoutRef.current)
+    }
+
+    replyTimeoutRef.current = setTimeout(() => {
+      setChatMessages((previous) => [
+        ...previous,
+        {
+          id: Date.now(),
+          text: BOT_REPLY_TEXT,
+          sentAt: new Date(),
+          role: 'bot',
+        },
+      ])
+
+      if (!chatOpenRef.current) {
+        setUnreadReplies((count) => count + 1)
+      }
+
+      replyTimeoutRef.current = null
+    }, BOT_REPLY_DELAY_MS)
+  }
+
+  const handleChatSubmit = (event) => {
+    event.preventDefault()
+    const trimmed = chatMessage.trim()
+    if (!trimmed) return
+
+    setChatMessages((previous) => [
+      ...previous,
+      { id: Date.now(), text: trimmed, sentAt: new Date(), role: 'user' },
+    ])
+    setChatMessage('')
+    scheduleBotReply()
+  }
+
+  const toggleChatOpen = () => {
+    setChatOpen((open) => {
+      const nextOpen = !open
+      if (nextOpen) {
+        setUnreadReplies(0)
+      }
+      return nextOpen
+    })
+  }
+
+  const hasUserMessages = chatMessages.some((message) => message.role === 'user')
+  const isAwaitingReply =
+    hasUserMessages && chatMessages[chatMessages.length - 1]?.role === 'user'
 
   const prevTestimonial = () => {
     setTestimonialDirection('prev')
@@ -119,6 +206,11 @@ function Homepage() {
     setTestimonialIndex(p => (p + 1) % testimonialImages.length)
   }
 
+  const navigate = (path) => {
+    window.history.pushState({}, '', path)
+    window.dispatchEvent(new Event('cursor:navigate'))
+  }
+
   return (
     <div className="hp-page">
       <div className="hp-ellipse hp-ellipse-1" aria-hidden="true" />
@@ -127,6 +219,111 @@ function Homepage() {
       <div className="hp-ellipse hp-ellipse-4" aria-hidden="true" />
 
       <Navbar logoSrc={logoCircleImg} currentPage="home" />
+
+      {signedIn ? (
+        <>
+          {chatOpen ? (
+            <section
+              className="hp-chatbot-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Sorbetes chatbot"
+            >
+              <header className="hp-chatbot-header">
+                <div className="hp-chatbot-brand">
+                  <img src={logoCircleImg} alt="" />
+                  <span>SORBETES</span>
+                </div>
+                <button
+                  type="button"
+                  className="hp-chatbot-close"
+                  aria-label="Close chatbot"
+                  onClick={() => setChatOpen(false)}
+                >
+                  <IoClose aria-hidden="true" />
+                </button>
+              </header>
+
+              <div className="hp-chatbot-divider" aria-hidden="true" />
+
+              <div className="hp-chatbot-notice">
+                <span className="hp-chatbot-notice-icon" aria-hidden="true">
+                  i
+                </span>
+                <p>Replies may take a few moments. Thank you for your patience.</p>
+              </div>
+
+              <div
+                className={
+                  hasUserMessages ? 'hp-chatbot-body hp-chatbot-body-sent' : 'hp-chatbot-body'
+                }
+              >
+                {!hasUserMessages ? (
+                  <p className="hp-chatbot-greeting">Hi, how may we assist you today</p>
+                ) : (
+                  <>
+                    {isAwaitingReply ? (
+                      <p className="hp-chatbot-awaiting">Awaiting response...</p>
+                    ) : null}
+                    <div className="hp-chatbot-messages" aria-live="polite">
+                      {chatMessages.map((message) =>
+                        message.role === 'bot' ? (
+                          <article className="hp-chatbot-message hp-chatbot-message-bot" key={message.id}>
+                            <div className="hp-chatbot-message-row">
+                              <span className="hp-chatbot-avatar hp-chatbot-avatar-bot" aria-hidden="true">
+                                <img src={logoCircleImg} alt="" />
+                              </span>
+                              <div className="hp-chatbot-bubble hp-chatbot-bubble-bot">{message.text}</div>
+                            </div>
+                          </article>
+                        ) : (
+                          <article className="hp-chatbot-message" key={message.id}>
+                            <div className="hp-chatbot-message-row">
+                              <div className="hp-chatbot-bubble">{message.text}</div>
+                              <span className="hp-chatbot-avatar" aria-hidden="true">
+                                <FaUser />
+                              </span>
+                            </div>
+                            <p className="hp-chatbot-sent-time">{formatSentTime(message.sentAt)}</p>
+                          </article>
+                        ),
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <form className="hp-chatbot-input-row" onSubmit={handleChatSubmit}>
+                <input
+                  type="text"
+                  value={chatMessage}
+                  onChange={(event) => setChatMessage(event.target.value)}
+                  placeholder="Write a message here"
+                  aria-label="Write a message"
+                />
+                <button type="submit" className="hp-chatbot-send" aria-label="Send message">
+                  <FiSend aria-hidden="true" />
+                </button>
+              </form>
+            </section>
+          ) : null}
+
+          <button
+            type="button"
+            className="hp-chatbot-button"
+            aria-label={chatOpen ? 'Close chatbot' : 'Open chatbot'}
+            aria-expanded={chatOpen}
+            onClick={toggleChatOpen}
+          >
+            <FiMessageSquare aria-hidden="true" />
+            {!chatOpen && unreadReplies > 0 ? (
+              <span className="hp-chatbot-badge" aria-label={`${unreadReplies} unread replies`}>
+                {unreadReplies > 9 ? '9+' : unreadReplies}
+              </span>
+            ) : null}
+          </button>
+        </>
+      ) : null}
 
       <section className="hp-hero" aria-label="Hero">
         <div className="hp-hero-copy">
@@ -140,8 +337,23 @@ function Homepage() {
             thoughtfully crafted, market-ready collections that stand out.
           </p>
           <div className="hp-hero-cta-row">
-            <button type="button" className="hp-btn hp-btn-primary">EXPLORE MORE</button>
-            <button type="button" className="hp-btn hp-btn-outline">AVAIL NOW</button>
+            {signedIn ? (
+              <>
+                <button type="button" className="hp-btn hp-btn-primary" onClick={() => navigate('?page=pricing')}>
+                  START NEW ORDER
+                </button>
+                <button type="button" className="hp-btn hp-btn-outline" onClick={() => navigate('?page=my-orders')}>
+                  VIEW MY ORDERS
+                </button>
+              </>
+            ) : (
+              <>
+                <button type="button" className="hp-btn hp-btn-primary" onClick={() => navigate('?page=portfolio')}>
+                  EXPLORE MORE
+                </button>
+                <button type="button" className="hp-btn hp-btn-outline">AVAIL NOW</button>
+              </>
+            )}
           </div>
           <div className="hp-hero-divider" aria-hidden="true" />
           <div className="hp-hero-stats">

@@ -6,12 +6,14 @@ import {
   portfolioExpandedItems,
 } from '../data/portfolioItems.js'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import wLogo from '../assets/w_logo.png'
 
 const PORTFOLIO_EXPANDED_BASE_WIDTH = 1920
-const PORTFOLIO_EXPANDED_BASE_HEIGHT = 2154
+const PORTFOLIO_EXPANDED_PAGE_HEIGHT = 2154
+const PORTFOLIO_EXPANDED_BASE_HEIGHT = PORTFOLIO_EXPANDED_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 function getPortfolioExpandedScale() {
   if (typeof window === 'undefined') {
@@ -171,9 +173,9 @@ function PortfolioExpanded() {
                 </div>
               </div>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

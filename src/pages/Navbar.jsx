@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
+import LoggedInNavbar from './LoggedInNavbar.jsx'
+import { isSignedIn } from '../utils/auth.js'
 import '../design/Navbar.css'
 
 const NAV_ITEMS = [
@@ -21,8 +23,7 @@ const NAV_ITEMS = [
     ],
   },
   { key: 'founders-club', label: "Founder's Club", page: 'founders-club' },
-  { key: 'reviews', label: 'Reviews', hash: '#reviews' },
-  { key: 'get-in-touch', label: 'Get in Touch', hash: '#get-in-touch' },
+  { key: 'get-in-touch', label: 'Get in Touch', page: 'get-in-touch' },
 ]
 
 function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = false }) {
@@ -30,6 +31,10 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = fals
   const [openDropdown, setOpenDropdown] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileDropdown, setMobileDropdown] = useState(null)
+
+  if (isSignedIn()) {
+    return <LoggedInNavbar currentPage={currentPage} />
+  }
 
   const resolved = activeNav ?? currentPage
 

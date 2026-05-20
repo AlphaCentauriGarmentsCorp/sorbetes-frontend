@@ -6,11 +6,13 @@ import '../design/FoundersClub.css'
 import foundersLogo from '../assets/Founders-logo.png'
 import wLogo from '../assets/w_logo.png'
 import foundersClubKush from '../assets/Kush.jpg'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const FOUNDERS_CLUB_BASE_WIDTH = 1920
-const FOUNDERS_CLUB_BASE_HEIGHT = 3877
+const FOUNDERS_CLUB_PAGE_HEIGHT = 3877
+const FOUNDERS_CLUB_BASE_HEIGHT = FOUNDERS_CLUB_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const reviews = [
   { name: 'John Lloyd Cruz', featured: true },
@@ -215,9 +217,9 @@ function FoundersClub() {
                 START YOUR JOURNEY
               </button>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </main>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
       </div>
