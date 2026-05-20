@@ -9,11 +9,13 @@ import linyaLogo from '../assets/linya.jpg'
 import dailyGrindLogo from '../assets/daily grind.jpg'
 import teamMnlLogo from '../assets/teammnl.jpg'
 import reeferImage from '../assets/reefer.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const PORTFOLIO_BASE_WIDTH = 1920
-const PORTFOLIO_BASE_HEIGHT = 3262
+const PORTFOLIO_PAGE_HEIGHT = 3262
+const PORTFOLIO_BASE_HEIGHT = PORTFOLIO_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const featuredBrands = [
   { src: kushLogo, alt: 'KUSH' },
@@ -161,9 +163,9 @@ function Portfolio() {
                 </button>
               </div>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

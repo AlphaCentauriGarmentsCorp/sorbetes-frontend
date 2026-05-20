@@ -4,11 +4,13 @@ import '../design/FabricPrintGuide.css'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import reeferImg from '../assets/reefer.png'
 import wLogo from '../assets/w_logo.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const FABRIC_PRINT_GUIDE_BASE_WIDTH = 1920
-const FABRIC_PRINT_GUIDE_BASE_HEIGHT = 4449
+const FABRIC_PRINT_GUIDE_PAGE_HEIGHT = 4449
+const FABRIC_PRINT_GUIDE_BASE_HEIGHT = FABRIC_PRINT_GUIDE_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const fabricPrintSteps = [
   {
@@ -156,9 +158,9 @@ function FabricPrintGuide() {
                 </article>
               ))}
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

@@ -5,11 +5,13 @@ import '../design/PortfolioArchive.css'
 import { portfolioArchiveItems } from '../data/portfolioItems.js'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 
 const PORTFOLIO_ARCHIVE_BASE_WIDTH = 1920
-const PORTFOLIO_ARCHIVE_BASE_HEIGHT = 2849
+const PORTFOLIO_ARCHIVE_PAGE_HEIGHT = 2849
+const PORTFOLIO_ARCHIVE_BASE_HEIGHT = PORTFOLIO_ARCHIVE_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 const archiveTabs = ['All', 'T-shirts', 'Hoodies', 'Others']
 const archiveFilters = [
@@ -247,9 +249,9 @@ function PortfolioArchive() {
                 </button>
               </div>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </div>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>

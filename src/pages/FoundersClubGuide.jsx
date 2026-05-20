@@ -3,11 +3,14 @@ import { IoChevronBack } from 'react-icons/io5'
 import '../design/FoundersClubGuide.css'
 import foundersLogo from '../assets/Founders-logo.png'
 import wLogo from '../assets/w_logo.png'
+import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { isSignedIn } from '../utils/auth.js'
 
 const FOUNDERS_CLUB_GUIDE_BASE_WIDTH = 1920
-const FOUNDERS_CLUB_GUIDE_BASE_HEIGHT = 1984
+const FOUNDERS_CLUB_GUIDE_PAGE_HEIGHT = 1984
+const FOUNDERS_CLUB_GUIDE_BASE_HEIGHT = FOUNDERS_CLUB_GUIDE_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
 
 function getFoundersClubGuideScale() {
   if (typeof window === 'undefined') {
@@ -35,8 +38,9 @@ function FoundersClubGuide() {
     window.dispatchEvent(new Event('cursor:navigate'))
   }
 
-  const goToSignUp = () => {
-    window.history.pushState({}, '', '?page=auth&mode=signup')
+  const goToAvailNow = () => {
+    const nextPath = isSignedIn() ? '?page=pricing' : '?page=auth&mode=signup&redirect=%3Fpage%3Dpricing'
+    window.history.pushState({}, '', nextPath)
     window.dispatchEvent(new Event('cursor:navigate'))
   }
 
@@ -101,13 +105,13 @@ function FoundersClubGuide() {
                 </div>
               </article>
 
-              <button type="button" className="fcg-avail-button" onClick={goToSignUp}>
+              <button type="button" className="fcg-avail-button" onClick={goToAvailNow}>
                 AVAIL NOW
               </button>
             </section>
-
-            <Footer logoSrc={wLogo} />
           </main>
+
+          <Footer logoSrc={wLogo} />
         </div>
       </div>
     </div>
