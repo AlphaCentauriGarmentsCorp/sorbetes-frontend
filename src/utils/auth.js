@@ -192,7 +192,35 @@ export function updateCurrentUser(updates) {
   return { ok: true, user: updated }
 }
 
+export function updateCurrentUserPassword(currentPassword, newPassword) {
+  const user = getCurrentUser()
+  if (!user) {
+    return { ok: false, error: 'Please sign in again before changing your password.' }
+  }
+
+  if (!newPassword || newPassword.length < 8 || !/\d/.test(newPassword) || !/[^A-Za-z0-9]/.test(newPassword)) {
+    return { ok: false, error: 'New password must be at least 8 characters and include one number and one special character.' }
+  }
+
+  const users = readUsers()
+  const index = users.findIndex((entry) => entry.email === user.email)
+  if (index < 0) {
+    return { ok: false, error: 'Account not found.' }
+  }
+
+  const savedPassword = users[index].password
+  if (savedPassword && savedPassword !== currentPassword) {
+    return { ok: false, error: 'Current password is incorrect.' }
+  }
+
+  users[index] = { ...users[index], password: newPassword }
+  writeUsers(users)
+  setSignedIn(true, { ...user, password: undefined })
+
+  return { ok: true }
+}
+
 export function getPostAuthPath() {
   const redirect = new URLSearchParams(window.location.search).get('redirect')
-  return redirect || '?page=founders-club'
+  return redirect || '?page=home'
 }

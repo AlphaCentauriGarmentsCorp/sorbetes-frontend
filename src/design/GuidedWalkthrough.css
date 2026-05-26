@@ -21,6 +21,10 @@
   overflow: hidden;
 }
 
+.GW-page.GW-review-page {
+  overflow: visible;
+}
+
 .GW-close-x {
   position: absolute;
   width: 28px;
@@ -203,12 +207,12 @@
 .GW-review-order-page {
   position: relative;
   width: 1920px;
-  height: 3347px;
+  height: 3513px;
   background: #ffffff;
 }
 
 .GW-review-uploaded-page {
-  height: 4109px;
+  height: 4295px;
 }
 
 .GW-review-hero {
@@ -553,10 +557,23 @@
 .GW-review-woven-row select {
   padding-right: 60px;
   appearance: none;
+  -webkit-appearance: none;
+  background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23555555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 35px center;
   background-size: 10px 6px;
+}
+
+.GW-review-field-grid select:disabled,
+.GW-review-field-full select:disabled,
+.GW-review-woven-row select:disabled,
+.GW-review-small-field input:read-only {
+  opacity: 1;
+  cursor: default;
+  background-color: #ffffff !important;
+  color: #555555 !important;
+  -webkit-text-fill-color: #555555 !important;
 }
 
 .GW-review-field-grid input {
@@ -728,28 +745,29 @@
   width: 405px;
 }
 
-.GW-review-footer {
+.GW-review-footer-wrap {
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 5;
   width: 1920px;
-  height: 332px;
-  box-sizing: border-box;
-  background: #000000;
-  color: #ffffff;
-  font-family: 'Montserrat', system-ui, sans-serif;
 }
 
-.GW-review-uploaded-footer {
-  bottom: -20px;
+.GW-review-footer-wrap .hp-footer {
+  width: 100%;
+  max-width: none;
+}
+
+.GW-review-footer-wrap.GW-review-uploaded-footer {
+  bottom: 0;
 }
 
 .GW-pricing-page {
-  height: 3634px;
+  height: 4050px;
 }
 
 .GW-pricing-card {
-  height: 2632px;
+  height: 2882px;
 }
 
 .GW-pricing-card .GW-review-section-title h2 {
@@ -927,7 +945,8 @@
 }
 
 .GW-pricing-size-row label {
-  width: 242.2px;
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -938,7 +957,7 @@
 }
 
 .GW-pricing-size-row input {
-  width: 242.2px;
+  width: 100%;
   height: 36px;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -1097,6 +1116,7 @@
 .GW-pricing-submit {
   width: 405px;
   height: 48.91px;
+  margin-bottom: 24px;
   border: 0;
   border-radius: 10px;
   background: #000000;
@@ -1106,6 +1126,7 @@
   font-size: 20px;
   line-height: 24px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .GW-quotation-sent-page {
@@ -1239,9 +1260,7 @@
 }
 
 .GW-review-footer-brand {
-  position: absolute;
-  left: 100px;
-  top: 90px;
+  padding-top: 56px;
 }
 
 .GW-review-footer-brand > div {
@@ -1285,28 +1304,12 @@
   line-height: 20px;
 }
 
-.GW-review-footer-section {
-  position: absolute;
-  top: 34px;
-}
-
-.GW-review-footer-section:nth-of-type(2) {
-  left: 431px;
-  width: 346px;
-}
-
-.GW-review-footer-section:nth-of-type(3) {
-  left: 1027px;
-  width: 317px;
-}
-
-.GW-review-footer-social {
-  left: 1594px;
-  width: 176px;
-}
-
 .GW-review-footer-section h3 {
   margin: 0 0 28px;
+}
+
+.GW-review-footer-contact h3 {
+  margin-bottom: 28px;
 }
 
 .GW-review-footer-section p {
@@ -1319,22 +1322,42 @@
   line-height: 20px;
 }
 
+.GW-review-footer-section p:last-child {
+  margin-bottom: 0;
+}
+
+.GW-review-footer-section p a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.GW-review-footer-section p a:hover {
+  text-decoration: underline;
+}
+
 .GW-review-footer-section p span {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #515151;
   display: grid;
   place-items: center;
   flex: none;
+  color: #ffffff;
+  font-size: 16px;
 }
 
-.GW-review-footer-social > div {
+.GW-review-footer-hours p {
+  margin: 0 0 8px;
+}
+
+.GW-review-footer-social-row {
   display: flex;
-  gap: 19px;
+  align-items: center;
+  gap: 16px;
 }
 
-.GW-review-footer-social > div span {
+.GW-review-footer-social-link {
   width: 46px;
   height: 46px;
   border-radius: 50%;
@@ -1342,17 +1365,20 @@
   color: #000000;
   display: grid;
   place-items: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: opacity 0.2s ease;
 }
 
-.GW-review-footer-social .muted {
-  opacity: 0.2;
+.GW-review-footer-social-link:hover {
+  opacity: 0.85;
+}
+
+.GW-review-footer-social-link svg {
+  color: #000000;
 }
 
 .GW-review-footer-bottom {
-  position: absolute;
-  left: 53px;
-  right: 53px;
-  bottom: 28px;
   border-top: 1px solid #ffffff;
   padding-top: 18px;
   display: flex;
@@ -3385,4 +3411,530 @@
   font-size: 20px;
   line-height: 24px;
   cursor: pointer;
+}
+
+.GW-skip-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 240;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GW-skip-modal {
+  width: min(640px, calc(100% - 48px));
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.GW-skip-modal h2 {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  text-align: center;
+  color: #000000;
+}
+
+.GW-skip-modal p {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.GW-skip-actions {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.GW-skip-cancel-btn,
+.GW-skip-confirm-btn {
+  flex: 1;
+  height: 49px;
+  border-radius: 10px;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+.GW-skip-cancel-btn {
+  border: 1px solid #000000;
+  background: #ffffff;
+  color: #000000;
+}
+
+.GW-skip-confirm-btn {
+  border: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Dark mode */
+body.sorbetes-dark .GW-shell,
+body.sorbetes-dark .GW-page,
+body.sorbetes-dark .GW-main-container {
+  background: #101010 !important;
+}
+
+body.sorbetes-dark .GW-selection-card {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.sorbetes-dark .GW-card-title,
+body.sorbetes-dark .GW-card-subtitle,
+body.sorbetes-dark .fit-label-main,
+body.sorbetes-dark .option-item,
+body.sorbetes-dark .front-choice {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-back-btn {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-next-btn,
+body.sorbetes-dark .GW-location-next {
+  background: #ffce31 !important;
+  border: 1px solid #ffce31 !important;
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .GW-skip-btn {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  color: #f5f5f5 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.sorbetes-dark .GW-skip-btn svg {
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-hint-bar {
+  background: rgba(255, 206, 49, 0.18) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .hint-icon {
+  background: rgba(255, 255, 255, 0.35) !important;
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .GW-skip-modal {
+  background: #1a1a1a;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.65);
+}
+
+body.sorbetes-dark .GW-skip-modal h2 {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-skip-modal p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+body.sorbetes-dark .GW-skip-cancel-btn {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-skip-confirm-btn {
+  background: #ffce31;
+  border-color: #ffce31;
+  color: #111111;
+}
+
+body.sorbetes-dark .GW-warning-modal {
+  background: #1a1a1a;
+}
+
+body.sorbetes-dark .GW-warning-modal h2,
+body.sorbetes-dark .GW-warning-modal p {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-warning-modal button {
+  background: #ffce31;
+  color: #111111;
+}
+
+/* Review / pricing order pages */
+body.sorbetes-dark .GW-review-order-page,
+body.sorbetes-dark .GW-review-uploaded-page,
+body.sorbetes-dark .GW-pricing-page {
+  background: transparent !important;
+}
+
+body.sorbetes-dark .GW-review-order-details {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .GW-pricing-summary-block,
+body.sorbetes-dark .GW-pricing-files-block,
+body.sorbetes-dark .GW-pricing-quantity-block,
+body.sorbetes-dark .GW-pricing-overall-block,
+body.sorbetes-dark .GW-pricing-subsection,
+body.sorbetes-dark .GW-pricing-row,
+body.sorbetes-dark .GW-pricing-quantity-box {
+  background: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .GW-review-card,
+body.sorbetes-dark .GW-pricing-card {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+body.sorbetes-dark .GW-review-hero h1,
+body.sorbetes-dark .GW-review-hero p,
+body.sorbetes-dark .GW-review-uploaded-heading,
+body.sorbetes-dark .GW-review-contact h3,
+body.sorbetes-dark .GW-review-order-details h3,
+body.sorbetes-dark .GW-review-section-title h2,
+body.sorbetes-dark .GW-pricing-summary-block h3,
+body.sorbetes-dark .GW-pricing-files-block h3,
+body.sorbetes-dark .GW-pricing-quantity-heading h3,
+body.sorbetes-dark .GW-pricing-overall-block h3,
+body.sorbetes-dark .GW-pricing-subsection h4,
+body.sorbetes-dark .GW-pricing-row span,
+body.sorbetes-dark .GW-pricing-row strong,
+body.sorbetes-dark .GW-pricing-quantity-heading p {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-review-section-title p {
+  color: #ffce31;
+}
+
+body.sorbetes-dark .GW-review-tabs button {
+  color: #f5f5f5;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+body.sorbetes-dark .GW-review-tabs button.active {
+  opacity: 1;
+  border-bottom-color: #ffce31;
+}
+
+body.sorbetes-dark .GW-review-card-header > button,
+body.sorbetes-dark .GW-review-color-help {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+body.sorbetes-dark .GW-review-muted-label,
+body.sorbetes-dark .GW-review-field-grid label,
+body.sorbetes-dark .GW-review-field-full,
+body.sorbetes-dark .GW-review-woven-row label,
+body.sorbetes-dark .GW-review-radio-group,
+body.sorbetes-dark .GW-review-small-field,
+body.sorbetes-dark .GW-review-divider em {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+body.sorbetes-dark .GW-review-divider span {
+  border-top-color: rgba(255, 255, 255, 0.16);
+}
+
+body.sorbetes-dark .GW-review-social-row button {
+  background: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-review-field-grid input,
+body.sorbetes-dark .GW-review-field-grid select,
+body.sorbetes-dark .GW-review-field-full select,
+body.sorbetes-dark .GW-review-small-field input,
+body.sorbetes-dark .GW-review-woven-row select {
+  background-color: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.82) !important;
+  opacity: 1 !important;
+}
+
+body.sorbetes-dark .GW-review-field-grid select,
+body.sorbetes-dark .GW-review-field-full select,
+body.sorbetes-dark .GW-review-woven-row select {
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23f5f5f5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 35px center !important;
+  background-size: 10px 6px !important;
+}
+
+body.sorbetes-dark .GW-review-field-grid select:disabled,
+body.sorbetes-dark .GW-review-field-full select:disabled,
+body.sorbetes-dark .GW-review-woven-row select:disabled,
+body.sorbetes-dark .GW-review-small-field input:read-only {
+  background-color: #121212 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.82) !important;
+  opacity: 1 !important;
+}
+
+body.sorbetes-dark .GW-review-radio-group > div {
+  background: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .GW-review-radio-group > div span::before {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+body.sorbetes-dark .GW-review-radio-group > div span.checked::before {
+  background: #ffce31;
+  box-shadow: inset 0 0 0 2px #121212;
+}
+
+body.sorbetes-dark .GW-review-actions button:first-child,
+body.sorbetes-dark .GW-review-uploaded-actions button:first-child {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.45) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-review-actions button:last-child,
+body.sorbetes-dark .GW-review-uploaded-actions button:last-child,
+body.sorbetes-dark .GW-pricing-download {
+  background: #ffce31 !important;
+  border: 1px solid #ffce31 !important;
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .GW-review-section-num {
+  background: #ffce31;
+  color: #111111;
+}
+
+body.sorbetes-dark .GW-review-page .step-label,
+body.sorbetes-dark .GW-review-page .step-completed .step-label,
+body.sorbetes-dark .GW-review-page .GW-stepper-complete .step-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+body.sorbetes-dark .GW-review-page .step.active .step-label {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-review-page .step-num {
+  background: #f5f5f5;
+  color: #111111;
+}
+
+body.sorbetes-dark .GW-review-page .step:not(.active):not(.step-completed) .step-num {
+  background: rgba(255, 255, 255, 0.22);
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-review-page .step-completed .step-num,
+body.sorbetes-dark .GW-review-page .GW-stepper-complete .step-num {
+  background: #319f3a;
+  color: #ffffff;
+}
+
+/* Color selection step */
+body.sorbetes-dark .GW-color-label,
+body.sorbetes-dark .GW-color-title-block .GW-card-title,
+body.sorbetes-dark .GW-color-title-block .GW-card-subtitle {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-color-select {
+  background: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-color-select span {
+  color: inherit !important;
+}
+
+body.sorbetes-dark .GW-select-caret {
+  border-top-color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .GW-color-menu {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+body.sorbetes-dark .GW-color-tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.sorbetes-dark .GW-color-tab {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+body.sorbetes-dark .GW-color-tab-active {
+  color: #f5f5f5 !important;
+  border-bottom-color: #ffce31 !important;
+}
+
+body.sorbetes-dark .GW-color-swatch-selected {
+  outline-color: #ffce31 !important;
+  outline-offset: 2px;
+}
+
+/* Woven location step */
+body.sorbetes-dark .GW-woven-location-heading .GW-card-title,
+body.sorbetes-dark .GW-woven-location-heading .GW-card-subtitle {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-location-choice,
+body.sorbetes-dark .GW-location-other {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.35) !important;
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-location-choice .GW-location-choice-row,
+body.sorbetes-dark .GW-location-choice .GW-location-choice-row > span,
+body.sorbetes-dark .GW-location-other > span {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-location-choice .help-icon-button,
+body.sorbetes-dark .GW-location-choice .help-icon {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-location-choice .radio-dot {
+  border-color: #000000;
+  background: #ffffff;
+}
+
+body.sorbetes-dark .GW-location-info {
+  background: rgba(255, 206, 49, 0.3) !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+body.sorbetes-dark .GW-location-info .hint-icon {
+  background: rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+}
+
+body.sorbetes-dark .GW-location-other .other-input {
+  background: #f5f5f5;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: #000000;
+}
+
+body.sorbetes-dark .GW-location-other .other-input::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+body.sorbetes-dark .GW-location-attach-button {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(0, 0, 0, 0.72) !important;
+}
+
+body.sorbetes-dark .GW-location-attach-button svg {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-location-attach-help {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .GW-location-uploaded-row {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.sorbetes-dark .GW-location-uploaded-label {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+body.sorbetes-dark .GW-location-uploaded-name,
+body.sorbetes-dark .GW-location-uploaded-name svg,
+body.sorbetes-dark .GW-location-attached-file {
+  color: #000000 !important;
+}
+
+/* Artwork upload step */
+body.sorbetes-dark .GW-artwork-heading .GW-card-title,
+body.sorbetes-dark .GW-artwork-heading .GW-card-subtitle,
+body.sorbetes-dark .GW-artwork-upload-section h2 {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .GW-upload-dropzone,
+body.sorbetes-dark .GW-artwork-dropzone {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.35) !important;
+}
+
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-icon,
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-title,
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-support,
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-browse,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-icon,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-title,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-support,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-browse {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-support,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-support {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+body.sorbetes-dark .GW-upload-dropzone .GW-upload-browse,
+body.sorbetes-dark .GW-artwork-dropzone .GW-upload-browse {
+  background: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-upload-files-label,
+body.sorbetes-dark .GW-artwork-files-label {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+body.sorbetes-dark .GW-upload-file-row,
+body.sorbetes-dark .GW-artwork-file-row {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+body.sorbetes-dark .GW-upload-file-name,
+body.sorbetes-dark .GW-upload-file-name svg {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .GW-upload-remove {
+  color: #fe7e7e !important;
 }

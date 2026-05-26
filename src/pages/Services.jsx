@@ -12,6 +12,7 @@ import teamMnlLogo from '../assets/teammnl.jpg'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const SERVICES_BASE_WIDTH = 1920
 const SERVICES_PAGE_HEIGHT = 7901
@@ -132,11 +133,6 @@ function Services() {
     return () => window.cancelAnimationFrame(id)
   }, [])
 
-  const goToHome = () => {
-    window.history.pushState({}, '', '?page=home')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   return (
     <div className="services-shell">
       <div
@@ -153,7 +149,7 @@ function Services() {
 
             <Navbar logoSrc={logoCircleImg} currentPage="services" />
 
-            <button type="button" className="services-back-button" aria-label="Back to homepage" onClick={goToHome}>
+            <button type="button" className="services-back-button" aria-label="Go back" onClick={() => navigateBack()}>
               <IoChevronBack className="services-back-icon" aria-hidden="true" />
             </button>
 
@@ -174,13 +170,13 @@ function Services() {
               </div>
 
               <div className="services-highlight-grid" aria-label="Service highlights">
-                {highlightCards.map(({ Icon, label }) => (
-                  <article key={label} className="services-highlight-card">
+                {highlightCards.map((card) => (
+                  <article key={card.label} className="services-highlight-card">
                     <div className="services-highlight-icon-wrap" aria-hidden="true">
                       <span className="services-highlight-icon-bg" />
-                      <Icon className="services-highlight-icon" />
+                      <card.Icon className="services-highlight-icon" />
                     </div>
-                    <p className="services-highlight-label">{label}</p>
+                    <p className="services-highlight-label">{card.label}</p>
                   </article>
                 ))}
               </div>
@@ -233,19 +229,19 @@ function Services() {
               </div>
 
               <div className="services-why-list">
-                {whyChooseUs.map(({ Icon, title, description, iconClass }) => (
-                  <article key={title} className="services-why-item">
+                {whyChooseUs.map((item) => (
+                  <article key={item.title} className="services-why-item">
                     <div className="services-why-left-card">
                       <div className="services-why-left-inner">
                         <div className="services-why-icon-wrap">
-                          <Icon className={`services-why-icon ${iconClass}`} aria-hidden="true" />
+                          <item.Icon className={`services-why-icon ${item.iconClass}`} aria-hidden="true" />
                         </div>
-                        <h3>{title}</h3>
+                        <h3>{item.title}</h3>
                       </div>
                     </div>
 
                     <div className="services-why-right-card">
-                      <p>{description}</p>
+                      <p>{item.description}</p>
                     </div>
                   </article>
                 ))}

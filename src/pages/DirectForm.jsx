@@ -6,6 +6,7 @@ import Footer from './Footer.jsx'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
 import '../design/DirectForm.css'
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const DIRECT_FORM_BASE_WIDTH = 1920
 const DIRECT_FORM_PAGE_HEIGHT = 2968
@@ -105,11 +106,6 @@ function getDirectFormScale() {
   }
 
   return Math.min(Math.max((window.innerWidth - 24) / DIRECT_FORM_BASE_WIDTH, 0.18), 1)
-}
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
 }
 
 function Field({ label, value, onChange, placeholder, type = 'text' }) {
@@ -691,7 +687,7 @@ export default function DirectForm() {
           >
             <Navbar logoSrc={logoCircleImg} currentPage="pricing" />
 
-            <button className="DFF-back" type="button" aria-label="Back to pricing" onClick={() => navigate('?page=pricing')}>
+            <button className="DFF-back" type="button" aria-label="Go back" onClick={() => navigateBack('?page=pricing')}>
               <IoChevronBack aria-hidden="true" />
             </button>
 
@@ -815,7 +811,7 @@ export default function DirectForm() {
               {warning ? <p className="DFF-warning">{warning}</p> : null}
 
               <div className="DFF-actions">
-                <button type="button" onClick={() => navigate('?page=pricing')}>Back</button>
+                <button type="button" onClick={() => navigateBack('?page=pricing')}>Back</button>
                 <button type="button" onClick={goToUploadFiles}>Next</button>
               </div>
             </section>

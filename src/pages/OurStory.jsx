@@ -7,6 +7,7 @@ import wLogo from '../assets/w_logo.png'
 import storyImage from '../assets/Hero 1.jpg'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const OUR_STORY_BASE_WIDTH = 1920
 const OUR_STORY_BASE_HEIGHT = 3223
@@ -34,10 +35,6 @@ function OurStory() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    window.location.search = '?page=home'
-  }
-
   const showPreviousSlide = () => {
     setSlideIndex((prev) => (prev - 1 + storySlides.length) % storySlides.length)
   }
@@ -62,7 +59,7 @@ function OurStory() {
 
             <Navbar logoSrc={logoCircleImg} currentPage="our-story" />
 
-            <button type="button" className="os-back-button" aria-label="Back to homepage" onClick={goToHome}>
+            <button type="button" className="os-back-button" aria-label="Go back" onClick={() => navigateBack()}>
               <IoChevronBack className="os-back-icon" aria-hidden="true" />
             </button>
 

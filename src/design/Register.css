@@ -567,3 +567,78 @@
     font-size: 13px;
   }
 }
+
+/* Dark mode */
+body.sorbetes-dark .auth-signup-form-panel,
+body.sorbetes-dark .register-right,
+body.sorbetes-dark .register-form-wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .register-top-link {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .register-top-link .register-link-button {
+  color: #ffce31 !important;
+}
+
+body.sorbetes-dark .register-title,
+body.sorbetes-dark .register-subtitle {
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .register-social {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+body.sorbetes-dark .register-social-label {
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .register-or {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body.sorbetes-dark .register-label {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .register-input-wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+body.sorbetes-dark .register-input-wrapper .register-input {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .register-input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body.sorbetes-dark .register-terms {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+body.sorbetes-dark .register-terms .register-link-button {
+  color: #ffce31 !important;
+}
+
+body.sorbetes-dark .register-submit {
+  background: #ffce31 !important;
+}
+
+body.sorbetes-dark .register-submit-label {
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .register-back-icon {
+  filter: invert(1);
+}

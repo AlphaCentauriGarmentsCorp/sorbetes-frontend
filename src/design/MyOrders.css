@@ -635,3 +635,140 @@
   height: 16px;
   flex-shrink: 0;
 }
+
+body.sorbetes-dark .MO-orders-list {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .MO-order-card {
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+}
+
+body.sorbetes-dark .MO-order-card-top,
+body.sorbetes-dark .MO-order-card-bottom,
+body.sorbetes-dark .MO-order-card-ident,
+body.sorbetes-dark .MO-order-card-meta,
+body.sorbetes-dark .MO-order-actions,
+body.sorbetes-dark .MO-order-summary,
+body.sorbetes-dark .MO-progress,
+body.sorbetes-dark .MO-progress-step {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .MO-order-reference,
+body.sorbetes-dark .MO-order-type,
+body.sorbetes-dark .MO-order-summary,
+body.sorbetes-dark .MO-order-summary strong,
+body.sorbetes-dark .MO-order-summary span:not(.MO-order-summary-dot),
+body.sorbetes-dark .MO-progress-label,
+body.sorbetes-dark .MO-tab,
+body.sorbetes-dark .MO-sort-label {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .MO-tab-active {
+  border-bottom-color: #ffce31;
+}
+
+body.sorbetes-dark .MO-sort-icon {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .MO-order-summary-dot {
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.sorbetes-dark .MO-order-submitted {
+  background: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+.sorbetes-dark .MO-btn-primary {
+  background: #ffce31;
+  color: #111111;
+  border: 1px solid #ffce31;
+}
+
+.sorbetes-dark .MO-btn-primary:hover {
+  background: #eebf22;
+}
+
+.sorbetes-dark .MO-btn-cancel {
+  background: transparent;
+  color: #ff8b8b;
+  border-color: #ff8b8b;
+}
+
+.sorbetes-dark .MO-btn-cancel:hover {
+  background: rgba(255, 139, 139, 0.12);
+}
+
+.sorbetes-dark .MO-sort-select {
+  background: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .MO-sort-chevron::before,
+.sorbetes-dark .MO-sort-chevron::after {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.sorbetes-dark .MO-order-icon {
+  border-color: rgba(255, 255, 255, 0.24);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .MO-progress-dot-current,
+.sorbetes-dark .MO-progress-dot-upcoming {
+  background: #f5f5f5;
+}
+
+.sorbetes-dark .MO-progress-line {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.sorbetes-dark .MO-progress-line-complete {
+  background: #319f3a;
+}
+
+.sorbetes-dark .MO-detail-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.sorbetes-dark .MO-detail-modal {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.7);
+}
+
+.sorbetes-dark .MO-detail-close,
+.sorbetes-dark .MO-detail-section-title,
+.sorbetes-dark .MO-detail-value {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .MO-detail-subsection-title,
+.sorbetes-dark .MO-detail-label {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.sorbetes-dark .MO-detail-row {
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.sorbetes-dark .MO-detail-file-btn {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .MO-detail-file-btn:hover {
+  background: rgba(255, 206, 49, 0.14);
+}

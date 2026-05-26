@@ -1056,3 +1056,140 @@
   width: 55%;
   height: 55%;
 }
+
+.sorbetes-dark .hp-quote {
+  background: #1a1a1a;
+  box-shadow: 0 2px 18px rgba(255, 206, 49, 0.42);
+}
+
+body.sorbetes-dark .hp-why-icon-svg-star {
+  color: #eebe00 !important;
+}
+
+body.sorbetes-dark .hp-why-icon-svg-handshake {
+  color: #c47a2d !important;
+}
+
+body.sorbetes-dark .hp-why-icon-svg-medal {
+  color: #6b9fd4 !important;
+}
+
+body.sorbetes-dark .hp-why-icon-svg-ph {
+  color: #5ba3d9 !important;
+}
+
+body.sorbetes-dark .hp-why-icon-svg-people {
+  color: #e8e8e8 !important;
+}
+
+body.sorbetes-dark .hp-why-icon {
+  background: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+body.sorbetes-dark .hp-why-item {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+body.sorbetes-dark .hp-why-left {
+  border-right-color: rgba(255, 255, 255, 0.18);
+}
+
+body.sorbetes-dark .hp-why-item-title,
+body.sorbetes-dark .hp-why-item-text {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-hero-stat {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-hero-divider {
+  border-top-color: rgba(255, 255, 255, 0.16);
+}
+
+.sorbetes-dark .hp-quote-title,
+.sorbetes-dark .hp-quote-subtitle,
+.sorbetes-dark .hp-quote-card-title,
+.sorbetes-dark .hp-quote-card-text {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-quote-card {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.sorbetes-dark .hp-quote-icon-wrap {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: #1f1f1f;
+}
+
+.sorbetes-dark .hp-quote-icon {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-chatbot-button {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.sorbetes-dark .hp-chatbot-button:hover {
+  background: #252525;
+}
+
+.sorbetes-dark .hp-chatbot-badge {
+  border-color: #1a1a1a;
+}
+
+.sorbetes-dark .hp-chatbot-panel {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
+}
+
+.sorbetes-dark .hp-chatbot-brand span,
+.sorbetes-dark .hp-chatbot-close,
+.sorbetes-dark .hp-chatbot-greeting,
+.sorbetes-dark .hp-chatbot-awaiting,
+.sorbetes-dark .hp-chatbot-sent-time {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-chatbot-divider {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.sorbetes-dark .hp-chatbot-notice {
+  background: rgba(255, 206, 49, 0.18);
+}
+
+.sorbetes-dark .hp-chatbot-notice p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sorbetes-dark .hp-chatbot-bubble,
+.sorbetes-dark .hp-chatbot-bubble-bot {
+  background: #252525;
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-chatbot-avatar {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-chatbot-input-row {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.sorbetes-dark .hp-chatbot-input-row input {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .hp-chatbot-send {
+  color: #ffce31;
+}

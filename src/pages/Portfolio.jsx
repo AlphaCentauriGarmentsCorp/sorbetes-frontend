@@ -12,6 +12,7 @@ import reeferImage from '../assets/reefer.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const PORTFOLIO_BASE_WIDTH = 1920
 const PORTFOLIO_PAGE_HEIGHT = 3262
@@ -46,11 +47,6 @@ function Portfolio() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    window.history.pushState({}, '', '?page=home')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   const goToCollection = () => {
     window.history.pushState({}, '', '?page=portfolio-archive')
     window.dispatchEvent(new Event('cursor:navigate'))
@@ -72,7 +68,7 @@ function Portfolio() {
 
             <Navbar logoSrc={logoCircleImg} currentPage="services" />
 
-            <button type="button" className="portfolio-back-button" aria-label="Back to homepage" onClick={goToHome}>
+            <button type="button" className="portfolio-back-button" aria-label="Go back" onClick={() => navigateBack()}>
               <IoChevronBack className="portfolio-back-icon" aria-hidden="true" />
             </button>
 

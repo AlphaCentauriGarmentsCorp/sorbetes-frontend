@@ -85,6 +85,20 @@
   pointer-events: none;
 }
 
+/* Keep signup layer full-width side-by-side; don't let hidden login form steal layout */
+.auth-login-overlay.auth-login-signup .auth-login-form-panel {
+  display: none;
+}
+
+.auth-login-overlay.auth-login-signup .auth-login-left-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  flex: none;
+  z-index: 1;
+}
+
 /* Login left panel - slides right while fading out (Login → Sign up) */
 .auth-login-left-panel {
   flex: 0 0 38%;
@@ -345,6 +359,42 @@
   border: 1px solid #000000;
 }
 
+/* Desktop: login [image left | form right], signup [form left | image right] */
+@media (min-width: 769px) {
+  .auth-signup-inner {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .auth-signup-form-panel {
+    order: 1;
+    flex: 1 1 auto;
+    min-height: 100vh;
+  }
+
+  .auth-signup-decorative {
+    order: 2;
+    flex: 0 0 38%;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  .auth-login-overlay {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .auth-login-left-panel {
+    flex: 0 0 38%;
+    min-width: 320px;
+  }
+
+  .auth-login-form-panel {
+    flex: 1 1 auto;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .auth-page {
@@ -377,9 +427,18 @@
     min-height: 100dvh;
   }
 
+  /* Match login: hero image on top, form below */
   .auth-signup-decorative {
+    order: -1;
     flex: 0 0 auto;
     min-height: 40vh;
+    width: 100%;
+  }
+
+  .auth-signup-form-panel {
+    order: 0;
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .auth-login-overlay {
@@ -387,6 +446,10 @@
   }
 
   .auth-login-overlay.auth-login-signup {
+    display: none;
+  }
+
+  .auth-login-overlay.auth-login-signup .auth-login-form-panel {
     display: none;
   }
 
@@ -398,9 +461,24 @@
   .auth-login-left-panel {
     flex: 0 0 auto;
     min-height: 40vh;
+    position: relative;
+    width: 100%;
   }
 
   .auth-login-overlay.auth-login-signup .auth-login-left-panel {
     transform: translateX(62vw);
   }
+}
+
+/* Dark mode */
+body.sorbetes-dark .auth-login-form-panel {
+  background: transparent !important;
+}
+
+body.sorbetes-dark .auth-form-error {
+  color: #ff8a80 !important;
+}
+
+body.sorbetes-dark .auth-form-success {
+  color: #81c784 !important;
 }

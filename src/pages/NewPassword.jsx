@@ -2,11 +2,7 @@ import { useState } from 'react'
 import { FaCheckCircle } from 'react-icons/fa'
 import '../design/ForgotPassword.css'
 import logoImg from '../assets/Logo Sorbetes.jpg'
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
-}
+import { navigateBack } from '../utils/navigation.js'
 
 function NewPassword() {
   const [passwordError, setPasswordError] = useState('')
@@ -60,7 +56,7 @@ function NewPassword() {
               <h2 id="new-password-confirmation-title">Password Reset successful</h2>
               <p>You can now log in with your new password.</p>
             </div>
-            <button type="button" className="forgot-submit" onClick={() => navigate('?page=home')}>
+            <button type="button" className="forgot-submit" onClick={() => navigateBack()}>
               Back to website
             </button>
           </section>

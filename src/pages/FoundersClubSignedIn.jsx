@@ -14,6 +14,7 @@ import foundersClubKush from '../assets/Kush.jpg'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Footer from './Footer.jsx'
 import LoggedInNavbar from './LoggedInNavbar.jsx'
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const FCSI_BASE_WIDTH = 1920
 const FCSI_PAGE_HEIGHT = 5046
@@ -37,11 +38,6 @@ function getFoundersClubSignedInScale() {
   }
 
   return Math.min(Math.max((window.innerWidth - 24) / FCSI_BASE_WIDTH, 0.18), 1)
-}
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
 }
 
 function ReviewModal({ review, onClose }) {
@@ -123,10 +119,6 @@ function FoundersClubSignedIn() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    navigate('?page=home')
-  }
-
   const goToFoundersGuide = (event) => {
     event.preventDefault()
     navigate('?page=founders-club-guide')
@@ -151,7 +143,7 @@ function FoundersClubSignedIn() {
               <LoggedInNavbar currentPage="founders-club" />
 
               <div className="fcsi-top-links">
-                <button type="button" className="fc-back-button" aria-label="Back to homepage" onClick={goToHome}>
+                <button type="button" className="fc-back-button" aria-label="Go back" onClick={() => navigateBack()}>
                   <IoChevronBack aria-hidden="true" />
                 </button>
                 <a href="?page=founders-club-guide" onClick={goToFoundersGuide}>

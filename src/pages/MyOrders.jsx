@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { FaBoxOpen, FaCheck, FaFilter } from 'react-icons/fa'
 import { IoChevronBack } from 'react-icons/io5'
@@ -10,6 +10,7 @@ import '../design/MyOrders.css'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import OrderDetailModal from './OrderDetailModal.jsx'
 import { TRACKING_REFERENCES } from '../data/orderTracking.js'
+import { navigateBack } from '../utils/navigation.js'
 
 const SAMPLE_ORDER_DETAILS = {
   status: 'Confirmed',
@@ -46,7 +47,10 @@ const SAMPLE_ORDER_DETAILS = {
 
 const MO_BASE_WIDTH = 1920
 const MO_PAGE_HEIGHT = 1941
-const MO_BASE_HEIGHT = MO_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
+const MO_LIST_START_Y = 820
+const MO_ORDER_CARD_HEIGHT = 250
+const MO_ORDER_CARD_GAP = 63
+const MO_ORDER_LIST_BOTTOM_SPACE = 180
 
 const PROGRESS_STEPS = [
   { key: 'confirmed', label: 'Confirmed' },
@@ -119,11 +123,6 @@ function getMyOrdersScale() {
   }
 
   return Math.min(Math.max((window.innerWidth - 24) / MO_BASE_WIDTH, 0.18), 1)
-}
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
 }
 
 function getStepState(stepIndex, currentStep) {
@@ -267,6 +266,8 @@ export default function MyOrders() {
   const [upcomingOrders, setUpcomingOrders] = useState(UPCOMING_ORDERS)
   const [cancelTarget, setCancelTarget] = useState(null)
   const [detailTarget, setDetailTarget] = useState(null)
+  const ordersListRef = useRef(null)
+  const [measuredPageHeight, setMeasuredPageHeight] = useState(MO_PAGE_HEIGHT)
 
   useEffect(() => {
     const handleResize = () => {
@@ -281,6 +282,27 @@ export default function MyOrders() {
   const orders = activeTab === 'upcoming' ? upcomingOrders : []
   const upcomingCount = upcomingOrders.length
   const previousCount = 0
+  const orderListHeight = orders.length
+    ? orders.length * MO_ORDER_CARD_HEIGHT + (orders.length - 1) * MO_ORDER_CARD_GAP
+    : 160
+  const estimatedPageHeight = MO_LIST_START_Y + orderListHeight + MO_ORDER_LIST_BOTTOM_SPACE
+  const pageHeight = Math.max(MO_PAGE_HEIGHT, estimatedPageHeight, measuredPageHeight)
+  const canvasHeight = pageHeight + FOOTER_CANVAS_HEIGHT
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const list = ordersListRef.current
+
+      if (!list) {
+        setMeasuredPageHeight(MO_PAGE_HEIGHT)
+        return
+      }
+
+      setMeasuredPageHeight(Math.max(MO_PAGE_HEIGHT, list.offsetTop + list.offsetHeight + MO_ORDER_LIST_BOTTOM_SPACE))
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [activeTab, orders.length])
 
   const handleConfirmCancel = () => {
     if (!cancelTarget) {
@@ -297,21 +319,21 @@ export default function MyOrders() {
         className="MO-scale-frame"
         style={{
           width: `${MO_BASE_WIDTH * pageScale}px`,
-          height: `${MO_BASE_HEIGHT * pageScale}px`,
+          height: `${canvasHeight * pageScale}px`,
         }}
       >
         <div
           className="MO-scale-content"
-          style={{ height: `${MO_BASE_HEIGHT}px`, transform: `scale(${pageScale})` }}
+          style={{ height: `${canvasHeight}px`, transform: `scale(${pageScale})` }}
         >
-          <main className="MO-page">
+          <main className="MO-page" style={{ minHeight: `${pageHeight}px` }}>
             <Navbar logoSrc={logoCircleImg} currentPage="my-orders" />
 
             <button
               type="button"
               className="MO-back"
-              aria-label="Back to homepage"
-              onClick={() => navigate('?page=home')}
+              aria-label="Go back"
+              onClick={() => navigateBack()}
             >
               <IoChevronBack aria-hidden="true" />
             </button>
@@ -361,7 +383,7 @@ export default function MyOrders() {
               </div>
             </div>
 
-            <div className="MO-orders-list">
+            <div className="MO-orders-list" ref={ordersListRef}>
               {orders.length ? (
                 orders.map((order) => (
                   <OrderCard

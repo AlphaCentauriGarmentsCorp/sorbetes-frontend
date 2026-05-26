@@ -1,0 +1,260 @@
+/* Walk-in order submitted confirmation */
+
+.wic-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Montserrat', system-ui, sans-serif;
+}
+
+.wic-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1759px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 43px clamp(20px, 4vw, 75px) 0;
+  box-sizing: border-box;
+}
+
+.wic-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.wic-brand img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.wic-brand span {
+  font-family: 'Bebas Neue', Impact, sans-serif;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.wic-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1487px;
+  margin: 0 auto;
+  padding: 60px clamp(16px, 3vw, 40px) 48px;
+  box-sizing: border-box;
+}
+
+.wic-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px clamp(20px, 4vw, 40px);
+  gap: 0;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.wic-card-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 40px;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.3);
+}
+
+.wic-success-icon {
+  width: 146px;
+  height: 146px;
+  border-radius: 50%;
+  background: rgba(49, 159, 58, 0.15);
+  color: #319f3a;
+  display: grid;
+  place-items: center;
+}
+
+.wic-success-icon svg {
+  width: 84px;
+  height: 84px;
+}
+
+.wic-heading-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 33px;
+  margin-top: 40px;
+}
+
+.wic-heading-block h1 {
+  margin: 0;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 800;
+  line-height: 0.88;
+  text-align: center;
+}
+
+.wic-heading-block p {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.wic-details {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px 20px 0;
+  box-sizing: border-box;
+}
+
+.wic-detail-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.wic-detail-row span {
+  font-weight: 400;
+}
+
+.wic-detail-row strong {
+  font-weight: 600;
+  text-align: right;
+}
+
+.wic-amount-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+  padding: 30px 40px 0;
+  border-top: 0.5px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.wic-amount-row span {
+  font-weight: 400;
+}
+
+.wic-amount-row strong {
+  font-weight: 600;
+}
+
+.wic-done-btn {
+  width: min(814px, 100%);
+  min-height: 49px;
+  margin-top: 50px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  background: #000000 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.wic-done-btn:hover {
+  background: #1a1a1a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.wic-page .hp-footer {
+  margin-top: auto;
+}
+
+body.sorbetes-dark .wif-light-scope.wic-page {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .wif-light-scope .wic-card {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .wif-light-scope .wic-heading-block h1,
+body.sorbetes-dark .wif-light-scope .wic-detail-row span,
+body.sorbetes-dark .wif-light-scope .wic-detail-row strong,
+body.sorbetes-dark .wif-light-scope .wic-amount-row span,
+body.sorbetes-dark .wif-light-scope .wic-amount-row strong {
+  color: #000000 !important;
+}
+
+body.sorbetes-dark .wif-light-scope .wic-done-btn,
+body.sorbetes-dark .wif-light-scope .wic-done-btn:hover {
+  background: #000000 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .wic-main {
+    padding-top: 32px;
+  }
+
+  .wic-card {
+    padding: 32px 16px;
+  }
+
+  .wic-details {
+    gap: 24px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .wic-detail-row,
+  .wic-amount-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .wic-detail-row strong,
+  .wic-amount-row strong {
+    text-align: left;
+  }
+
+  .wic-success-icon {
+    width: 120px;
+    height: 120px;
+  }
+
+  .wic-success-icon svg {
+    width: 64px;
+    height: 64px;
+  }
+}
