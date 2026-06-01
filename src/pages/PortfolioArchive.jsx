@@ -7,6 +7,7 @@ import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import wLogo from '../assets/w_logo.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
+import { navigateBack } from '../utils/navigation.js'
 import Footer from './Footer.jsx'
 
 const PORTFOLIO_ARCHIVE_BASE_WIDTH = 1920
@@ -98,8 +99,8 @@ function PortfolioArchive() {
             <button
               type="button"
               className="portfolio-archive-back-button"
-              aria-label="Back to portfolio"
-              onClick={goToPortfolio}
+              aria-label="Go back"
+              onClick={() => navigateBack('?page=portfolio')}
             >
               <IoChevronBack className="portfolio-archive-back-icon" aria-hidden="true" />
             </button>

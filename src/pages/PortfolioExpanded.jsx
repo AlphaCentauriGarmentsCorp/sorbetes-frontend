@@ -8,6 +8,7 @@ import {
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
+import { navigateBack } from '../utils/navigation.js'
 import Footer from './Footer.jsx'
 import wLogo from '../assets/w_logo.png'
 
@@ -79,8 +80,8 @@ function PortfolioExpanded() {
             <button
               type="button"
               className="portfolio-expanded-back-button"
-              aria-label="Back to archive"
-              onClick={goToArchive}
+              aria-label="Go back"
+              onClick={() => navigateBack('?page=portfolio-archive')}
             >
               <IoChevronBack className="portfolio-expanded-back-icon" aria-hidden="true" />
             </button>

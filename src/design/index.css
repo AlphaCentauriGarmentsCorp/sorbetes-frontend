@@ -21,7 +21,176 @@ body {
   background-color: #ffffff;
 }
 
+body.sorbetes-dark {
+  background-color: #101010;
+  color: #f5f5f5;
+}
+
+:root.sorbetes-dark {
+  color-scheme: dark;
+}
+
 button {
   font-family: inherit;
+}
+
+body.sorbetes-dark :is(
+  .hp-page,
+  .contact-shell,
+  .contact-page,
+  .fabric-guide-shell,
+  .fabric-guide-page,
+  .guide-shell,
+  .guide-page,
+  .MO-shell,
+  .MO-page,
+  .DFF-shell,
+  .founders-club-guide-shell,
+  .founders-club-guide-page,
+  .auth-page,
+  .forgot-page,
+  .our-story-shell,
+  .our-story-page,
+  .portfolio-shell,
+  .portfolio-page,
+  .GW-shell,
+  .GW-main-container,
+  .GW-loader-page,
+  .GW-review-order-page,
+  .GW-quotation-sent-page,
+  .portfolio-archive-shell,
+  .portfolio-archive-page,
+  .PR-shell,
+  .PR-page,
+  .services-shell,
+  .services-page,
+  .TO-shell,
+  .TO-page,
+  .fcsi-shell,
+  .fcsi-page,
+  .founders-club-shell,
+  .founders-club-page,
+  .portfolio-expanded-shell,
+  .portfolio-expanded-page
+) {
+  background: #101010 !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(.nb-header) {
+  background: #141414 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.sorbetes-dark :is(.nb-brand-name, .nb-link, .nb-dropdown-item) {
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(.nb-dropdown-menu, .nb-mobile-menu) {
+  background: #1e1e1e !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55) !important;
+}
+
+body.sorbetes-dark :is(.nb-dropdown-item + .nb-dropdown-item) {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.sorbetes-dark :is(.nb-caret) {
+  filter: invert(1);
+}
+
+body.sorbetes-dark :is(
+  .hp-page,
+  .contact-page,
+  .fabric-guide-page,
+  .guide-page,
+  .MO-page,
+  .DFF-shell,
+  .founders-club-guide-page,
+  .auth-page,
+  .forgot-page,
+  .our-story-page,
+  .portfolio-page,
+  .GW-main-container,
+  .portfolio-archive-page,
+  .PR-page,
+  .services-page,
+  .TO-page,
+  .fcsi-page,
+  .founders-club-page,
+  .portfolio-expanded-page
+) :is(h1, h2, h3, h4, p, span, label, li, a, small, strong, button) {
+  color: inherit;
+}
+
+body.sorbetes-dark :is(
+  [class*='card'],
+  [class*='panel'],
+  [class*='modal'],
+  [class*='form-wrapper'],
+  [class*='form-panel'],
+  [class*='input-wrapper'],
+  [class*='message-card'],
+  [class*='confirmation'],
+  [class*='faq-question'],
+  [class*='order'],
+  [class*='summary'],
+  [class*='dropdown-menu']
+) {
+  background-color: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(input, textarea, select) {
+  background-color: #121212 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(input, textarea, select)::placeholder {
+  color: rgba(255, 255, 255, 0.38) !important;
+}
+
+body.sorbetes-dark :is(hr, [class*='divider']) {
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+body.sorbetes-dark :is(
+  .hp-btn-primary,
+  .nb-btn-dark,
+  [class*='btn-primary'],
+  [class*='btn-save'],
+  [class$='submit'],
+  [class*='submit-button'],
+  [class*='continue']
+) {
+  background: #ffce31 !important;
+  border-color: #ffce31 !important;
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .MO-order-submitted {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(
+  .hp-btn-outline,
+  .nb-btn-outline,
+  [class*='btn-outline'],
+  [class*='back-button'],
+  [class*='secondary']
+) {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.34) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark :is(svg) {
+  color: currentColor;
 }
 

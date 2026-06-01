@@ -7,6 +7,7 @@ import wLogo from '../assets/w_logo.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const GUIDE_BASE_WIDTH = 1920
 const GUIDE_PAGE_HEIGHT = 4261
@@ -87,11 +88,6 @@ function Guide() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    window.history.pushState({}, '', '?page=home')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   return (
     <div className="guide-shell">
       <div
@@ -105,7 +101,7 @@ function Guide() {
           <div className="guide-page">
             <Navbar logoSrc={logoCircleImg} currentPage="guide" />
 
-            <button type="button" className="guide-back-button" aria-label="Back to homepage" onClick={goToHome}>
+            <button type="button" className="guide-back-button" aria-label="Go back" onClick={() => navigateBack()}>
               <IoChevronBack className="guide-back-icon" aria-hidden="true" />
             </button>
 

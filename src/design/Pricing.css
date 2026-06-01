@@ -334,3 +334,73 @@
   border: none;
   cursor: pointer;
 }
+
+/* Dark mode */
+body.sorbetes-dark .PR-cards {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .PR-card {
+  background: #1a1a1a !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+body.sorbetes-dark .PR-card h2,
+body.sorbetes-dark .PR-card p {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .PR-icon {
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #ffffff !important;
+}
+
+body.sorbetes-dark .PR-icon svg {
+  color: #ffffff !important;
+}
+
+body.sorbetes-dark .PR-title,
+body.sorbetes-dark .PR-subtitle {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .PR-back,
+body.sorbetes-dark .PR-guide {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .PR-back svg {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .PR-btn {
+  background: #ffce31 !important;
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .PR-outline {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .PR-outline span,
+body.sorbetes-dark .PR-demo-icon {
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .PR-info {
+  background: rgba(255, 206, 49, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+body.sorbetes-dark .PR-i {
+  background: rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .PR-ellipse {
+  opacity: 0.35;
+}

@@ -205,6 +205,15 @@
   opacity: 0.85;
 }
 
+.sorbetes-dark .hp-footer-social-link {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.sorbetes-dark .hp-footer-social-link svg {
+  color: #000000 !important;
+}
+
 @media (max-width: 1200px) {
   .hp-footer {
     padding: 40px 32px 28px;

@@ -10,6 +10,7 @@ import { HiMiniUsers } from "react-icons/hi2"
 import { FaPenAlt } from "react-icons/fa"
 import { IoChevronBack, IoClose } from "react-icons/io5"
 import { FiVolume2, FiVolumeX, FiPlay, FiPause } from "react-icons/fi"
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const PR_BASE_WIDTH = 1920
 const PR_PAGE_HEIGHT = 1562
@@ -21,11 +22,6 @@ function getPricingScale() {
   }
 
   return Math.min(Math.max((window.innerWidth - 24) / PR_BASE_WIDTH, 0.18), 1)
-}
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
 }
 
 export default function Pricing() {
@@ -64,7 +60,7 @@ export default function Pricing() {
             <Navbar logoSrc={logoCircleImg} currentPage="pricing" />
 
             <div className="PR-top-row">
-              <button className="PR-back" type="button" aria-label="Back to homepage" onClick={() => navigate('?page=home')}>
+              <button className="PR-back" type="button" aria-label="Go back" onClick={() => navigateBack()}>
                 <IoChevronBack aria-hidden="true" />
               </button>
               <button className="PR-guide" type="button" onClick={() => navigate('?page=guide')}>

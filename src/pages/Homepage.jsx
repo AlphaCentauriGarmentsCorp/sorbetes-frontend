@@ -131,7 +131,8 @@ function Homepage() {
   useEffect(() => {
     chatOpenRef.current = chatOpen
     if (chatOpen) {
-      setUnreadReplies(0)
+      const frame = window.requestAnimationFrame(() => setUnreadReplies(0))
+      return () => window.cancelAnimationFrame(frame)
     }
   }, [chatOpen])
 
@@ -351,7 +352,9 @@ function Homepage() {
                 <button type="button" className="hp-btn hp-btn-primary" onClick={() => navigate('?page=portfolio')}>
                   EXPLORE MORE
                 </button>
-                <button type="button" className="hp-btn hp-btn-outline">AVAIL NOW</button>
+                <button type="button" className="hp-btn hp-btn-outline" onClick={() => navigate('?page=pricing')}>
+                  AVAIL NOW
+                </button>
               </>
             )}
           </div>
@@ -433,7 +436,9 @@ function Homepage() {
             </article>
           ))}
         </div>
-        <button type="button" className="hp-btn hp-btn-primary hp-services-avail">AVAIL NOW</button>
+        <button type="button" className="hp-btn hp-btn-primary hp-services-avail" onClick={() => navigate('?page=pricing')}>
+          AVAIL NOW
+        </button>
       </section>
 
       <section className="hp-why" aria-label="Why choose us">
@@ -480,7 +485,13 @@ function Homepage() {
             <p className="hp-quote-card-text">Fill out the order form directly and proceed to pricing with your preferred garment and production specifications.</p>
           </article>
         </div>
-        <button type="button" className="hp-btn hp-btn-primary hp-quote-btn">Request a Quote</button>
+        <button
+          type="button"
+          className="hp-btn hp-btn-primary hp-quote-btn"
+          onClick={() => navigate('?page=pricing')}
+        >
+          Request a Quote
+        </button>
       </section>
 
       <section className="hp-trusted" aria-label="Trusted brands">

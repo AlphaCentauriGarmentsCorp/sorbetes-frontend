@@ -478,6 +478,43 @@
   opacity: 0.9;
 }
 
+.sorbetes-dark .fcsi-experience {
+  background: #1a1a1a;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+.sorbetes-dark .fcsi-experience-intro h2,
+.sorbetes-dark .fcsi-experience-intro p,
+.sorbetes-dark .fcsi-field label,
+.sorbetes-dark .fcsi-rating-block > span {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .fcsi-field input,
+.sorbetes-dark .fcsi-field textarea {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .fcsi-field input::placeholder,
+.sorbetes-dark .fcsi-field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.sorbetes-dark .fcsi-rating-star {
+  color: rgba(255, 255, 255, 0.24);
+}
+
+.sorbetes-dark .fcsi-rating-star.is-active {
+  color: #ffce31;
+}
+
+.sorbetes-dark .fcsi-submit {
+  background: #ffce31;
+  color: #111111;
+}
+
 @media (max-width: 1200px) {
   .fcsi-nav {
     display: none;

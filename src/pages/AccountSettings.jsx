@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
-import { FaCheck, FaExclamation, FaPen, FaUser } from 'react-icons/fa'
+import { FaCheck, FaExclamation, FaEye, FaInfoCircle, FaPen, FaUser } from 'react-icons/fa'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
+import foundersLogo from '../assets/Founders-logo.png'
 import wLogo from '../assets/w_logo.png'
 import '../design/AccountSettings.css'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
-import { getCurrentUser, updateCurrentUser } from '../utils/auth.js'
+import { getCurrentUser, updateCurrentUser, updateCurrentUserPassword } from '../utils/auth.js'
 import { navigateToPage } from '../utils/navigation.js'
 
 const SAVE_TOAST_DURATION_MS = 5000
@@ -19,7 +20,7 @@ const PROFILE_NAV = [
   { key: 'account', label: 'Account' },
   { key: 'address', label: 'Address' },
   { key: 'password', label: 'Password' },
-  { key: 'founders-club', label: "Sorbetes Founder's Club", page: 'founders-club' },
+  { key: 'founders-club', label: "Sorbetes Founder's Club" },
   { key: 'rewards', label: 'Rewards' },
 ]
 
@@ -31,6 +32,52 @@ const DEFAULT_PROFILE = {
 }
 
 const PROFILE_TEXT_FIELDS = ['firstName', 'lastName', 'email', 'phone']
+
+const DEFAULT_PASSWORD_FORM = {
+  currentPassword: '',
+  newPassword: '',
+  confirmPassword: '',
+}
+
+const DEFAULT_FOUNDERS_FORM = {
+  pictureUrl: '',
+  logoUrl: '',
+  firstName: '',
+  lastName: '',
+  facebookLink: '',
+  instagramLink: '',
+  tiktokLink: '',
+  highlightedMessage: '',
+  message: '',
+  referenceNumber: '',
+}
+
+const FOUNDERS_REQUIRED_FIELDS = ['firstName', 'lastName', 'highlightedMessage', 'message']
+
+const DEFAULT_REWARDS_FORM = {
+  referenceCode: '',
+  friendReferenceCode: '',
+  referralCode: '',
+  hasAccess: false,
+}
+
+const PASSWORD_REQUIREMENTS = [
+  {
+    key: 'safe-length',
+    label: 'Please add all necessary characters to create a safe password',
+    test: (value) => value.length >= 8,
+  },
+  {
+    key: 'number',
+    label: 'One number',
+    test: (value) => /\d/.test(value),
+  },
+  {
+    key: 'special',
+    label: 'One special character',
+    test: (value) => /[^A-Za-z0-9]/.test(value),
+  },
+]
 
 const DEFAULT_ADDRESS = {
   street: '117 Mother Ignacia',
@@ -110,6 +157,48 @@ function getInitialProfile() {
     email: user.email || DEFAULT_PROFILE.email,
     phone: user.phone || DEFAULT_PROFILE.phone,
     avatarUrl: user.avatarUrl || '',
+  }
+}
+
+function getInitialFoundersForm() {
+  const user = getCurrentUser()
+  const saved = user?.foundersClub || {}
+
+  return {
+    pictureUrl: saved.pictureUrl || '',
+    logoUrl: saved.logoUrl || '',
+    firstName: saved.firstName || user?.firstName || '',
+    lastName: saved.lastName || user?.lastName || '',
+    facebookLink: saved.facebookLink || '',
+    instagramLink: saved.instagramLink || '',
+    tiktokLink: saved.tiktokLink || '',
+    highlightedMessage: saved.highlightedMessage || '',
+    message: saved.message || '',
+    referenceNumber: saved.referenceNumber || '',
+  }
+}
+
+function createRewardReferralCode(user) {
+  const source = `${user?.username || user?.email || user?.firstName || 'sorbetes'}`
+    .replace(/[^a-z0-9]/gi, '')
+    .toUpperCase()
+  const base = (source || 'SORBETES').slice(0, 8).padEnd(8, '0')
+  const checksum = Array.from(`${user?.email || base}`).reduce(
+    (total, character) => total + character.charCodeAt(0),
+    0,
+  )
+
+  return `${base}${String(checksum).padStart(4, '0').slice(-4)}`
+}
+
+function getInitialRewardsForm() {
+  const user = getCurrentUser()
+  const saved = user?.rewards || {}
+
+  return {
+    ...DEFAULT_REWARDS_FORM,
+    ...saved,
+    referralCode: saved.referralCode || createRewardReferralCode(user),
   }
 }
 
@@ -209,13 +298,48 @@ function EditableField({
 export default function AccountSettings() {
   const [pageScale, setPageScale] = useState(() => getAccountScale())
   const [profile, setProfile] = useState(getInitialProfile)
+  const [savedAvatarUrl, setSavedAvatarUrl] = useState(() => getCurrentUser()?.avatarUrl || '')
+  const [savedDisplayName, setSavedDisplayName] = useState(
+    () => getCurrentUser()?.firstName || DEFAULT_PROFILE.firstName || 'Guest',
+  )
+  const [savedFoundersForm, setSavedFoundersForm] = useState(getInitialFoundersForm)
   const [address, setAddress] = useState(getInitialAddress)
   const [activeSection, setActiveSection] = useState('account')
   const [toast, setToast] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
+  const [passwordForm, setPasswordForm] = useState(DEFAULT_PASSWORD_FORM)
+  const [passwordMessage, setPasswordMessage] = useState('')
+  const [foundersForm, setFoundersForm] = useState(getInitialFoundersForm)
+  const [rewardsForm, setRewardsForm] = useState(getInitialRewardsForm)
+  const [passwordVisibility, setPasswordVisibility] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassword: false,
+  })
   const fileInputRef = useRef(null)
+  const foundersPictureInputRef = useRef(null)
+  const foundersLogoInputRef = useRef(null)
   const toastTimerRef = useRef(null)
-  const displayFirstName = profile.firstName || 'Guest'
+  const displayFirstName = savedDisplayName
+  const passwordRequirementStates = PASSWORD_REQUIREMENTS.map((requirement) => ({
+    ...requirement,
+    met: requirement.test(passwordForm.newPassword),
+  }))
+  const passwordRequirementsMet = passwordRequirementStates.every((requirement) => requirement.met)
+  const showPasswordRequirements = Boolean(passwordForm.newPassword || fieldErrors.newPassword)
+  const newPasswordTone = showPasswordRequirements
+    ? passwordRequirementsMet
+      ? 'valid'
+      : 'invalid'
+    : ''
+  const showConfirmPasswordMatch = Boolean(passwordForm.confirmPassword || fieldErrors.confirmPassword)
+  const confirmPasswordMatches =
+    Boolean(passwordForm.confirmPassword) && passwordForm.confirmPassword === passwordForm.newPassword
+  const confirmPasswordTone = showConfirmPasswordMatch
+    ? confirmPasswordMatches
+      ? 'valid'
+      : 'invalid'
+    : ''
 
   useEffect(() => {
     const handleResize = () => {
@@ -236,13 +360,17 @@ export default function AccountSettings() {
   }, [])
 
   useEffect(() => {
-    setAddress((current) => {
-      if (current.sameAsProfile !== false || current.shipping) {
-        return current
-      }
+    const frame = window.requestAnimationFrame(() => {
+      setAddress((current) => {
+        if (current.sameAsProfile !== false || current.shipping) {
+          return current
+        }
 
-      return { ...current, shipping: pickLocationFields(current) }
+        return { ...current, shipping: pickLocationFields(current) }
+      })
     })
+
+    return () => window.cancelAnimationFrame(frame)
   }, [])
 
   const handleProfileChange = (key, value) => {
@@ -348,6 +476,70 @@ export default function AccountSettings() {
     setProfile((current) => ({ ...current, avatarUrl: '' }))
   }
 
+  const updateFoundersFile = (key, file) => {
+    if (!file || file.size > 15 * 1024 * 1024) {
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setFoundersForm((current) => ({ ...current, [key]: reader.result }))
+      }
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleFoundersFileChange = (event, key) => {
+    updateFoundersFile(key, event.target.files?.[0])
+    event.target.value = ''
+  }
+
+  const handleFoundersFieldChange = (key, value) => {
+    setFoundersForm((current) => ({ ...current, [key]: value }))
+
+    if (fieldErrors[`founders-${key}`]) {
+      setFieldErrors((current) => {
+        const next = { ...current }
+        delete next[`founders-${key}`]
+        return next
+      })
+    }
+  }
+
+  const handleRemoveFoundersFile = (key) => {
+    setFoundersForm((current) => ({ ...current, [key]: '' }))
+  }
+
+  const handleRewardsFieldChange = (key, value) => {
+    setRewardsForm((current) => ({ ...current, [key]: value }))
+
+    if (fieldErrors[key]) {
+      setFieldErrors((current) => {
+        const next = { ...current }
+        delete next[key]
+        return next
+      })
+    }
+  }
+
+  const handlePasswordFieldChange = (key, value) => {
+    setPasswordForm((current) => ({ ...current, [key]: value }))
+    setPasswordMessage('')
+
+    if (fieldErrors[key]) {
+      setFieldErrors((current) => {
+        const next = { ...current }
+        delete next[key]
+        return next
+      })
+    }
+  }
+
+  const togglePasswordVisibility = (key) => {
+    setPasswordVisibility((current) => ({ ...current, [key]: !current[key] }))
+  }
+
   const showToast = (type) => {
     setToast(type)
     if (toastTimerRef.current) {
@@ -379,6 +571,8 @@ export default function AccountSettings() {
     })
 
     if (result.ok) {
+      setSavedAvatarUrl(profile.avatarUrl)
+      setSavedDisplayName(profile.firstName.trim() || 'Guest')
       showToast('success')
     }
   }
@@ -433,9 +627,141 @@ export default function AccountSettings() {
     }
   }
 
+  const savePassword = () => {
+    const errors = {}
+    const currentPassword = passwordForm.currentPassword.trim()
+    const newPassword = passwordForm.newPassword.trim()
+    const confirmPassword = passwordForm.confirmPassword.trim()
+
+    if (!passwordRequirementsMet) {
+      errors.newPassword = true
+    }
+
+    if (!confirmPassword || confirmPassword !== newPassword) {
+      errors.confirmPassword = true
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      setPasswordMessage(
+        confirmPassword && confirmPassword !== newPassword
+          ? 'New password and confirmation must match.'
+          : 'Please make sure your new password meets all requirements.',
+      )
+      showToast('error')
+      return
+    }
+
+    const result = updateCurrentUserPassword(currentPassword, newPassword)
+
+    if (!result.ok) {
+      setFieldErrors({ currentPassword: true })
+      setPasswordMessage(result.error)
+      showToast('error')
+      return
+    }
+
+    setFieldErrors({})
+    setPasswordMessage('')
+    setPasswordForm(DEFAULT_PASSWORD_FORM)
+    showToast('success')
+  }
+
+  const saveFoundersClub = () => {
+    const payload = {
+      pictureUrl: foundersForm.pictureUrl,
+      logoUrl: foundersForm.logoUrl,
+      firstName: foundersForm.firstName.trim(),
+      lastName: foundersForm.lastName.trim(),
+      facebookLink: foundersForm.facebookLink.trim(),
+      instagramLink: foundersForm.instagramLink.trim(),
+      tiktokLink: foundersForm.tiktokLink.trim(),
+      highlightedMessage: foundersForm.highlightedMessage.trim(),
+      message: foundersForm.message.trim(),
+      referenceNumber: foundersForm.referenceNumber.trim(),
+    }
+
+    const errors = FOUNDERS_REQUIRED_FIELDS.reduce((accumulator, key) => {
+      if (!payload[key]) {
+        accumulator[`founders-${key}`] = true
+      }
+      return accumulator
+    }, {})
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors)
+      showToast('error')
+      return
+    }
+
+    setFoundersForm(payload)
+
+    const result = updateCurrentUser({ foundersClub: payload })
+
+    if (result.ok) {
+      setSavedFoundersForm(payload)
+      showToast('success')
+    }
+  }
+
+  const saveRewards = () => {
+    const fieldKey = rewardsForm.hasAccess ? 'friendReferenceCode' : 'referenceCode'
+    const submittedCode = rewardsForm[fieldKey].trim()
+
+    if (!submittedCode) {
+      setFieldErrors({ [fieldKey]: true })
+      showToast('error')
+      return
+    }
+
+    const payload = {
+      ...rewardsForm,
+      [fieldKey]: submittedCode,
+      hasAccess: true,
+      referralCode: rewardsForm.referralCode || createRewardReferralCode(getCurrentUser()),
+    }
+
+    setFieldErrors({})
+    setRewardsForm(payload)
+
+    const result = updateCurrentUser({ rewards: payload })
+
+    if (result.ok) {
+      showToast('success')
+    }
+  }
+
+  const handleCopyReferralCode = async () => {
+    if (!rewardsForm.referralCode) {
+      return
+    }
+
+    try {
+      await navigator.clipboard.writeText(rewardsForm.referralCode)
+      showToast('success')
+    } catch {
+      showToast('error')
+    }
+  }
+
   const handleSave = () => {
     if (activeSection === 'address') {
       saveAddress()
+      return
+    }
+
+    if (activeSection === 'password') {
+      savePassword()
+      return
+    }
+
+    if (activeSection === 'founders-club') {
+      saveFoundersClub()
+      return
+    }
+
+    if (activeSection === 'rewards') {
+      saveRewards()
       return
     }
 
@@ -452,6 +778,96 @@ export default function AccountSettings() {
     setFieldErrors({})
     setToast(null)
   }
+
+  const renderPasswordField = (key, label, placeholder, tone = '') => (
+    <div className={`AS-password-field${tone ? ` AS-password-field-${tone}` : ''}`}>
+      <label className="AS-field-label" htmlFor={`as-${key}`}>
+        {label}
+      </label>
+      <div
+        className={`AS-password-input-wrap${tone ? ` AS-password-input-wrap-${tone}` : ''}${
+          fieldErrors[key] ? ' AS-password-input-wrap-error' : ''
+        }`}
+      >
+        <input
+          id={`as-${key}`}
+          className="AS-password-input"
+          type={passwordVisibility[key] ? 'text' : 'password'}
+          value={passwordForm[key]}
+          placeholder={placeholder}
+          onChange={(event) => handlePasswordFieldChange(key, event.target.value)}
+        />
+        <button
+          type="button"
+          className="AS-password-eye"
+          aria-label={passwordVisibility[key] ? `Hide ${label}` : `Show ${label}`}
+          onClick={() => togglePasswordVisibility(key)}
+        >
+          <FaEye aria-hidden="true" />
+        </button>
+      </div>
+    </div>
+  )
+
+  const renderFoundersUploadRow = ({ type, title, uploadLabel, previewUrl, draftUrl, inputRef }) => (
+    <div className="AS-founders-upload-row">
+      <div className="AS-founders-upload-info">
+        <span className="AS-founders-avatar" aria-hidden="true">
+          {previewUrl ? <img src={previewUrl} alt="" /> : <FaUser />}
+        </span>
+        <div className="AS-founders-upload-copy">
+          <p className="AS-founders-upload-title">{title}</p>
+          <p className="AS-founders-upload-hint">PNG, JPG under 15MB</p>
+        </div>
+      </div>
+      <div className="AS-founders-upload-actions">
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/jpg"
+          className="AS-file-input"
+          onChange={(event) => handleFoundersFileChange(event, type)}
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+        <button
+          type="button"
+          className="AS-btn AS-btn-primary"
+          onClick={() => inputRef.current?.click()}
+        >
+          {uploadLabel}
+        </button>
+        <button
+          type="button"
+          className="AS-btn AS-btn-remove"
+          onClick={() => handleRemoveFoundersFile(type)}
+          disabled={!draftUrl && !previewUrl}
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  )
+
+  const renderFoundersInput = ({ keyName, label, placeholder, required = false }) => (
+    <div className="AS-founders-field">
+      <label className="AS-field-label" htmlFor={`as-founders-${keyName}`}>
+        {label}
+        {required ? ' *' : ''}
+      </label>
+      <input
+        id={`as-founders-${keyName}`}
+        className={`AS-founders-input${
+          fieldErrors[`founders-${keyName}`] ? ' AS-founders-input-error' : ''
+        }`}
+        type="text"
+        value={foundersForm[keyName]}
+        placeholder={placeholder}
+        aria-invalid={Boolean(fieldErrors[`founders-${keyName}`])}
+        onChange={(event) => handleFoundersFieldChange(keyName, event.target.value)}
+      />
+    </div>
+  )
 
   return (
     <div className="AS-shell">
@@ -473,7 +889,11 @@ export default function AccountSettings() {
               <aside className="AS-sidebar" aria-label="Profile settings">
                 <div className="AS-user-card">
                   <span className="AS-user-avatar" aria-hidden="true">
-                    <FaUser />
+                    {savedAvatarUrl ? (
+                      <img src={savedAvatarUrl} alt="" />
+                    ) : (
+                      <FaUser />
+                    )}
                   </span>
                   <div className="AS-user-greeting">
                     <p className="AS-user-hello">Hello,</p>
@@ -501,7 +921,10 @@ export default function AccountSettings() {
                 </nav>
               </aside>
 
-              <section className="AS-panel" aria-label="Account settings">
+              <section
+                className={`AS-panel${activeSection === 'rewards' ? ' AS-panel-rewards' : ''}`}
+                aria-label="Account settings"
+              >
                 {toast ? (
                   <div
                     className={`AS-save-toast${toast === 'error' ? ' AS-save-toast-error' : ''}`}
@@ -540,8 +963,8 @@ export default function AccountSettings() {
                     <div className="AS-profile-picture-row">
                       <div className="AS-profile-picture-left">
                         <span className="AS-profile-avatar" aria-hidden="true">
-                          {profile.avatarUrl ? (
-                            <img src={profile.avatarUrl} alt="" />
+                          {savedAvatarUrl ? (
+                            <img src={savedAvatarUrl} alt="" />
                           ) : (
                             <FaUser />
                           )}
@@ -568,7 +991,7 @@ export default function AccountSettings() {
                           type="button"
                           className="AS-btn AS-btn-remove"
                           onClick={handleRemoveAvatar}
-                          disabled={!profile.avatarUrl}
+                          disabled={!profile.avatarUrl && !savedAvatarUrl}
                         >
                           Remove
                         </button>
@@ -799,6 +1222,315 @@ export default function AccountSettings() {
                       <button type="button" className="AS-btn AS-btn-save" onClick={handleSave}>
                         Save
                       </button>
+                    </div>
+                  </div>
+                ) : activeSection === 'password' ? (
+                  <div className="AS-panel-inner AS-panel-inner-password">
+                    <header className="AS-panel-header">
+                      <div className="AS-panel-heading">
+                        <h1 className="AS-panel-title">Password</h1>
+                        <p className="AS-panel-subtitle">Keep your password up to date.</p>
+                      </div>
+                      <hr className="AS-divider" />
+                    </header>
+
+                    <div className="AS-password-notice" role="note">
+                      <FaInfoCircle aria-hidden="true" />
+                      <p>
+                        Heads up! Accounts created using Google don&apos;t require a password. You can leave this
+                        section blank unless you&apos;d like to set one for manual login using your email and password.
+                      </p>
+                    </div>
+
+                    <div className="AS-password-form">
+                      <div className="AS-password-current-block">
+                        {renderPasswordField('currentPassword', 'Current Password', 'Enter your password')}
+                        <p className="AS-password-hint">
+                          <FaInfoCircle aria-hidden="true" />
+                          <span>Leave blank if your account uses Google sign-in.</span>
+                        </p>
+                      </div>
+
+                      <div className="AS-password-requirement-block">
+                        {renderPasswordField(
+                          'newPassword',
+                          'New Password',
+                          'Enter your new password',
+                          newPasswordTone,
+                        )}
+                        <ul
+                          className={`AS-password-requirements${
+                            newPasswordTone ? ` AS-password-requirements-${newPasswordTone}` : ''
+                          }`}
+                        >
+                          {passwordRequirementStates.map((requirement) => (
+                            <li
+                              key={requirement.key}
+                              className={
+                                requirement.met
+                                  ? 'AS-password-requirement AS-password-requirement-met'
+                                  : 'AS-password-requirement'
+                              }
+                            >
+                              {requirement.label}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="AS-password-match-block">
+                        {renderPasswordField(
+                          'confirmPassword',
+                          'Confirm New Password',
+                          'Confirm your new password',
+                          confirmPasswordTone,
+                        )}
+                        {showConfirmPasswordMatch ? (
+                          <p className={`AS-password-match AS-password-match-${confirmPasswordTone}`}>
+                            {confirmPasswordMatches
+                              ? 'Passwords match'
+                              : 'Confirm password must match your new password'}
+                          </p>
+                        ) : null}
+                      </div>
+
+                      {passwordMessage ? <p className="AS-password-message">{passwordMessage}</p> : null}
+
+                      <div className="AS-password-actions">
+                        <button type="button" className="AS-btn AS-btn-save" onClick={handleSave}>
+                          Change Password
+                        </button>
+                        <button
+                          type="button"
+                          className="AS-password-forgot"
+                          onClick={() => navigateToPage('forgot-password')}
+                        >
+                          Forgot password?
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : activeSection === 'founders-club' ? (
+                  <div className="AS-panel-inner AS-panel-inner-founders">
+                    <div className="AS-founders-scroll">
+                      <header className="AS-founders-header">
+                        <img className="AS-founders-logo" src={foundersLogo} alt="The Founders Club" />
+                        <a className="AS-founders-learn" href="?page=founders-club-guide">
+                          Learn more about Sorbetes Founder&apos;s Club
+                        </a>
+                      </header>
+
+                      <section className="AS-founders-intro">
+                        <h1>Be Featured on the Sorbetes Founder&apos;s Club</h1>
+                        <p>
+                          The Sorbetes Founder&apos;s Club highlights the brands that trusted us in developing their
+                          apparel and growing their identity. This section features testimonials, logos, and
+                          experiences from clients who have collaborated with our team, offering insight into how their
+                          ideas were transformed into finished garments. It serves as both recognition for our partners
+                          and inspiration for future brands looking to start their journey with Sorbetes.
+                        </p>
+                      </section>
+
+                      <hr className="AS-divider AS-divider-light" />
+
+                      <section className="AS-founders-uploads">
+                        {renderFoundersUploadRow({
+                          type: 'pictureUrl',
+                          title: 'Your Picture',
+                          uploadLabel: 'Upload profile picture',
+                          previewUrl: savedFoundersForm.pictureUrl,
+                          draftUrl: foundersForm.pictureUrl,
+                          inputRef: foundersPictureInputRef,
+                        })}
+                        {renderFoundersUploadRow({
+                          type: 'logoUrl',
+                          title: 'Logo',
+                          uploadLabel: 'Upload logo',
+                          previewUrl: savedFoundersForm.logoUrl,
+                          draftUrl: foundersForm.logoUrl,
+                          inputRef: foundersLogoInputRef,
+                        })}
+                      </section>
+
+                      <hr className="AS-divider AS-divider-light" />
+
+                      <section className="AS-founders-basic">
+                        <h2>Basic Information</h2>
+                        <div className="AS-field-row">
+                          {renderFoundersInput({
+                            keyName: 'firstName',
+                            label: 'First Name',
+                            placeholder: 'Enter your name',
+                            required: true,
+                          })}
+                          {renderFoundersInput({
+                            keyName: 'lastName',
+                            label: 'Last Name',
+                            placeholder: 'Enter your last name',
+                            required: true,
+                          })}
+                        </div>
+                      </section>
+
+                      <section className="AS-founders-basic">
+                        <div className="AS-founders-section-heading">
+                          <h2>Social Media Link</h2>
+                          <p>At least one social media link is enough.</p>
+                        </div>
+                        {renderFoundersInput({
+                          keyName: 'facebookLink',
+                          label: 'Facebook Link',
+                          placeholder: 'Enter your name',
+                        })}
+                        {renderFoundersInput({
+                          keyName: 'instagramLink',
+                          label: 'Instagram Link',
+                          placeholder: 'Enter your name',
+                        })}
+                        {renderFoundersInput({
+                          keyName: 'tiktokLink',
+                          label: 'Tiktok Link',
+                          placeholder: 'Enter your name',
+                        })}
+                      </section>
+
+                      <hr className="AS-divider AS-divider-light" />
+
+                      <section className="AS-founders-basic AS-founders-message-section">
+                        <h2>Your Message</h2>
+                        {renderFoundersInput({
+                          keyName: 'highlightedMessage',
+                          label: 'Highlighted Message',
+                          placeholder: 'Enter highlighted message here',
+                          required: true,
+                        })}
+                        <div className="AS-founders-field">
+                          <label className="AS-field-label" htmlFor="as-founders-message">
+                            Message *
+                          </label>
+                          <textarea
+                            id="as-founders-message"
+                            className={`AS-founders-input AS-founders-textarea${
+                              fieldErrors['founders-message'] ? ' AS-founders-input-error' : ''
+                            }`}
+                            value={foundersForm.message}
+                            placeholder="Enter your message..."
+                            aria-invalid={Boolean(fieldErrors['founders-message'])}
+                            onChange={(event) => handleFoundersFieldChange('message', event.target.value)}
+                          />
+                        </div>
+                        {renderFoundersInput({
+                          keyName: 'referenceNumber',
+                          label: 'Reference Number',
+                          placeholder: 'Enter your reference number',
+                        })}
+                      </section>
+
+                      <div className="AS-save-row AS-founders-save-row">
+                        <button type="button" className="AS-btn AS-btn-save" onClick={handleSave}>
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : activeSection === 'rewards' ? (
+                  <div className="AS-panel-inner AS-panel-inner-rewards">
+                    <header className="AS-rewards-header">
+                      <div className="AS-panel-heading">
+                        <h1 className="AS-panel-title">Earn Points & Get Rewards with Referrals</h1>
+                        <p className="AS-rewards-subtitle">
+                          Invite friends, earn points, and redeem them for free treats and perks. 100 points = 1 free
+                          product! The more you refer, the more you earn.
+                        </p>
+                      </div>
+                      <hr className="AS-divider AS-divider-light" />
+                    </header>
+
+                    {!rewardsForm.hasAccess ? (
+                      <div className="AS-rewards-notice" role="note">
+                        <FaInfoCircle aria-hidden="true" />
+                        <p>
+                          Please enter your reference code to access the referral system and start earning points for
+                          free production.
+                        </p>
+                      </div>
+                    ) : null}
+
+                    <div className="AS-rewards-form">
+                      {rewardsForm.hasAccess ? (
+                        <div className="AS-rewards-field">
+                          <label className="AS-rewards-label" htmlFor="as-rewards-referral-code">
+                            Your Referral Code:
+                          </label>
+                          <div className="AS-rewards-input-row">
+                            <input
+                              id="as-rewards-referral-code"
+                              className="AS-rewards-input"
+                              type="text"
+                              value={rewardsForm.referralCode}
+                              readOnly
+                            />
+                            <button
+                              type="button"
+                              className="AS-rewards-submit"
+                              onClick={handleCopyReferralCode}
+                            >
+                              Copy to Clipboard
+                            </button>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      <div className="AS-rewards-field">
+                        <label
+                          className="AS-rewards-label"
+                          htmlFor={
+                            rewardsForm.hasAccess
+                              ? 'as-rewards-friend-reference-code'
+                              : 'as-rewards-reference-code'
+                          }
+                        >
+                          {rewardsForm.hasAccess ? 'Enter Referral Code:' : 'Enter your reference code:'}
+                        </label>
+                        <div
+                          className={`AS-rewards-input-row${
+                            fieldErrors[rewardsForm.hasAccess ? 'friendReferenceCode' : 'referenceCode']
+                              ? ' AS-rewards-input-row-error'
+                              : ''
+                          }`}
+                        >
+                          <input
+                            id={
+                              rewardsForm.hasAccess
+                                ? 'as-rewards-friend-reference-code'
+                                : 'as-rewards-reference-code'
+                            }
+                            className="AS-rewards-input"
+                            type="text"
+                            value={
+                              rewardsForm.hasAccess
+                                ? rewardsForm.friendReferenceCode
+                                : rewardsForm.referenceCode
+                            }
+                            placeholder={
+                              rewardsForm.hasAccess
+                                ? "Enter your friend's referral code here"
+                                : 'Enter your reference code here'
+                            }
+                            aria-invalid={Boolean(
+                              fieldErrors[rewardsForm.hasAccess ? 'friendReferenceCode' : 'referenceCode'],
+                            )}
+                            onChange={(event) =>
+                              handleRewardsFieldChange(
+                                rewardsForm.hasAccess ? 'friendReferenceCode' : 'referenceCode',
+                                event.target.value,
+                              )
+                            }
+                          />
+                          <button type="button" className="AS-rewards-submit" onClick={handleSave}>
+                            Submit
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ) : (

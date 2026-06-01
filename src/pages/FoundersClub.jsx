@@ -9,6 +9,7 @@ import foundersClubKush from '../assets/Kush.jpg'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const FOUNDERS_CLUB_BASE_WIDTH = 1920
 const FOUNDERS_CLUB_PAGE_HEIGHT = 3877
@@ -109,11 +110,6 @@ function FoundersClub() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    window.history.pushState({}, '', '?page=home')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   const goToSignUp = () => {
     window.history.pushState({}, '', '?page=auth&mode=signup')
     window.dispatchEvent(new Event('cursor:navigate'))
@@ -140,7 +136,7 @@ function FoundersClub() {
             <Navbar logoSrc={foundersLogo} currentPage="founders-club" logoOnly />
 
             <div className="fc-top-links">
-              <button type="button" className="fc-back-button" aria-label="Back to homepage" onClick={goToHome}>
+              <button type="button" className="fc-back-button" aria-label="Go back" onClick={() => navigateBack()}>
                 <IoChevronBack aria-hidden="true" />
               </button>
               <a href="?page=founders-club-guide" onClick={goToFoundersGuide}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaCheck, FaClipboardList, FaTruck } from 'react-icons/fa'
 import { IoChevronBack } from 'react-icons/io5'
 import Navbar from './Navbar.jsx'
@@ -15,10 +15,11 @@ import {
   STUDIO_NAME,
   getTrackingForReference,
 } from '../data/orderTracking.js'
+import { navigateBack } from '../utils/navigation.js'
 
 const TO_BASE_WIDTH = 1920
-const TO_PAGE_HEIGHT = 3600
-const TO_BASE_HEIGHT = TO_PAGE_HEIGHT + FOOTER_CANVAS_HEIGHT
+const TO_PAGE_HEIGHT = 2100
+const TO_PAGE_BOTTOM_SPACE = 180
 
 const MAP_EMBED_URL =
   'https://www.google.com/maps?q=117%20Mother%20Ignacia%20Ave%2C%20Quezon%20City%2C%20Philippines&output=embed'
@@ -47,11 +48,6 @@ function getTrackOrderScale() {
   }
 
   return Math.min(Math.max((window.innerWidth - 24) / TO_BASE_WIDTH, 0.18), 1)
-}
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
 }
 
 function TrackingDetailsCard({ tracking }) {
@@ -87,9 +83,9 @@ function TrackingDetailsCard({ tracking }) {
         }`}
         aria-hidden="true"
       >
-        {STAGE_ICONS.map(({ key, Icon }, index) => {
-          const isProduction = key === 'production'
-          const isDeliveredStage = key === 'delivered'
+        {STAGE_ICONS.map((stage, index) => {
+          const isProduction = stage.key === 'production'
+          const isDeliveredStage = stage.key === 'delivered'
           const isOutlinedComplete = isDelivered && index < 3
           const isFilledComplete = isDelivered && isDeliveredStage
           const isActive = !isDelivered && index === activeStageIndex
@@ -97,7 +93,7 @@ function TrackingDetailsCard({ tracking }) {
           const lineActive = !stepperMuted && index > 0 && index <= activeStageIndex
 
           return (
-            <div key={key} className="TO-details-stage-wrap">
+            <div key={stage.key} className="TO-details-stage-wrap">
               {index > 0 ? (
                 <span
                   className={`TO-details-stage-line${
@@ -119,7 +115,7 @@ function TrackingDetailsCard({ tracking }) {
                 {isProduction ? (
                   <ProductionStageIcon active={isOutlinedComplete || isActive || isPast} />
                 ) : (
-                  <Icon aria-hidden="true" />
+                  <stage.Icon aria-hidden="true" />
                 )}
               </span>
             </div>
@@ -219,9 +215,13 @@ function TrackingDetailsCard({ tracking }) {
 export default function TrackOrder() {
   const [pageScale, setPageScale] = useState(() => getTrackOrderScale())
   const [reference, setReference] = useState('')
+  const trackSectionRef = useRef(null)
+  const [measuredPageHeight, setMeasuredPageHeight] = useState(TO_PAGE_HEIGHT)
   const trimmedReference = reference.trim()
   const tracking = getTrackingForReference(trimmedReference)
   const hasTracking = Boolean(tracking)
+  const pageHeight = Math.max(TO_PAGE_HEIGHT, measuredPageHeight)
+  const canvasHeight = pageHeight + FOOTER_CANVAS_HEIGHT
 
   useEffect(() => {
     const handleResize = () => {
@@ -233,27 +233,49 @@ export default function TrackOrder() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    const section = trackSectionRef.current
+    if (!section) {
+      return undefined
+    }
+
+    const updatePageHeight = () => {
+      window.requestAnimationFrame(() => {
+        setMeasuredPageHeight(
+          Math.max(TO_PAGE_HEIGHT, section.offsetTop + section.offsetHeight + TO_PAGE_BOTTOM_SPACE),
+        )
+      })
+    }
+
+    updatePageHeight()
+
+    const observer = new ResizeObserver(updatePageHeight)
+    observer.observe(section)
+
+    return () => observer.disconnect()
+  }, [hasTracking])
+
   return (
     <div className="TO-shell">
       <div
         className="TO-scale-frame"
         style={{
           width: `${TO_BASE_WIDTH * pageScale}px`,
-          height: `${TO_BASE_HEIGHT * pageScale}px`,
+          height: `${canvasHeight * pageScale}px`,
         }}
       >
         <div
           className="TO-scale-content"
-          style={{ height: `${TO_BASE_HEIGHT}px`, transform: `scale(${pageScale})` }}
+          style={{ height: `${canvasHeight}px`, transform: `scale(${pageScale})` }}
         >
-          <main className="TO-page">
+          <main className="TO-page" style={{ minHeight: `${pageHeight}px` }}>
             <Navbar logoSrc={logoCircleImg} currentPage="track-order" />
 
             <button
               type="button"
               className="TO-back"
-              aria-label="Back to homepage"
-              onClick={() => navigate('?page=home')}
+              aria-label="Go back"
+              onClick={() => navigateBack()}
             >
               <IoChevronBack aria-hidden="true" />
             </button>
@@ -269,7 +291,7 @@ export default function TrackOrder() {
               </p>
             </header>
 
-            <section className="TO-track-section" aria-label="Order tracking">
+            <section className="TO-track-section" ref={trackSectionRef} aria-label="Order tracking">
               <div className="TO-map-wrap">
                 <iframe
                   className="TO-map"

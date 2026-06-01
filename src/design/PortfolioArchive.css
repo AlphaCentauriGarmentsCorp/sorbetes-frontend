@@ -470,3 +470,28 @@
 .portfolio-archive-pagination-page:hover {
   opacity: 0.9;
 }
+
+.sorbetes-dark .portfolio-archive-pagination {
+  background: #1a1a1a;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+.sorbetes-dark .portfolio-archive-pagination-summary,
+.sorbetes-dark .portfolio-archive-pagination-total,
+.sorbetes-dark .portfolio-archive-pagination-rows span {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .portfolio-archive-pagination-arrow {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.sorbetes-dark .portfolio-archive-pagination-page {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .portfolio-archive-intro-card {
+  background: transparent;
+}

@@ -73,16 +73,16 @@ function Footer({ logoSrc }) {
         <div className="hp-footer-section hp-footer-follow">
           <h3 className="hp-footer-heading">Follow us</h3>
           <div className="hp-footer-social-row">
-            {SOCIAL_LINKS.map(({ href, label, className, icon: Icon }) => (
+            {SOCIAL_LINKS.map((social) => (
               <a
-                key={label}
-                className={className}
-                href={href}
+                key={social.label}
+                className={social.className}
+                href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`Open Sorbetes on ${label}`}
+                aria-label={`Open Sorbetes on ${social.label}`}
               >
-                <Icon aria-hidden="true" />
+                <social.icon aria-hidden="true" />
               </a>
             ))}
           </div>

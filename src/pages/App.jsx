@@ -21,10 +21,12 @@ import GetInTouch from './GetInTouch.jsx'
 import MyOrders from './MyOrders.jsx'
 import TrackOrder from './TrackOrder.jsx'
 import AccountSettings from './AccountSettings.jsx'
+import WalkInForm from './WalkInForm.jsx'
 import { ensureFoundersClubAccount, isSignedIn } from '../utils/auth.js'
 import '../design/index.css'
 
 import { getPageParam } from '../utils/navigation.js'
+import { applySavedDarkMode } from '../utils/theme.js'
 
 export default function App() {
   const [navVersion, setNavVersion] = useState(0)
@@ -40,6 +42,7 @@ export default function App() {
     window.addEventListener('cursor:auth-change', syncAuth)
 
     ensureFoundersClubAccount()
+    applySavedDarkMode()
     syncAuth()
 
     return () => {
@@ -55,6 +58,7 @@ export default function App() {
     document.body.scrollTop = 0
   }, [page])
 
+  if (page === 'walk-in') return <WalkInForm />
   if (page === 'otp') return <OtpVerification />
   if (page === 'auth') return <Auth />
   if (page === 'forgot-password') return <ForgotPassword />

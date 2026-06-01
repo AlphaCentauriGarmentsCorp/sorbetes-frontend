@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
+import { navigateBack } from '../utils/navigation.js'
 import '../design/OtpVerification.css'
 
 const OTP_LENGTH = 6
@@ -59,7 +60,7 @@ function OtpVerification() {
   }
 
   const handleBack = () => {
-    if (window.history.length > 0) window.history.back()
+    navigateBack('?page=auth')
   }
 
   return (

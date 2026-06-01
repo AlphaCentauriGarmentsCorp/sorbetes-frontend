@@ -599,3 +599,22 @@
     transform: translateX(calc(-50% - 47.5px));
   }
 }
+
+.sorbetes-dark .services-why-icon-wrap {
+  background: rgba(255, 206, 49, 0.18);
+  border-color: rgba(255, 206, 49, 0.32);
+}
+
+.sorbetes-dark .services-why-icon,
+.sorbetes-dark .services-why-icon-users {
+  color: #ffce31;
+}
+
+.sorbetes-dark .services-why-icon-handshake {
+  color: #d38a3a;
+}
+
+.sorbetes-dark .services-why-icon-award,
+.sorbetes-dark .services-why-icon-location {
+  color: #8fc7ff;
+}

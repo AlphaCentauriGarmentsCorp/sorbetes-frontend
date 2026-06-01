@@ -8,6 +8,7 @@ import wLogo from '../assets/w_logo.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const CONTACT_BASE_WIDTH = 1920
 const CONTACT_PAGE_HEIGHT = 3013
@@ -78,11 +79,6 @@ function getContactScale() {
   return Math.min(Math.max((window.innerWidth - 24) / CONTACT_BASE_WIDTH, 0.18), 1)
 }
 
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
-}
-
 function GetInTouch() {
   const [pageScale, setPageScale] = useState(() => getContactScale())
   const [openFaqs, setOpenFaqs] = useState([])
@@ -100,10 +96,6 @@ function GetInTouch() {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  const goToHome = () => {
-    navigate('?page=home')
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -148,7 +140,7 @@ function GetInTouch() {
               </section>
             ) : (
               <>
-                <button type="button" className="contact-back-button" aria-label="Back to homepage" onClick={goToHome}>
+                <button type="button" className="contact-back-button" aria-label="Go back" onClick={() => navigateBack()}>
                   <IoChevronBack aria-hidden="true" />
                 </button>
 
@@ -160,12 +152,12 @@ function GetInTouch() {
                 </div>
 
                 <div className="contact-detail-list">
-                  {contactDetails.map(({ Icon, text }, index) => (
+                  {contactDetails.map((detail, index) => (
                     <div className="contact-detail-row" key={index}>
                       <span className="contact-icon-circle" aria-hidden="true">
-                        <Icon />
+                        <detail.Icon />
                       </span>
-                      <p>{text}</p>
+                      <p>{detail.text}</p>
                     </div>
                   ))}
                 </div>
