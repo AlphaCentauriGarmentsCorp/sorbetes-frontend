@@ -230,6 +230,18 @@
   height: 24px;
 }
 
+.sorbetes-dark .contact-social {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.sorbetes-dark .contact-social-dark {
+  background: #000000 !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
 .contact-form-panel {
   width: 881px;
   height: 704px;
@@ -426,6 +438,22 @@
   font-size: 20px;
   line-height: 24px;
   color: #000000;
+}
+
+.sorbetes-dark .contact-faq-item {
+  background: #1a1a1a;
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .contact-faq-question,
+.sorbetes-dark .contact-faq-item p,
+.sorbetes-dark .contact-faq > p {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .contact-faq-item-open {
+  background: #202020;
 }
 
 .contact-map {

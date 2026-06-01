@@ -3,11 +3,7 @@ import { FaCheckCircle } from 'react-icons/fa'
 import { IoArrowBack } from 'react-icons/io5'
 import '../design/ForgotPassword.css'
 import logoImg from '../assets/Logo Sorbetes.jpg'
-
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
-}
+import { navigateBack } from '../utils/navigation.js'
 
 function ForgotPassword() {
   const [emailSent, setEmailSent] = useState(false)
@@ -47,7 +43,7 @@ function ForgotPassword() {
           type="button"
           className="forgot-back-button"
           aria-label="Back to login"
-          onClick={() => navigate('?page=auth')}
+          onClick={() => navigateBack('?page=auth')}
         >
           <IoArrowBack aria-hidden="true" />
         </button>
@@ -59,7 +55,7 @@ function ForgotPassword() {
               <h2 id="forgot-confirmation-title">Email Successfully Sent</h2>
               <p>A secure reset link has been delivered to your email address.</p>
             </div>
-            <button type="button" className="forgot-submit" onClick={() => navigate('?page=home')}>
+            <button type="button" className="forgot-submit" onClick={() => navigateBack()}>
               Back to website
             </button>
           </section>

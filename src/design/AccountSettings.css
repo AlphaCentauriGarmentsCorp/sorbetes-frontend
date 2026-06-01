@@ -63,6 +63,13 @@
   place-items: center;
   flex-shrink: 0;
   font-size: 22px;
+  overflow: hidden;
+}
+
+.AS-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .AS-user-greeting {
@@ -153,6 +160,12 @@
   overflow: visible;
 }
 
+.AS-panel-rewards {
+  min-height: 501px;
+  padding-top: 41px;
+  padding-bottom: 50px;
+}
+
 .AS-save-toast {
   position: absolute;
   top: 28px;
@@ -236,6 +249,355 @@
 .AS-panel-inner-address {
   gap: 25px;
   align-items: stretch;
+}
+
+.AS-panel-inner-password {
+  align-items: stretch;
+  gap: 70px;
+}
+
+.AS-panel-inner-founders {
+  align-items: stretch;
+  gap: 24px;
+}
+
+.AS-panel-inner-rewards {
+  align-items: stretch;
+  gap: 50px;
+}
+
+.AS-rewards-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.AS-rewards-subtitle {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #000000;
+}
+
+.AS-rewards-notice {
+  width: 100%;
+  min-height: 37px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background: rgba(255, 206, 49, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.AS-rewards-notice p {
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+.AS-rewards-notice svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.AS-rewards-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.AS-rewards-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.AS-rewards-label {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  color: #000000;
+}
+
+.AS-rewards-input-row {
+  width: 100%;
+  min-height: 39px;
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 11px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.AS-rewards-input-row-error {
+  border-color: #d85c66;
+  background: rgba(216, 92, 102, 0.04);
+}
+
+.AS-rewards-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 11px 28px;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.AS-rewards-input::placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.AS-rewards-input:focus {
+  outline: none;
+}
+
+.AS-rewards-submit {
+  flex: 0 0 178px;
+  border: none;
+  background: #000000;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  cursor: pointer;
+}
+
+.AS-rewards-submit:hover {
+  opacity: 0.88;
+}
+
+.AS-founders-scroll {
+  max-height: 773px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  scrollbar-width: thin;
+  scrollbar-color: #000000 rgba(0, 0, 0, 0.2);
+}
+
+.AS-founders-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.AS-founders-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+}
+
+.AS-founders-scroll::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 20px;
+}
+
+.AS-founders-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.AS-founders-logo {
+  width: 90px;
+  height: 86px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.AS-founders-learn {
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 400;
+  color: #555555;
+  text-decoration: underline;
+  text-align: right;
+}
+
+.AS-founders-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.AS-founders-intro h1,
+.AS-founders-basic h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  color: #000000;
+}
+
+.AS-founders-intro p {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #000000;
+}
+
+.AS-founders-uploads {
+  display: flex;
+  flex-direction: column;
+  gap: 39px;
+}
+
+.AS-founders-upload-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.AS-founders-upload-info {
+  display: flex;
+  align-items: center;
+  gap: 39px;
+  min-width: 0;
+}
+
+.AS-founders-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #000000;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.AS-founders-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.AS-founders-upload-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.AS-founders-upload-title,
+.AS-founders-upload-hint {
+  margin: 0;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.AS-founders-upload-title {
+  color: #000000;
+}
+
+.AS-founders-upload-hint {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.AS-founders-upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  flex-shrink: 0;
+}
+
+.AS-founders-basic {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.AS-founders-section-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.AS-founders-section-heading p {
+  margin: 0;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #000000;
+}
+
+.AS-founders-field {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.AS-founders-input {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 28px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 11px;
+  box-sizing: border-box;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.AS-founders-input::placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.AS-founders-input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.45);
+}
+
+.AS-founders-input-error {
+  border-color: #d85c66;
+  background: rgba(216, 92, 102, 0.04);
+}
+
+.AS-founders-input-error::placeholder {
+  color: rgba(216, 92, 102, 0.65);
+}
+
+.AS-founders-message-section {
+  gap: 36px;
+}
+
+.AS-founders-textarea {
+  min-height: 305px;
+  resize: vertical;
+  line-height: 17px;
+}
+
+.AS-founders-save-row {
+  flex-shrink: 0;
+  padding-bottom: 6px;
 }
 
 .AS-panel-scroll {
@@ -606,6 +968,274 @@
   background: #f5f5f5;
 }
 
+.AS-password-notice {
+  width: 100%;
+  min-height: 37px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background: rgba(255, 206, 49, 0.3);
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.AS-password-notice p {
+  margin: 0;
+  max-width: 1058px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.AS-password-notice svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.AS-password-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 70px;
+}
+
+.AS-password-current-block {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.AS-password-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.AS-password-field-invalid .AS-field-label {
+  color: #d85c66;
+}
+
+.AS-password-field-valid .AS-field-label {
+  color: #34a853;
+}
+
+.AS-password-input-wrap {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 28px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 11px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: #ffffff;
+}
+
+.AS-password-input-wrap-error {
+  border-color: #d85c66;
+  background: #ffffff;
+}
+
+.AS-password-input-wrap-invalid {
+  border-color: #d85c66;
+}
+
+.AS-password-input-wrap-valid {
+  border-color: #34a853;
+}
+
+.AS-password-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+.AS-password-input::placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.AS-password-field-invalid .AS-password-input,
+.AS-password-field-invalid .AS-password-input::placeholder,
+.AS-password-input-wrap-invalid .AS-password-eye {
+  color: rgba(216, 92, 102, 0.72);
+}
+
+.AS-password-field-valid .AS-password-input,
+.AS-password-field-valid .AS-password-input::placeholder,
+.AS-password-input-wrap-valid .AS-password-eye {
+  color: rgba(52, 168, 83, 0.78);
+}
+
+.AS-password-input:focus {
+  outline: none;
+}
+
+.AS-password-eye {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  color: #8e909b;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+}
+
+.AS-password-eye svg {
+  width: 14px;
+  height: 14px;
+}
+
+.AS-password-hint {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.AS-password-hint svg {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+.AS-password-requirement-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.AS-password-match-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.AS-password-requirements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.AS-password-requirement {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.AS-password-requirement::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.AS-password-requirements-invalid .AS-password-requirement {
+  color: rgba(216, 92, 102, 0.78);
+}
+
+.AS-password-requirements-valid .AS-password-requirement,
+.AS-password-requirement-met {
+  color: rgba(52, 168, 83, 0.84);
+}
+
+.AS-password-match {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.AS-password-match::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.AS-password-match-invalid {
+  color: rgba(216, 92, 102, 0.78);
+}
+
+.AS-password-match-valid {
+  color: rgba(52, 168, 83, 0.84);
+}
+
+.AS-password-message {
+  margin: -35px 0 -35px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.AS-password-actions {
+  width: 192px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+.AS-password-actions .AS-btn-save {
+  width: 192px;
+  min-width: 192px;
+}
+
+.AS-password-forgot {
+  width: 192px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.35);
+  text-align: center;
+  cursor: pointer;
+}
+
+.AS-password-forgot:hover {
+  color: rgba(0, 0, 0, 0.65);
+}
+
 .AS-save-row {
   width: 100%;
   display: flex;
@@ -624,4 +1254,144 @@
 
 .AS-btn-save:hover {
   opacity: 0.88;
+}
+
+.sorbetes-dark .AS-shell,
+.sorbetes-dark .AS-page {
+  background: #101010;
+}
+
+.sorbetes-dark .AS-panel,
+.sorbetes-dark .AS-user-card,
+.sorbetes-dark .AS-save-toast {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+.sorbetes-dark .AS-user-card,
+.sorbetes-dark .AS-panel,
+.sorbetes-dark .AS-field-input-wrap,
+.sorbetes-dark .AS-password-input-wrap,
+.sorbetes-dark .AS-founders-input,
+.sorbetes-dark .AS-rewards-input-row {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.sorbetes-dark .AS-user-hello,
+.sorbetes-dark .AS-user-name,
+.sorbetes-dark .AS-side-nav-heading,
+.sorbetes-dark .AS-side-nav-link-active,
+.sorbetes-dark .AS-panel-title,
+.sorbetes-dark .AS-panel-subtitle,
+.sorbetes-dark .AS-section-title,
+.sorbetes-dark .AS-section-subtitle,
+.sorbetes-dark .AS-field-label,
+.sorbetes-dark .AS-profile-picture-title,
+.sorbetes-dark .AS-founders-upload-title,
+.sorbetes-dark .AS-founders-intro h1,
+.sorbetes-dark .AS-founders-intro p,
+.sorbetes-dark .AS-founders-basic h2,
+.sorbetes-dark .AS-founders-section-heading p,
+.sorbetes-dark .AS-rewards-subtitle,
+.sorbetes-dark .AS-rewards-label,
+.sorbetes-dark .AS-password-input,
+.sorbetes-dark .AS-founders-input,
+.sorbetes-dark .AS-rewards-input,
+.sorbetes-dark .AS-field-input {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .AS-side-nav-link {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.sorbetes-dark .AS-side-nav-link:hover {
+  color: #f5f5f5;
+}
+
+.sorbetes-dark .AS-divider {
+  border-top-color: rgba(255, 255, 255, 0.16);
+}
+
+.sorbetes-dark .AS-field-input-wrap,
+.sorbetes-dark .AS-password-input-wrap,
+.sorbetes-dark .AS-founders-input,
+.sorbetes-dark .AS-rewards-input-row {
+  background: #121212;
+}
+
+.sorbetes-dark .AS-field-input-wrap-disabled {
+  background: #252525;
+}
+
+.sorbetes-dark .AS-field-edit,
+.sorbetes-dark .AS-btn-remove {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.sorbetes-dark .AS-profile-picture-hint,
+.sorbetes-dark .AS-founders-upload-hint,
+.sorbetes-dark .AS-password-hint,
+.sorbetes-dark .AS-password-forgot,
+.sorbetes-dark .AS-password-message,
+.sorbetes-dark .AS-founders-learn {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.sorbetes-dark .AS-password-notice,
+.sorbetes-dark .AS-rewards-notice {
+  background: rgba(255, 206, 49, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sorbetes-dark .AS-founders-input::placeholder,
+.sorbetes-dark .AS-password-input::placeholder,
+.sorbetes-dark .AS-rewards-input::placeholder {
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.sorbetes-dark .AS-user-avatar,
+.sorbetes-dark .AS-profile-avatar,
+.sorbetes-dark .AS-founders-avatar {
+  background: #f5f5f5;
+  color: #111111;
+}
+
+.sorbetes-dark .AS-btn-save,
+.sorbetes-dark .AS-btn-primary,
+.sorbetes-dark .AS-rewards-submit {
+  background: #ffce31;
+  color: #111111;
+}
+
+.sorbetes-dark .AS-save-toast-text {
+  color: #7be083;
+}
+
+.sorbetes-dark .AS-password-field-valid .AS-field-label {
+  color: #7be083;
+}
+
+body.sorbetes-dark .AS-password-requirements {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+body.sorbetes-dark .AS-password-requirements-invalid .AS-password-requirement {
+  color: rgba(255, 175, 182, 0.92);
+}
+
+body.sorbetes-dark .AS-password-requirements-valid .AS-password-requirement,
+body.sorbetes-dark .AS-password-requirement-met {
+  color: #7be083;
+}
+
+body.sorbetes-dark .AS-password-match-invalid {
+  color: rgba(255, 175, 182, 0.92);
+}
+
+body.sorbetes-dark .AS-password-match-valid {
+  color: #7be083;
 }

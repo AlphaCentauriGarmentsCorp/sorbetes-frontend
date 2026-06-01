@@ -6,6 +6,7 @@ import {
   loginUser,
   registerUser,
 } from '../utils/auth.js'
+import { navigateBack } from '../utils/navigation.js'
 import '../design/Login.css'
 import '../design/Register.css'
 import '../design/Auth.css'
@@ -266,10 +267,6 @@ function Auth() {
     ensureFoundersClubAccount()
   }, [])
 
-  const goToHomepage = () => {
-    window.location.search = '?page=home'
-  }
-
   const goAfterAuth = () => {
     const path = getPostAuthPath()
     window.history.pushState({}, '', path)
@@ -348,7 +345,7 @@ function Auth() {
                 Log in
               </button>
             </div>
-            <button type="button" className="register-back-button" aria-label="Back" onClick={goToHomepage}>
+            <button type="button" className="register-back-button" aria-label="Go back" onClick={() => navigateBack()}>
               <span className="register-back-icon" />
             </button>
             <div className="register-form-wrapper">
@@ -516,7 +513,7 @@ function Auth() {
               Sign up
             </button>
           </div>
-          <button type="button" className="login-back-button" aria-label="Back" onClick={goToHomepage}>
+          <button type="button" className="login-back-button" aria-label="Go back" onClick={() => navigateBack()}>
             <span className="login-back-icon" />
           </button>
           <div className="login-form-wrapper">

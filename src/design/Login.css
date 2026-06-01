@@ -558,3 +558,83 @@
   }
 }
 
+/* Dark mode */
+body.sorbetes-dark .auth-login-form-panel,
+body.sorbetes-dark .login-right,
+body.sorbetes-dark .login-form-wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .login-top-link {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .login-top-link .login-link-button {
+  color: #ffce31 !important;
+}
+
+body.sorbetes-dark .login-title,
+body.sorbetes-dark .login-subtitle {
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .login-social {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+body.sorbetes-dark .login-social-label {
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .login-or {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body.sorbetes-dark .login-label {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.sorbetes-dark .login-input-wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+body.sorbetes-dark .login-input-wrapper .login-input {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #f5f5f5 !important;
+}
+
+body.sorbetes-dark .login-input::placeholder {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body.sorbetes-dark .login-remember-forgot {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+body.sorbetes-dark .login-remember-forgot .login-link-button {
+  color: #ffce31 !important;
+}
+
+body.sorbetes-dark .login-checkbox {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+body.sorbetes-dark .login-submit {
+  background: #ffce31 !important;
+}
+
+body.sorbetes-dark .login-submit-label {
+  color: #111111 !important;
+}
+
+body.sorbetes-dark .login-back-icon {
+  filter: invert(1);
+}
+

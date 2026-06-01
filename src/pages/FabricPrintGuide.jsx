@@ -7,6 +7,7 @@ import wLogo from '../assets/w_logo.png'
 import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
+import { navigateBack } from '../utils/navigation.js'
 
 const FABRIC_PRINT_GUIDE_BASE_WIDTH = 1920
 const FABRIC_PRINT_GUIDE_PAGE_HEIGHT = 4449
@@ -90,11 +91,6 @@ function FabricPrintGuide() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goToHome = () => {
-    window.history.pushState({}, '', '?page=home')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   return (
     <div className="fabric-guide-shell">
       <div
@@ -111,8 +107,8 @@ function FabricPrintGuide() {
             <button
               type="button"
               className="fabric-guide-back-button"
-              aria-label="Back to homepage"
-              onClick={goToHome}
+              aria-label="Go back"
+              onClick={() => navigateBack()}
             >
               <IoChevronBack className="fabric-guide-back-icon" aria-hidden="true" />
             </button>

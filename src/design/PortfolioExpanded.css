@@ -325,3 +325,45 @@
 .portfolio-expanded-pagination-dot:hover {
   opacity: 0.9;
 }
+
+.sorbetes-dark .portfolio-expanded-gallery-item-active::after {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.sorbetes-dark .portfolio-expanded-gallery-item-prev::after,
+.sorbetes-dark .portfolio-expanded-gallery-item-next::after,
+.sorbetes-dark .portfolio-expanded-gallery-item-prev-far::after,
+.sorbetes-dark .portfolio-expanded-gallery-item-next-far::after {
+  background: rgba(0, 0, 0, 0.48);
+}
+
+.sorbetes-dark .portfolio-expanded-gallery-arrow {
+  background: rgba(26, 26, 26, 0.92);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.sorbetes-dark .portfolio-expanded-pagination-dot {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.sorbetes-dark .portfolio-expanded-pagination-dot-active {
+  background: #ffffff;
+}
+
+.sorbetes-dark .portfolio-expanded-details {
+  background: #1a1a1a;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+.sorbetes-dark .portfolio-expanded-details-header {
+  border-bottom-color: rgba(255, 255, 255, 0.16);
+}
+
+.sorbetes-dark .portfolio-expanded-details-header span,
+.sorbetes-dark .portfolio-expanded-details-labels p,
+.sorbetes-dark .portfolio-expanded-details-values p {
+  color: #f5f5f5;
+}

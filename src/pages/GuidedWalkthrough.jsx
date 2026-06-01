@@ -13,6 +13,9 @@ import neckProclubImg from '../assets/Neck_proclub.png'
 import wovenLabelImg from '../assets/woven.png'
 import wovenBackImg from '../assets/woven_back.png'
 import sorbetesLogoImg from '../assets/Logo/whitelogo.png'
+import wLogo from '../assets/w_logo.png'
+import Footer from './Footer.jsx'
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const GW_BASE_WIDTH = 1920
 const GW_BASE_HEIGHT = 1357
@@ -34,9 +37,18 @@ const GW_WOVEN_LOCATION_ATTACH_BASE_HEIGHT = 2500
 const GW_UPLOAD_ARTWORK_BASE_HEIGHT = 3561
 const GW_UPLOAD_ARTWORK_ROW_EXTRA_HEIGHT = 80
 const GW_LOADER_BASE_HEIGHT = 1080
-const GW_PRODUCT_DETAILS_BASE_HEIGHT = 3347
-const GW_UPLOADED_FILES_BASE_HEIGHT = 4109
-const GW_PRICING_BASE_HEIGHT = 3634
+const GW_REVIEW_CARD_TOP = 670
+const GW_FOOTER_FULL_HEIGHT = 450
+const GW_REVIEW_FOOTER_GAP = 48
+const GW_PRODUCT_DETAILS_CARD_HEIGHT = 2345
+const GW_UPLOADED_FILES_CARD_HEIGHT = 3127
+const GW_PRICING_CARD_BASE_HEIGHT = 2882
+const GW_PRODUCT_DETAILS_BASE_HEIGHT =
+  GW_REVIEW_CARD_TOP + GW_PRODUCT_DETAILS_CARD_HEIGHT + GW_REVIEW_FOOTER_GAP + GW_FOOTER_FULL_HEIGHT
+const GW_UPLOADED_FILES_BASE_HEIGHT =
+  GW_REVIEW_CARD_TOP + GW_UPLOADED_FILES_CARD_HEIGHT + GW_REVIEW_FOOTER_GAP + GW_FOOTER_FULL_HEIGHT
+const GW_PRICING_BASE_HEIGHT =
+  GW_REVIEW_CARD_TOP + GW_PRICING_CARD_BASE_HEIGHT + GW_REVIEW_FOOTER_GAP + GW_FOOTER_FULL_HEIGHT
 const GW_PRICE_BREAKDOWN_EXTRA_HEIGHT = 520
 const GW_QUOTATION_SENT_BASE_HEIGHT = 2398
 const GW_INFO_EXTRA_HEIGHT = 209
@@ -45,6 +57,60 @@ const GW_FABRIC_INFO_EXTRA_HEIGHT = 209
 const GW_PRINT_INFO_EXTRA_HEIGHT = 178
 const GW_METHOD_EXTRA_OPTIONS_HEIGHT = 258
 const GW_METHOD_INFO_EXTRA_HEIGHT = 233
+
+const PRICING_QUANTITY_SIZES = [
+  ['xs', 'XS'],
+  ['small', 'Small'],
+  ['medium', 'Medium'],
+  ['large', 'Large'],
+  ['xl', 'XL'],
+  ['2xl', '2XL'],
+  ['3xl', '3XL'],
+]
+
+const PRICING_QUANTITY_MIN_TOTAL = 50
+
+const SKIP_SECTION_LABELS = {
+  fit: 'fit style selection',
+  fabric: 'fabric selection',
+  color: 'color selection',
+  print: 'print package selection',
+  method: 'printing method selection',
+  front: 'front design',
+  back: 'back design',
+  neckline: 'neckline style',
+  'inner-branding': 'inner branding',
+  'woven-label': 'woven label',
+  'own-woven-label': 'own woven label',
+  'woven-label-upload': 'woven label upload',
+  'woven-location': 'woven location',
+  'woven-location-back': 'back woven location',
+  'woven-location-reference': 'woven location reference',
+  'upload-artwork': 'artwork upload',
+}
+
+const SKIP_DESTINATIONS = {
+  fit: 'fabric',
+  fabric: 'color',
+  color: 'print',
+  print: 'method',
+  method: 'front',
+  front: 'back',
+  back: 'neckline',
+  neckline: 'inner-branding',
+  'inner-branding': 'woven-label',
+  'woven-label': 'upload-artwork',
+  'own-woven-label': 'woven-location',
+  'woven-label-upload': 'woven-location',
+  'woven-location': 'woven-location-back',
+  'woven-location-back': 'woven-location-reference',
+  'woven-location-reference': 'upload-artwork',
+  'upload-artwork': 'quotation-loader',
+}
+
+function getSkipDestination(currentQuestion) {
+  return SKIP_DESTINATIONS[currentQuestion] ?? null
+}
 
 const APPAREL_INFO = {
   't-shirt': {
@@ -98,6 +164,9 @@ const FABRIC_OPTIONS = [
 ]
 
 const COLOR_SWATCHES = Array.from({ length: 69 }, (_, index) => index)
+
+const LIGHT_SWATCH_COLORS = COLOR_SWATCHES.map((index) => `hsl(${(index * 19) % 360}, 72%, 72%)`)
+const DARK_SWATCH_COLORS = COLOR_SWATCHES.map((index) => `hsl(${(index * 19) % 360}, 58%, 32%)`)
 
 const PRINT_OPTIONS = [
   {
@@ -252,11 +321,6 @@ function getGuidedWalkthroughScale() {
   return Math.min(Math.max((window.innerWidth - 24) / GW_BASE_WIDTH, 0.18), 1)
 }
 
-function navigate(path) {
-  window.history.pushState({}, '', path)
-  window.dispatchEvent(new Event('cursor:navigate'))
-}
-
 function getOptionLabel(options, selectedKey, fallback = '-') {
   return options.find((option) => option.key === selectedKey)?.label ?? fallback
 }
@@ -290,6 +354,15 @@ function getWovenLocationLabel(selectedKeys, otherTextValue) {
   return locationLabels.join(', ') || '-'
 }
 
+function GWReviewFooter({ className = '', style }) {
+  const wrapClass = ['GW-review-footer-wrap', className].filter(Boolean).join(' ')
+  return (
+    <div className={wrapClass} style={style}>
+      <Footer logoSrc={wLogo} />
+    </div>
+  )
+}
+
 export default function GuidedWalkthrough() {
   const [pageScale, setPageScale] = useState(() => getGuidedWalkthroughScale())
   const [question, setQuestion] = useState('garment')
@@ -321,13 +394,15 @@ export default function GuidedWalkthrough() {
     email: '',
     contactNumber: '',
   })
-  const [pricingQuantities, setPricingQuantities] = useState({
-    xs: '25',
-    medium: '5',
-    large: '10',
-    '2xl': '5',
-    '3xl': '5',
-  })
+  const [pricingQuantities, setPricingQuantities] = useState(() =>
+    Object.fromEntries(
+      PRICING_QUANTITY_SIZES.map(([key], index) => {
+        const base = Math.floor(PRICING_QUANTITY_MIN_TOTAL / PRICING_QUANTITY_SIZES.length)
+        const remainder = PRICING_QUANTITY_MIN_TOTAL % PRICING_QUANTITY_SIZES.length
+        return [key, String(base + (index < remainder ? 1 : 0))]
+      }),
+    ),
+  )
   const [artworkFiles, setArtworkFiles] = useState({
     woven: [],
     front: [],
@@ -348,6 +423,7 @@ export default function GuidedWalkthrough() {
   const [openWovenBackLocationInfo, setOpenWovenBackLocationInfo] = useState([])
   const [priceBreakdownOpen, setPriceBreakdownOpen] = useState(false)
   const [exitModalOpen, setExitModalOpen] = useState(false)
+  const [skipConfirmOpen, setSkipConfirmOpen] = useState(false)
   const [warningMessage, setWarningMessage] = useState('')
   const infoExtraHeight = openInfo.length * GW_INFO_EXTRA_HEIGHT
   const fitInfoExtraHeight = openFitInfo.length > 0 ? GW_FIT_INFO_EXTRA_HEIGHT : 0
@@ -370,7 +446,11 @@ export default function GuidedWalkthrough() {
       : question === 'quotation-sent'
         ? GW_QUOTATION_SENT_BASE_HEIGHT
       : question === 'pricing'
-        ? GW_PRICING_BASE_HEIGHT + priceBreakdownExtraHeight
+        ? GW_REVIEW_CARD_TOP +
+          GW_PRICING_CARD_BASE_HEIGHT +
+          priceBreakdownExtraHeight +
+          GW_REVIEW_FOOTER_GAP +
+          GW_FOOTER_FULL_HEIGHT
       : question === 'uploaded-files'
         ? GW_UPLOADED_FILES_BASE_HEIGHT - uploadedFilesHiddenWovenOffset
       : isReviewQuestion
@@ -415,6 +495,27 @@ export default function GuidedWalkthrough() {
 
   const showWarning = (message) => {
     setWarningMessage(message)
+  }
+
+  const openSkipConfirm = () => {
+    if (getSkipDestination(question)) {
+      setSkipConfirmOpen(true)
+    }
+  }
+
+  const cancelSkip = () => {
+    setSkipConfirmOpen(false)
+  }
+
+  const confirmSkip = () => {
+    const nextQuestion = getSkipDestination(question)
+
+    if (nextQuestion) {
+      setQuestion(nextQuestion)
+      setWarningMessage('')
+    }
+
+    setSkipConfirmOpen(false)
   }
 
   const toggleWovenLocation = (locationKey) => {
@@ -513,13 +614,16 @@ export default function GuidedWalkthrough() {
   }
 
   const autoDistributeQuantities = () => {
-    setPricingQuantities({
-      xs: '10',
-      medium: '10',
-      large: '10',
-      '2xl': '10',
-      '3xl': '10',
-    })
+    const base = Math.floor(PRICING_QUANTITY_MIN_TOTAL / PRICING_QUANTITY_SIZES.length)
+    const remainder = PRICING_QUANTITY_MIN_TOTAL % PRICING_QUANTITY_SIZES.length
+    setPricingQuantities(
+      Object.fromEntries(
+        PRICING_QUANTITY_SIZES.map(([key], index) => [
+          key,
+          String(base + (index < remainder ? 1 : 0)),
+        ]),
+      ),
+    )
     setWarningMessage('')
   }
 
@@ -560,14 +664,6 @@ export default function GuidedWalkthrough() {
     ['Own Woven Label', getYesNoLabel(selectedOwnWovenLabel)],
     ['Woven Label Location', selectedWovenLocationLabel === '-' ? 'N/A' : selectedWovenLocationLabel],
   ]
-  const pricingQuantityRows = [
-    ['xs', 'XS'],
-    ['medium', 'Medium'],
-    ['large', 'Large'],
-    ['2xl', '2XL'],
-    ['3xl', '3XL'],
-  ]
-
   const isFilesStage =
     question === 'front' ||
     question === 'back' ||
@@ -885,68 +981,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </section>
 
-                <footer className="GW-review-footer">
-                  <div className="GW-review-footer-brand">
-                    <div>
-                      <span className="GW-review-footer-logo">
-                        <img src={sorbetesLogoImg} alt="" />
-                      </span>
-                      <strong>SORBETES</strong>
-                    </div>
-                    <p>Quezon City, Philippines</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Contact us</h3>
-                    <p>
-                      <span>
-                        <FaLocationDot aria-hidden="true" />
-                      </span>
-                      117 Mother Ignacia Ave., Quezon City, Philippines
-                    </p>
-                    <p>
-                      <span>
-                        <FaEnvelope aria-hidden="true" />
-                      </span>
-                      sales@alphacentauri.ph
-                    </p>
-                    <p>
-                      <span>
-                        <FaPhone aria-hidden="true" />
-                      </span>
-                      0961 442 7409
-                    </p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Business Hours</h3>
-                    <p>Mon-Sat: 9:00AM-5:00PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-
-                  <div className="GW-review-footer-section GW-review-footer-social">
-                    <h3>Follow us</h3>
-                    <div>
-                      <span>
-                        <FaFacebookF aria-hidden="true" />
-                      </span>
-                      <span>
-                        <FaInstagram aria-hidden="true" />
-                      </span>
-                      <span className="muted">
-                        <FaTiktok aria-hidden="true" />
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="GW-review-footer-bottom">
-                    <p>
-                      <FaCopyright aria-hidden="true" />
-                      2002-2025 Sorbetes. All rights reserved.
-                    </p>
-                    <button type="button">Privacy Policy &amp; Terms and Conditions</button>
-                  </div>
-                </footer>
+                <GWReviewFooter />
               </div>
             ) : question === 'uploaded-files' ? (
               <div
@@ -1043,68 +1078,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </section>
 
-                <footer className="GW-review-footer GW-review-uploaded-footer">
-                  <div className="GW-review-footer-brand">
-                    <div>
-                      <span className="GW-review-footer-logo">
-                        <img src={sorbetesLogoImg} alt="" />
-                      </span>
-                      <strong>SORBETES</strong>
-                    </div>
-                    <p>Quezon City, Philippines</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Contact us</h3>
-                    <p>
-                      <span>
-                        <FaLocationDot aria-hidden="true" />
-                      </span>
-                      117 Mother Ignacia Ave., Quezon City, Philippines
-                    </p>
-                    <p>
-                      <span>
-                        <FaEnvelope aria-hidden="true" />
-                      </span>
-                      sales@alphacentauri.ph
-                    </p>
-                    <p>
-                      <span>
-                        <FaPhone aria-hidden="true" />
-                      </span>
-                      0961 442 7409
-                    </p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Business Hours</h3>
-                    <p>Mon-Sat: 9:00AM-5:00PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-
-                  <div className="GW-review-footer-section GW-review-footer-social">
-                    <h3>Follow us</h3>
-                    <div>
-                      <span>
-                        <FaFacebookF aria-hidden="true" />
-                      </span>
-                      <span>
-                        <FaInstagram aria-hidden="true" />
-                      </span>
-                      <span className="muted">
-                        <FaTiktok aria-hidden="true" />
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="GW-review-footer-bottom">
-                    <p>
-                      <FaCopyright aria-hidden="true" />
-                      2002-2025 Sorbetes. All rights reserved.
-                    </p>
-                    <button type="button">Privacy Policy &amp; Terms and Conditions</button>
-                  </div>
-                </footer>
+                <GWReviewFooter className="GW-review-uploaded-footer" />
               </div>
             ) : question === 'pricing' ? (
               <div
@@ -1131,7 +1105,7 @@ export default function GuidedWalkthrough() {
 
                 <section
                   className="GW-review-card GW-pricing-card"
-                  style={{ height: `${2632 + priceBreakdownExtraHeight}px` }}
+                  style={{ height: `${GW_PRICING_CARD_BASE_HEIGHT + priceBreakdownExtraHeight}px` }}
                 >
                   <div className="GW-review-card-header">
                     <div className="GW-review-section-title">
@@ -1197,7 +1171,7 @@ export default function GuidedWalkthrough() {
                       </div>
                       <div className="GW-pricing-quantity-box">
                         <div className="GW-pricing-size-row">
-                          {pricingQuantityRows.map(([sizeKey, label]) => (
+                          {PRICING_QUANTITY_SIZES.map(([sizeKey, label]) => (
                             <label key={sizeKey}>
                               {label}
                               <input
@@ -1262,17 +1236,10 @@ export default function GuidedWalkthrough() {
                             </tr>
                           </thead>
                           <tbody>
-                            {[
-                              ['Small', pricingQuantities.xs],
-                              ['Medium', pricingQuantities.medium],
-                              ['Large', pricingQuantities.large],
-                              ['XL', pricingQuantities['2xl']],
-                              ['2XL', pricingQuantities['2xl']],
-                              ['3XL', pricingQuantities['3xl']],
-                            ].map(([size, quantity]) => (
-                              <tr key={size}>
-                                <td>{size}</td>
-                                <td>{quantity || '0'}</td>
+                            {PRICING_QUANTITY_SIZES.map(([sizeKey, label]) => (
+                              <tr key={sizeKey}>
+                                <td>{label}</td>
+                                <td>{pricingQuantities[sizeKey] || '0'}</td>
                                 <td>380</td>
                                 <td>0</td>
                                 <td>3,500.00 PHP</td>
@@ -1300,44 +1267,12 @@ export default function GuidedWalkthrough() {
                   </div>
                 </section>
 
-                <footer className="GW-review-footer">
-                  <div className="GW-review-footer-brand">
-                    <div>
-                      <span className="GW-review-footer-logo">
-                        <img src={sorbetesLogoImg} alt="" />
-                      </span>
-                      <strong>SORBETES</strong>
-                    </div>
-                    <p>Quezon City, Philippines</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Contact us</h3>
-                    <p><span><FaLocationDot aria-hidden="true" /></span>117 Mother Ignacia Ave., Quezon City, Philippines</p>
-                    <p><span><FaEnvelope aria-hidden="true" /></span>sales@alphacentauri.ph</p>
-                    <p><span><FaPhone aria-hidden="true" /></span>0961 442 7409</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Business Hours</h3>
-                    <p>Mon-Sat: 9:00AM-5:00PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-
-                  <div className="GW-review-footer-section GW-review-footer-social">
-                    <h3>Follow us</h3>
-                    <div>
-                      <span><FaFacebookF aria-hidden="true" /></span>
-                      <span><FaInstagram aria-hidden="true" /></span>
-                      <span className="muted"><FaTiktok aria-hidden="true" /></span>
-                    </div>
-                  </div>
-
-                  <div className="GW-review-footer-bottom">
-                    <p><FaCopyright aria-hidden="true" />2002-2025 Sorbetes. All rights reserved.</p>
-                    <button type="button">Privacy Policy &amp; Terms and Conditions</button>
-                  </div>
-                </footer>
+                <GWReviewFooter
+                  style={{
+                    top: `${GW_REVIEW_CARD_TOP + GW_PRICING_CARD_BASE_HEIGHT + priceBreakdownExtraHeight + GW_REVIEW_FOOTER_GAP}px`,
+                    bottom: 'auto',
+                  }}
+                />
               </div>
             ) : question === 'quotation-sent' ? (
               <div className="GW-quotation-sent-page">
@@ -1385,49 +1320,12 @@ export default function GuidedWalkthrough() {
                     ))}
                   </div>
 
-                  <button className="GW-quotation-done" type="button" onClick={() => navigate('?page=pricing')}>
+                  <button className="GW-quotation-done" type="button" onClick={() => navigateBack('?page=pricing')}>
                     Done
                   </button>
                 </section>
 
-                <footer className="GW-review-footer">
-                  <div className="GW-review-footer-brand">
-                    <div>
-                      <span className="GW-review-footer-logo">
-                        <img src={sorbetesLogoImg} alt="" />
-                      </span>
-                      <strong>SORBETES</strong>
-                    </div>
-                    <p>Quezon City, Philippines</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Contact us</h3>
-                    <p><span><FaLocationDot aria-hidden="true" /></span>117 Mother Ignacia Ave., Quezon City, Philippines</p>
-                    <p><span><FaEnvelope aria-hidden="true" /></span>sales@alphacentauri.ph</p>
-                    <p><span><FaPhone aria-hidden="true" /></span>0961 442 7409</p>
-                  </div>
-
-                  <div className="GW-review-footer-section">
-                    <h3>Business Hours</h3>
-                    <p>Mon-Sat: 9:00AM-5:00PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
-
-                  <div className="GW-review-footer-section GW-review-footer-social">
-                    <h3>Follow us</h3>
-                    <div>
-                      <span><FaFacebookF aria-hidden="true" /></span>
-                      <span><FaInstagram aria-hidden="true" /></span>
-                      <span className="muted"><FaTiktok aria-hidden="true" /></span>
-                    </div>
-                  </div>
-
-                  <div className="GW-review-footer-bottom">
-                    <p><FaCopyright aria-hidden="true" />2002-2025 Sorbetes. All rights reserved.</p>
-                    <button type="button">Privacy Policy &amp; Terms and Conditions</button>
-                  </div>
-                </footer>
+                <GWReviewFooter />
               </div>
             ) : question === 'garment' ? (
               <div className="GW-selection-card" style={{ height: `${914 + infoExtraHeight}px` }}>
@@ -1654,7 +1552,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ top: `${1346.64 + fitInfoExtraHeight}px` }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ top: `${1346.64 + fitInfoExtraHeight}px` }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -1766,7 +1664,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ top: `${1123.64 + fabricInfoExtraHeight}px` }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ top: `${1123.64 + fabricInfoExtraHeight}px` }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -1818,11 +1716,14 @@ export default function GuidedWalkthrough() {
                           <div className="GW-color-grid" role="listbox" aria-label={`${activeColorTab} pantone colors`}>
                             {COLOR_SWATCHES.map((swatch) => {
                               const colorValue = `${activeColorTab === 'light' ? 'Light' : 'Dark'} Color ${swatch + 1}`
+                              const swatchColor =
+                                activeColorTab === 'light' ? LIGHT_SWATCH_COLORS[swatch] : DARK_SWATCH_COLORS[swatch]
                               return (
                                 <button
                                   key={`${activeColorTab}-${swatch}`}
                                   type="button"
                                   className={selectedColor === colorValue ? 'GW-color-swatch GW-color-swatch-selected' : 'GW-color-swatch'}
+                                  style={{ backgroundColor: swatchColor }}
                                   aria-label={colorValue}
                                   onClick={() => {
                                     setSelectedColor(colorValue)
@@ -1867,7 +1768,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ top: `${1073.64 + colorDropdownExtraHeight}px` }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ top: `${1073.64 + colorDropdownExtraHeight}px` }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -1982,7 +1883,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ top: `${1346.64 + printInfoExtraHeight}px` }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ top: `${1346.64 + printInfoExtraHeight}px` }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -2093,6 +1994,7 @@ export default function GuidedWalkthrough() {
                 <button
                   className="GW-skip-btn"
                   type="button"
+                  onClick={openSkipConfirm}
                   style={{ top: `${1252.64 + GW_METHOD_EXTRA_OPTIONS_HEIGHT + methodInfoExtraHeight}px` }}
                 >
                   Skip <IoPlaySkipForward aria-hidden="true" />
@@ -2187,7 +2089,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ left: '1651px', top: '1158.64px' }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ left: '1651px', top: '1158.64px' }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -2280,7 +2182,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ left: '1664px', top: '1158.64px' }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ left: '1664px', top: '1158.64px' }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -2396,6 +2298,7 @@ export default function GuidedWalkthrough() {
                 <button
                   className="GW-skip-btn"
                   type="button"
+                  onClick={openSkipConfirm}
                   style={{ top: `${necklineInfoOpen ? 1423.43 : 1275}px` }}
                 >
                   Skip <IoPlaySkipForward aria-hidden="true" />
@@ -2502,6 +2405,7 @@ export default function GuidedWalkthrough() {
                 <button
                   className="GW-skip-btn"
                   type="button"
+                  onClick={openSkipConfirm}
                   style={{ top: `${1244 + innerBrandingInfoExtraHeight}px` }}
                 >
                   Skip <IoPlaySkipForward aria-hidden="true" />
@@ -2570,7 +2474,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ left: '1651px', top: '994.64px' }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ left: '1651px', top: '994.64px' }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -2637,7 +2541,7 @@ export default function GuidedWalkthrough() {
                   </div>
                 </div>
 
-                <button className="GW-skip-btn" type="button" style={{ left: '1651px', top: '994.64px' }}>
+                <button className="GW-skip-btn" type="button" onClick={openSkipConfirm} style={{ left: '1651px', top: '994.64px' }}>
                   Skip <IoPlaySkipForward aria-hidden="true" />
                 </button>
               </>
@@ -2840,7 +2744,7 @@ export default function GuidedWalkthrough() {
                     </div>
                   </div>
 
-                  <button className="GW-skip-btn GW-woven-location-skip" type="button">
+                  <button className="GW-skip-btn GW-woven-location-skip" type="button" onClick={openSkipConfirm}>
                     Skip <IoPlaySkipForward aria-hidden="true" />
                   </button>
                 </div>
@@ -2966,7 +2870,7 @@ export default function GuidedWalkthrough() {
                     </div>
                   </div>
 
-                  <button className="GW-skip-btn GW-woven-location-skip" type="button">
+                  <button className="GW-skip-btn GW-woven-location-skip" type="button" onClick={openSkipConfirm}>
                     Skip <IoPlaySkipForward aria-hidden="true" />
                   </button>
                 </div>
@@ -3120,7 +3024,7 @@ export default function GuidedWalkthrough() {
                     </div>
                   </div>
 
-                  <button className="GW-skip-btn GW-woven-location-skip" type="button">
+                  <button className="GW-skip-btn GW-woven-location-skip" type="button" onClick={openSkipConfirm}>
                     Skip <IoPlaySkipForward aria-hidden="true" />
                   </button>
                 </div>
@@ -3214,6 +3118,7 @@ export default function GuidedWalkthrough() {
                 <button
                   className="GW-skip-btn GW-artwork-skip"
                   type="button"
+                  onClick={openSkipConfirm}
                   style={{ top: `${3328 + artworkFileExtraHeight}px` }}
                 >
                   Skip <IoPlaySkipForward aria-hidden="true" />
@@ -3236,13 +3141,39 @@ export default function GuidedWalkthrough() {
                   </div>
 
                   <div className="GW-exit-actions">
-                    <button className="GW-quit-btn" type="button" onClick={() => navigate('?page=pricing')}>
+                    <button className="GW-quit-btn" type="button" onClick={() => navigateBack('?page=pricing')}>
                       Quit without saving
                     </button>
-                    <button className="GW-save-draft-btn" type="button" onClick={() => navigate('?page=pricing')}>
+                    <button className="GW-save-draft-btn" type="button" onClick={() => navigateBack('?page=pricing')}>
                       Save as Draft
                     </button>
                   </div>
+                </div>
+              </section>
+            </div>
+          ) : null}
+
+          {skipConfirmOpen ? (
+            <div className="GW-skip-overlay" role="presentation" onClick={cancelSkip}>
+              <section
+                className="GW-skip-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="GW-skip-title"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <h2 id="GW-skip-title">Skip this step?</h2>
+                <p>
+                  Are you sure you want to skip {SKIP_SECTION_LABELS[question] || 'this section'}? You can continue
+                  without completing it.
+                </p>
+                <div className="GW-skip-actions">
+                  <button type="button" className="GW-skip-cancel-btn" onClick={cancelSkip}>
+                    Cancel
+                  </button>
+                  <button type="button" className="GW-skip-confirm-btn" onClick={confirmSkip}>
+                    Yes, skip
+                  </button>
                 </div>
               </section>
             </div>

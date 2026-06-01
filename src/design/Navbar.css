@@ -196,6 +196,107 @@
   flex-shrink: 0;
 }
 
+.nb-theme-picker {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.nb-theme-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.nb-theme-option svg {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.nb-theme-option:hover:not(.nb-theme-option-active) {
+  color: #000000;
+}
+
+.nb-theme-option-active {
+  background: #000000;
+  color: #ffffff;
+}
+
+body.sorbetes-dark .nb-header {
+  background: #141414;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+body.sorbetes-dark .nb-brand-name,
+body.sorbetes-dark .nb-link,
+body.sorbetes-dark .nb-mobile-link {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .nb-caret {
+  filter: invert(1);
+}
+
+body.sorbetes-dark .nb-dropdown-menu,
+body.sorbetes-dark .nb-mobile-menu {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.sorbetes-dark .nb-dropdown-item {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .nb-hamburger span {
+  background: #f5f5f5;
+}
+
+body.sorbetes-dark .nb-theme-picker {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.sorbetes-dark .nb-theme-option {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+body.sorbetes-dark .nb-theme-option:hover:not(.nb-theme-option-active) {
+  color: #ffffff;
+}
+
+body.sorbetes-dark .nb-theme-option-active {
+  background: #ffce31;
+  color: #111111;
+}
+
+body.sorbetes-dark .nb-btn-outline {
+  background: transparent;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+body.sorbetes-dark .nb-btn-dark {
+  background: #ffce31;
+  color: #111111;
+}
+
 .nb-btn {
   height: 36px;
   padding: 0 20px;
@@ -338,6 +439,18 @@
   gap: 12px;
   margin-top: 24px;
   flex-wrap: wrap;
+}
+
+.nb-mobile-theme {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.nb-mobile-theme .nb-theme-option {
+  flex: 1;
+  justify-content: center;
+  height: 40px;
+  font-size: 14px;
 }
 
 .nb-mobile-actions .nb-btn {

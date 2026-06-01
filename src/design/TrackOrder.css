@@ -586,3 +586,92 @@
   color: #000000;
 }
 
+body.sorbetes-dark .TO-details-card {
+  background: #121212;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+body.sorbetes-dark .TO-details-title,
+body.sorbetes-dark .TO-details-event-location,
+body.sorbetes-dark .TO-details-substep-copy .TO-details-event-location,
+body.sorbetes-dark .TO-details-event-date {
+  color: #f5f5f5;
+}
+
+body.sorbetes-dark .TO-details-event-title,
+body.sorbetes-dark .TO-details-substep-copy .TO-details-event-title {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+body.sorbetes-dark .TO-details-view-all,
+body.sorbetes-dark .TO-details-view-all:hover {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+body.sorbetes-dark .TO-details-event,
+body.sorbetes-dark .TO-details-subtimeline,
+body.sorbetes-dark .TO-details-substep,
+body.sorbetes-dark .TO-details-event-row,
+body.sorbetes-dark .TO-details-substep-row,
+body.sorbetes-dark .TO-details-event-main,
+body.sorbetes-dark .TO-details-event-copy,
+body.sorbetes-dark .TO-details-substep-copy,
+body.sorbetes-dark .TO-details-timeline-section,
+body.sorbetes-dark .TO-details-timeline {
+  background: transparent !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+body.sorbetes-dark .TO-details-stage-line,
+body.sorbetes-dark .TO-details-stage-line-muted {
+  background: rgba(255, 255, 255, 0.22) !important;
+  background-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+body.sorbetes-dark .TO-details-stage-line-active {
+  background: #319f3a !important;
+  background-color: #319f3a !important;
+}
+
+body.sorbetes-dark .TO-title-line {
+  background: #ffce31;
+  background-color: #ffce31;
+}
+
+body.sorbetes-dark .TO-details-event-has-next .TO-details-marker-col::after,
+body.sorbetes-dark .TO-details-substep-has-next:not(.TO-details-substep-complete) .TO-details-submarker-col::after,
+body.sorbetes-dark .TO-details-substep-complete.TO-details-substep-has-next:has(
+    + .TO-details-substep:not(.TO-details-substep-complete)
+  )
+  .TO-details-submarker-col::after {
+  background: rgba(255, 255, 255, 0.22) !important;
+}
+
+body.sorbetes-dark .TO-details-event-complete.TO-details-event-has-next .TO-details-marker-col::after,
+body.sorbetes-dark .TO-details-event-expanded.TO-details-event-has-next .TO-details-marker-col::after,
+body.sorbetes-dark .TO-details-subtimeline::before,
+body.sorbetes-dark .TO-details-substep-has-next .TO-details-submarker-col::after {
+  background: #319f3a !important;
+}
+
+body.sorbetes-dark .TO-details-marker,
+body.sorbetes-dark .TO-details-submarker,
+body.sorbetes-dark .TO-details-stage-icon {
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+body.sorbetes-dark .TO-details-event-complete .TO-details-marker,
+body.sorbetes-dark .TO-details-submarker-complete {
+  background: #319f3a;
+  color: #ffffff;
+}
+
+body.sorbetes-dark .TO-details-event-current .TO-details-marker,
+body.sorbetes-dark .TO-details-stage-icon-current {
+  background: #121212;
+  border-color: #319f3a;
+  color: #319f3a;
+}
+

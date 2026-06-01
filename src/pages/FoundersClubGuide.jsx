@@ -7,6 +7,7 @@ import { FOOTER_CANVAS_HEIGHT } from '../constants/layout.js'
 import Navbar from './Navbar.jsx'
 import Footer from './Footer.jsx'
 import { isSignedIn } from '../utils/auth.js'
+import { navigate, navigateBack } from '../utils/navigation.js'
 
 const FOUNDERS_CLUB_GUIDE_BASE_WIDTH = 1920
 const FOUNDERS_CLUB_GUIDE_PAGE_HEIGHT = 1984
@@ -33,15 +34,9 @@ function FoundersClubGuide() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const goBack = () => {
-    window.history.pushState({}, '', '?page=founders-club')
-    window.dispatchEvent(new Event('cursor:navigate'))
-  }
-
   const goToAvailNow = () => {
     const nextPath = isSignedIn() ? '?page=pricing' : '?page=auth&mode=signup&redirect=%3Fpage%3Dpricing'
-    window.history.pushState({}, '', nextPath)
-    window.dispatchEvent(new Event('cursor:navigate'))
+    navigate(nextPath)
   }
 
   return (
@@ -57,7 +52,7 @@ function FoundersClubGuide() {
           <main className="founders-club-guide-page">
             <Navbar logoSrc={foundersLogo} currentPage="founders-club" logoOnly />
 
-            <button type="button" className="fcg-back-button" aria-label="Back to Founder's Club" onClick={goBack}>
+            <button type="button" className="fcg-back-button" aria-label="Go back" onClick={() => navigateBack('?page=founders-club')}>
               <IoChevronBack aria-hidden="true" />
             </button>
 

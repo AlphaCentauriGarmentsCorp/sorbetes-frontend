@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
+import NavbarThemePicker from '../components/NavbarThemePicker.jsx'
 import LoggedInNavbar from './LoggedInNavbar.jsx'
 import { isSignedIn } from '../utils/auth.js'
 import '../design/Navbar.css'
@@ -115,6 +116,7 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = fals
       </nav>
 
       <div className="nb-actions">
+        <NavbarThemePicker />
         <button type="button" className="nb-btn nb-btn-dark" onClick={() => { setMobileOpen(false); navigate('?page=auth') }}>
           Log in
         </button>
@@ -172,6 +174,7 @@ function Navbar({ logoSrc, brand = 'SORBETES', currentPage = '', logoOnly = fals
             )
           )}
           <div className="nb-mobile-actions">
+            <NavbarThemePicker className="nb-mobile-theme" />
             <button type="button" className="nb-btn nb-btn-dark" onClick={() => { setMobileOpen(false); navigate('?page=auth') }}>Log in</button>
             <button type="button" className="nb-btn nb-btn-outline"  onClick={() => { setMobileOpen(false); navigate('?page=pricing') }} >Pricing</button>
           </div>
