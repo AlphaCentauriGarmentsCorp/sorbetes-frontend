@@ -1,13 +1,15 @@
+import wLogo from '../assets/w_logo.png'
 import '../design/Footer.css'
 
-function Footer({ logoSrc }) {
+
+function Footer() {
   return (
     <footer className="hp-footer" aria-label="Footer">
       <div className="hp-footer-divider" aria-hidden="true" />
 
       <div className="hp-footer-brand">
         <div className="hp-footer-brand-row">
-          <img className="hp-footer-logo" src={logoSrc} alt="" />
+          <img className="hp-footer-logo" src={wLogo} alt="" />
           <div className="hp-footer-brand-text">SORBETES</div>
         </div>
         <div className="hp-footer-location">Quezon City, Philippines</div>

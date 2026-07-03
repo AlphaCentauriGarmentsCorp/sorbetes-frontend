@@ -18,11 +18,12 @@ import foundersClubSenoritos from '../assets/Senoritos.jpg'
 import foundersClubStayHungry from '../assets/Stay Hungry.jpg'
 import foundersClubVariant5 from '../assets/Variant5.jpg'
 import Navbar from './Navbar.jsx'
-import Footer from './Footer.jsx'
+
 import { useEffect, useState } from 'react'
 import { FaAward, FaLocationDot, FaPen, FaStar, FaUserGroup, FaUsers } from 'react-icons/fa6'
 import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa'
 import { MdHandshake } from 'react-icons/md'
+import Footer from './Footer'
 
 const HOMEPAGE_BASE_WIDTH = 1920
 const HOMEPAGE_BASE_HEIGHT = 9800
@@ -510,10 +511,11 @@ function Homepage() {
         </div>
       </section>
 
-      <Footer logoSrc={wLogo} />
+     
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   )
 }
