@@ -2,8 +2,10 @@ import '../design/OrderForm.css'
 
 import React from 'react'
 import Footer from './Footer'
+import { useNavigate } from 'react-router-dom'
 
 const OrderForm = () => {
+    const navigate = useNavigate();
   return (
     <div className='body'>
         <section className='form-container'>
@@ -24,7 +26,7 @@ const OrderForm = () => {
     </section>
 
         <div className='button-group'>
-            <button className='btn btn-download'>
+            <button className='btn btn-download' onClick={() => navigate("/shippingForm") }>
                     Submit
             </button>
         </div>

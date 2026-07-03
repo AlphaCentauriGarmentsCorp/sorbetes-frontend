@@ -1,8 +1,11 @@
 import '../design/OrderForm_ShippingInfo.css'
 import React from 'react'
 import Footer from './Footer'
+import { useNavigate } from 'react-router-dom'
+
 
 const OrderForm_ShippingInfo = () => {
+    const navigate = useNavigate();
   return (
     <div>
         <section className='hero'>
@@ -101,7 +104,7 @@ const OrderForm_ShippingInfo = () => {
         <br />
 
         <section className='button-group'>
-            <button className='btn btn-submit'>My Order Details</button>
+            <button className='btn btn-submit' onClick={() => navigate("/shippingForm")} >My Order Details</button>
             <button className='btn btn-download'>
                 <span className='download-icon'>Next</span>
             </button>
