@@ -1,0 +1,57 @@
+name: Deploy Sorbetes site to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-sorbetes-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (vite build -> dist/)
+        run: npm run build
+
+      - name: Deploy dist/ to Hostinger via rsync over SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HOSTINGER_SSH_KEY }}
+          RAW_HOST: ${{ secrets.HOSTINGER_SSH_HOST }}
+          RAW_PORT: ${{ secrets.HOSTINGER_SSH_PORT }}
+          RAW_USER: ${{ secrets.HOSTINGER_SSH_USER }}
+          # >>> ONLY domain-specific line #1: change if the final domain isn't sorbetes.com <<<
+          TARGET_DIR: domains/sorbetes.com/public_html
+        run: |
+          set -euo pipefail
+          HOST="$(printf '%s' "$RAW_HOST" | tr -d '[:space:]')"
+          PORT="$(printf '%s' "$RAW_PORT" | tr -d '[:space:]')"
+          USER="$(printf '%s' "$RAW_USER" | tr -d '[:space:]')"
+          echo "HOST=[$HOST] len=${#HOST}"; echo "PORT=[$PORT] len=${#PORT}"; echo "USER=[$USER] len=${#USER}"
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null && echo "deploy key parsed OK"
+          ssh -i ~/.ssh/deploy_key -p "$PORT" -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new \
+            "${USER}@${HOST}" "echo SSH_OK; which rsync"
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
+            dist/ "${USER}@${HOST}:${TARGET_DIR}/"
+
+      - name: Done
+        # >>> ONLY domain-specific line #2: change if the final domain isn't sorbetes.com <<<
+        run: echo "Deployed to https://sorbetes.com"
