@@ -6,6 +6,7 @@ import {
   loginUser,
   registerUser,
 } from '../utils/auth.js'
+import { navigate } from '../utils/navigation.js'
 import { navigateBack } from '../utils/navigation.js'
 import '../design/Login.css'
 import '../design/Register.css'
@@ -278,10 +279,10 @@ function Auth() {
     window.dispatchEvent(new Event('cursor:navigate'))
   }
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setAuthError('')
     setAuthSuccess('')
-    const result = loginUser(loginEmail, loginPassword)
+    const result = await loginUser(loginEmail, loginPassword)
 
     if (!result.ok) {
       setAuthError(result.error)
@@ -291,10 +292,10 @@ function Auth() {
     goAfterAuth()
   }
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     setAuthError('')
     setAuthSuccess('')
-    const result = registerUser({
+    const result = await registerUser({
       firstName,
       lastName,
       username,
@@ -307,12 +308,8 @@ function Auth() {
       return
     }
 
-    setAuthSuccess('Registration successful. You can now log in with your email or username.')
-    setLoginEmail(registerEmail || username)
-    setLoginPassword('')
-    setRegisterPassword('')
-    setIsSignUp(false)
-    setReturnPhase('idle')
+    // Account created; a 6-digit OTP was emailed. Continue on the verification page.
+    navigate(`?page=otp&email=${encodeURIComponent(result.email)}`)
   }
 
   const handleSignUpClick = () => {
