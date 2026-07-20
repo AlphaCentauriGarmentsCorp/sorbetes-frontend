@@ -1,15 +1,30 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import logoCircleImg from '../assets/Logo_Sorbetes-removebg-preview.png'
-import { navigateBack } from '../utils/navigation.js'
+import { navigate, navigateBack } from '../utils/navigation.js'
+import { verifyOtp, resendOtp, getPostAuthPath } from '../utils/auth.js'
 import '../design/OtpVerification.css'
 
 const OTP_LENGTH = 6
+const RESEND_SECONDS = 30
 
 function OtpVerification() {
+  const [email] = useState(() => new URLSearchParams(window.location.search).get('email') || '')
   const [digits, setDigits] = useState(() => Array.from({ length: OTP_LENGTH }, () => ''))
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
   const inputsRef = useRef([])
 
   const otpValue = useMemo(() => digits.join(''), [digits])
+
+  useEffect(() => {
+    if (cooldown <= 0) return undefined
+    const timer = setInterval(() => {
+      setCooldown((prev) => (prev <= 1 ? 0 : prev - 1))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [cooldown])
 
   const focusIndex = (index) => {
     const el = inputsRef.current[index]
@@ -53,10 +68,38 @@ function OtpVerification() {
     focusIndex(Math.max(lastIndex, 0))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // No verification function yet (UI only).
-    console.log('OTP submit:', otpValue)
+    if (submitting) return
+    setError('')
+
+    if (otpValue.length < OTP_LENGTH) {
+      setError('Please enter the 6-digit code.')
+      return
+    }
+
+    setSubmitting(true)
+    const result = await verifyOtp(email, otpValue)
+    if (!result.ok) {
+      setError(result.error)
+      setSubmitting(false)
+      return
+    }
+
+    navigate(getPostAuthPath())
+  }
+
+  const handleResend = async () => {
+    if (cooldown > 0 || resending) return
+    setError('')
+    setResending(true)
+    const result = await resendOtp(email)
+    setResending(false)
+    if (!result.ok) {
+      setError(result.error)
+      return
+    }
+    setCooldown(RESEND_SECONDS)
   }
 
   const handleBack = () => {
@@ -87,8 +130,8 @@ function OtpVerification() {
         <div className="otp-form-wrapper">
           <h2 className="otp-title">OTP Verification</h2>
           <p className="otp-subtitle">
-            Please enter the OTP (One-Time Password) sent to your registered email <strong>(je.de@gl.c*m)</strong> to
-            complete your verification.
+            Please enter the OTP (One-Time Password) sent to your registered email{' '}
+            <strong>{email || 'your email'}</strong> to complete your verification.
           </p>
 
           <form className="otp-form" onSubmit={handleSubmit}>
@@ -111,14 +154,28 @@ function OtpVerification() {
               ))}
             </div>
 
+            {error ? (
+              <p className="otp-error" role="alert" style={{ color: '#c0392b', margin: '4px 0 0' }}>
+                {error}
+              </p>
+            ) : null}
+
             <div className="otp-resend-row">
-              <button type="button" className="otp-resend-button">
-                Didn&apos;t got the code? <span className="otp-resend-underlined">Resend in 30s</span>
+              <button
+                type="button"
+                className="otp-resend-button"
+                onClick={handleResend}
+                disabled={cooldown > 0 || resending}
+              >
+                Didn&apos;t get the code?{' '}
+                <span className="otp-resend-underlined">
+                  {cooldown > 0 ? `Resend in ${cooldown}s` : resending ? 'Sending...' : 'Resend'}
+                </span>
               </button>
             </div>
 
-            <button type="submit" className="otp-verify-button">
-              <span className="otp-verify-label">Verify</span>
+            <button type="submit" className="otp-verify-button" disabled={submitting}>
+              <span className="otp-verify-label">{submitting ? 'Verifying...' : 'Verify'}</span>
             </button>
           </form>
         </div>
@@ -128,4 +185,3 @@ function OtpVerification() {
 }
 
 export default OtpVerification
-
