@@ -22,7 +22,7 @@ import MyOrders from './MyOrders.jsx'
 import TrackOrder from './TrackOrder.jsx'
 import AccountSettings from './AccountSettings.jsx'
 import WalkInForm from './WalkInForm.jsx'
-import { ensureFoundersClubAccount, isSignedIn } from '../utils/auth.js'
+import { ensureFoundersClubAccount, isSignedIn, hydrateSession } from '../utils/auth.js'
 import '../design/index.css'
 
 import { getPageParam } from '../utils/navigation.js'
@@ -44,6 +44,7 @@ export default function App() {
     ensureFoundersClubAccount()
     applySavedDarkMode()
     syncAuth()
+    hydrateSession()
 
     return () => {
       window.removeEventListener('popstate', syncPage)
